@@ -116,7 +116,7 @@ void InitializeMatrix()
     {
         for (int j = 0; j < ClebschGraphObj.adjLis.size(); j++)
         {
-            // cout<< i << "   " << j << endl;
+            // //cout<< i << "   " << j << endl;
             auto nv = ClebschGraphObj.adjLis[i].adjs;
             auto nu = ClebschGraphObj.adjLis[j].adjs;
             adjMatrix[i][j] = VectorInstersection(nv, nu);
@@ -177,7 +177,7 @@ public:
         for (auto ps : possibleColorsByVertex)
         {
             leafColoring[ps.first] = ps.second[permutation[i]];
-            // //////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
+            // ////////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
             i++;
         }
         if (!GetNextPermutation(permutation, numberOfChoices))
@@ -191,17 +191,17 @@ public:
     {
         //            return true;
         auto size = leafColoring.size();
-        // cout<< "-----------"<< endl;
+        // //cout<< "-----------"<< endl;
         // for(auto lc: leafColoring){
-        //         cout << lc.second <<"  ";
+        //         //cout << lc.second <<"  ";
         //     }
-        // cout<< endl;
+        // //cout<< endl;
         if (size == 3)
         {
             // if((leafColoring[1] <= leafColoring[2]) && (leafColoring[2]<= leafColoring[3]))
-            //     cout << "Coloração boa" << endl;
+            //     //cout << "Coloração boa" << endl;
             // else
-            //     cout << "Coloração ruim" << endl;
+            //     //cout << "Coloração ruim" << endl;
             return (leafColoring[1] <= leafColoring[2]) && (leafColoring[2] <= leafColoring[3]);
         }
         for (auto itr = leafColoring.begin(); itr != leafColoring.end(); advance(itr, 2))
@@ -217,14 +217,14 @@ public:
     map<unsigned, unsigned> GetNext()
     {
         map<unsigned, unsigned> leafColoring;
-        ////cout << "size " << n << endl;
+        //////cout << "size " << n << endl;
         while (!stop)
         {
             int i = 0;
             for (auto ps : possibleColorsByVertex)
             {
                 leafColoring[ps.first] = ps.second[permutation[i]];
-                // //////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
+                // ////////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
                 i++;
             }
             if (!GetNextPermutation(permutation, numberOfChoices))
@@ -247,7 +247,7 @@ public:
 
 vector<map<unsigned, unsigned>> AllCombinations(map<unsigned, vector<unsigned>> &possibleColorsByVertex)
 {
-    //////cout << "all combinations" << endl;
+    ////////cout << "all combinations" << endl;
     vector<map<unsigned, unsigned>> ret;
     unsigned n = possibleColorsByVertex.size();
     vector<char> permutation(n);
@@ -257,10 +257,10 @@ vector<map<unsigned, unsigned>> AllCombinations(map<unsigned, vector<unsigned>> 
     {
         numberOfChoices.push_back(c.second.size());
     }
-    ////////cout << "numberOfChoices"<<"with size n:"<< n << endl;
+    //////////cout << "numberOfChoices"<<"with size n:"<< n << endl;
     for (auto i : numberOfChoices)
     {
-        ////////cout << unsigned(i) << ", "<< endl;
+        //////////cout << unsigned(i) << ", "<< endl;
     }
     do
     {
@@ -269,7 +269,7 @@ vector<map<unsigned, unsigned>> AllCombinations(map<unsigned, vector<unsigned>> 
         for (auto ps : possibleColorsByVertex)
         {
             leafColoring[ps.first] = ps.second[permutation[i]];
-            // //////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
+            // ////////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
             i++;
         }
         ret.push_back(leafColoring);
@@ -305,19 +305,19 @@ public:
     TreeColoring *nextLevel;
 };
 
-void printTreeColoring(TreeColoring tc)
+void printTreeColoring(TreeColoring* tc)
 {
-    // int level = 0;
-    // while (tc.nextLevel != NULL)
-    // {
-    //     cout << "level: " <<level << "   ";
-    //     for(auto l: (*tc.leafColors)){
-    //         cout<< "index: " <<l.first << "  color: " <<l.second << "|";
-    //     }
-    //     tc = (*tc.nextLevel);
-    //     cout<< endl;
-    // }
-    // cout << "===========" << endl;
+    int level = 0;
+    //cout << "===========" << endl;
+    while (tc != NULL)
+    {
+        for(auto l: (*(*tc).leafColors)){
+            //cout<< l.second << " ";
+        }
+        tc = tc->nextLevel;
+        //cout<< endl;
+    }
+    //cout << "===========" << endl;
 }
 
 // escrever as cores na arvore ?
@@ -326,7 +326,7 @@ void printTreeColoring(TreeColoring tc)
 bool betterColoring(unsigned cost, map<unsigned, unsigned> &leafColors, vector<Node *> &leafs, TreeColoring *tc)
 {
     // se o leaf size for 3 último vértice -> caso base
-    ////////cout << "inicio betterColoring" << endl;
+    //////////cout << "inicio betterColoring" << endl;
     TreeColoring newTc;
     newTc.leafColors = &leafColors;
     newTc.nextLevel = tc;
@@ -334,56 +334,56 @@ bool betterColoring(unsigned cost, map<unsigned, unsigned> &leafColors, vector<N
     {
         auto v = PossibleChoicesCommonNeighbours(leafColors[(*leafs[0]).label], leafColors[(*leafs[1]).label]);
         auto cn = VectorInstersection(v, ClebschGraphObj.adjLis[leafColors[(*leafs[2]).label]].adjs);
-        ////cout << leafColors[(*leafs[0]).label] << " " << leafColors[(*leafs[1]).label] << " "<< leafColors[(*leafs[2]).label] << "-> " << endl;
-        ////cout<< "possible colors: ";
+        //////cout << leafColors[(*leafs[0]).label] << " " << leafColors[(*leafs[1]).label] << " "<< leafColors[(*leafs[2]).label] << "-> " << endl;
+        //////cout<< "possible colors: ";
         // for(auto p :cn ){
-        //     //cout<< p << " ";
+        //     ////cout<< p << " ";
         // }
         for (auto p : cn)
         {
-            // cout<< p << " ";
+            // //cout<< p << " ";
             if (cost > calculateCost(p))
             {
-                //////cout << "end base betterColoring" << endl;
-                // cout << "custo remanecente" << cost<< endl;
-                // cout << p;
-                // cout<< endl;
+                ////////cout << "end base betterColoring" << endl;
+                // //cout << "custo remanecente" << cost<< endl;
+                // //cout << p;
+                // //cout<< endl;
                 TreeColoring rootT;
                 map<unsigned, unsigned> rootColor;
                 rootColor[0] = p;
                 rootT.leafColors = &rootColor;
                 rootT.nextLevel = &newTc;
-                printTreeColoring(rootT);
+                printTreeColoring(&rootT);
                 return true;
             }
         }
-        // cout<< endl;
-        //////cout << "end base betterColoring" << endl;
+        // //cout<< endl;
+        ////////cout << "end base betterColoring" << endl;
         return false;
     }
     vector<Node *> newLeafs;
     map<unsigned, vector<unsigned>> possibleColors;
     for (int i = 0; i < leafs.size(); i += 2)
     {
-        //////cout << "test 1" << endl;
+        ////////cout << "test 1" << endl;
         auto parent = (*(leafs[i])).parent;
         auto v = leafColors[(*(leafs[i])).label];
         auto u = leafColors[(*(leafs[i + 1])).label];
         newLeafs.push_back(parent);
-        //////cout << "test 2" << endl;
+        ////////cout << "test 2" << endl;
         // testar se está vazio e retorna
         //  se um possible colors, retorna direto false
-        //////cout << "cor v: " << v << "  cor u "<< u << endl;
+        ////////cout << "cor v: " << v << "  cor u "<< u << endl;
         auto cn = PossibleChoicesCommonNeighbours(v, u);
         if (cn.size() == 0)
             return false;
         possibleColors[parent->label] = cn;
     }
-    //////cout << "test 5" << endl;
+    ////////cout << "test 5" << endl;
     auto combinationIterator = CombinationIterator(possibleColors);
-    //////cout << "test 6" << endl;
+    ////////cout << "test 6" << endl;
     auto levelCost = calculateCost(leafColors);
-    //////cout << "test 7" << endl;
+    ////////cout << "test 7" << endl;
     auto nextCost = cost - levelCost;
     if (levelCost > cost)
         return false;
@@ -394,17 +394,17 @@ bool betterColoring(unsigned cost, map<unsigned, unsigned> &leafColors, vector<N
         auto pc = combinationIterator.GetNextBottomUp();
         if (betterColoring(nextCost, pc, newLeafs, &newTc))
         {
-            //////cout << "end betterColoring" << endl;
-            ////cout << "custo remanecente" << cost<< endl;
+            ////////cout << "end betterColoring" << endl;
+            //////cout << "custo remanecente" << cost<< endl;
             for (auto l : leafs)
             {
-                // cout << leafColors[l->label] << " ";
+                // //cout << leafColors[l->label] << " ";
             }
-            // cout << endl;
+            // //cout << endl;
             return true;
         }
     }
-    //////cout << "end betterColoring" << endl;
+    ////////cout << "end betterColoring" << endl;
     return false;
 }
 
@@ -435,12 +435,12 @@ void print_tree(vector<Node *> children, map<unsigned, unsigned> &comb)
         vector<Node *> nextLevel;
         for (auto c : children)
         {
-            ////cout << c->label<< ":" << comb[c->label]<< " parent :"<< c->parent->label << "  |  ";
-            // cout << comb[c->label] << " ";
+            //////cout << c->label<< ":" << comb[c->label]<< " parent :"<< c->parent->label << "  |  ";
+            // //cout << comb[c->label] << " ";
             //  if(c->parent != NULL)
             //      nextLevel.push_back(c->parent);
         }
-        // cout << endl;
+        // //cout << endl;
         currLevel = nextLevel;
     }
 }
@@ -478,60 +478,66 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     bool isFirst = true;
     while (badCollorings.size() > 0 && level < maxTreeLevel)
     {
-        ////cout << "TEste 3"<< endl;
+        //////cout << "TEste 3"<< endl;
         if (isFirst)
         {
         }
         vector<pair<unsigned, map<unsigned, unsigned>>> newBadCollorings; // colocar custo
+        vector<vector<unsigned>> fbtest;
         // vector<unsigned> newCosts;
         unsigned colorIndex = 0;
         int testindex = 0;
         for (auto bcPair : badCollorings)
         {
             map<unsigned, vector<unsigned>> possibleColors;
-            //////cout << "Print the children" << endl;
-            // cout << "index " <<testindex <<" ";
+            ////////cout << "Print the children" << endl;
+            // //cout << "index " <<testindex <<" ";
             auto c = bcPair.second;
             auto fatherCost = bcPair.first;
             for (auto child : children)
             {
-                //////cout << child->label << " on level " << level << endl;
+                ////////cout << child->label << " on level " << level << endl;
                 auto parentColor = c[child->parent->label];
                 possibleColors[child->label] = ClebschGraphObj.adjLis[parentColor].adjs;
             }
-            // //////cout << " possible colors " << endl  ;
+            // ////////cout << " possible colors " << endl  ;
             // for(auto pc: possibleColors){
             //     for(auto c: pc.second){
-            //         //////cout << c << " ," << endl;
+            //         ////////cout << c << " ," << endl;
             //     }
             // }
-            ////cout << "==========" << endl;
+            //////cout << "==========" << endl;
             // otimizar com irmãos
             auto combinationIterator = CombinationIterator(possibleColors);
             // auto combinations = AllCombinations(possibleColors);
-            ////cout << "combinations on level : " << level << endl;
+            //////cout << "combinations on level : " << level << endl;
             // for(auto c: combinations){
             //     for (auto t: c){
-            //         //////cout << t.second << ",";
+            //         ////////cout << t.second << ",";
             //     }
-            //     //////cout << endl;
+            //     ////////cout << endl;
             // }
 
-            ////cout<< "================="<< endl;
+            //////cout<< "================="<< endl;
             unsigned gcCounter = 0;
             unsigned bcCounter = 0;
-            // cout << "Teste " << endl;
+            // //cout << "Teste " << endl;
             while (!combinationIterator.stop)
             {
                 auto comb = combinationIterator.GetNext();
                 unsigned cost = fatherCost + calculateCost(comb); // Prestar atenção no custo
-                // cout<< "Coloração das folhas: ";
+                // //cout<< "Coloração das folhas: ";
                 // for(auto c: comb){
-                //     cout<< c.second << " ";
+                //     //cout<< c.second << " ";
                 // }
                 if (!betterColoring(fatherCost, comb, children, NULL))
                 {
-                    newBadCollorings.push_back(make_pair(cost, comb));
+                    if(level <= 2)
+                        newBadCollorings.push_back(make_pair(cost, comb));
+                    else{
+                        vector<unsigned> test{0,0,0,0,0,0,0,0,0,0,0,0,0};
+                        fbtest.push_back(test);
+                    }
 
                     bcCounter++;
                 }
@@ -540,16 +546,16 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                     gcCounter++;
                 }
                 print_tree(children, comb);
-                // cout<< "custo: " << cost << " fcost " << fatherCost;
-                // cout  << endl;
+                // //cout<< "custo: " << cost << " fcost " << fatherCost;
+                // //cout  << endl;
             }
-            // cout<< combinationIterator.retPerm << "   " << combinationIterator.totalPerm<< endl;
-            cout << "Colorações ruins : " << bcCounter << "Colarações boas :" << gcCounter << " total: " << bcCounter + gcCounter << endl;
+            // //cout<< combinationIterator.retPerm << "   " << combinationIterator.totalPerm<< endl;
+            //cout << "Colorações ruins : " << bcCounter << "Colarações boas :" << gcCounter << " total: " << bcCounter + gcCounter << endl;
             testindex++;
             colorIndex++;
         }
-        cout << newBadCollorings.size() << " bad coloring on level : " << level << endl;
-        cout << "=========================" << endl;
+        //cout << newBadCollorings.size() << " bad coloring on level : " << level << endl;
+        //cout << "=========================" << endl;
         badCollorings = newBadCollorings; // use pointer
         children = growTree(children, index);
         level++;
@@ -560,9 +566,9 @@ bool TopDownOnTree(unsigned maxTreeLevel)
 int main()
 {
 
-    ////cout << "TEste " << endl;
+    //////cout << "TEste " << endl;
     InitializeMatrix();
-    ////cout << "TEste 2"<< endl;
+    //////cout << "TEste 2"<< endl;
     TopDownOnTree(2);
 
     return 0;
