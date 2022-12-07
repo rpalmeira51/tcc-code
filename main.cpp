@@ -6,6 +6,7 @@
 #include <bits/stdc++.h>
 #include <limits.h>
 #include <utility>
+#include<algorithm>
 using namespace std;
 
 // 0 {1, 10, 6, 8, 13}
@@ -532,13 +533,8 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                 // }
                 if (!betterColoring(fatherCost, comb, children, NULL))
                 {
-                    if(level <= 2)
-                        newBadCollorings.push_back(make_pair(cost, comb));
-                    else{
-                        vector<unsigned> test{0,0,0,0,0,0,0,0,0,0,0,0,0};
-                        fbtest.push_back(test);
-                    }
-
+                    if(newBadCollorings.find( ) == newBadCollorings.end())
+                    newBadCollorings.push_back(make_pair(cost, comb));
                     bcCounter++;
                 }
                 else
@@ -563,13 +559,121 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     return level == maxTreeLevel;
 }
 
-int main()
-{
 
-    //////cout << "TEste " << endl;
-    InitializeMatrix();
-    //////cout << "TEste 2"<< endl;
-    TopDownOnTree(2);
 
-    return 0;
+
+// 4,7,4,9, 9,7,5,7
+// ^ ^      ^ ^   
+bool isLexisGE(vector<unsigned>& coloring, unsigned pace_size, int fele_index){
+    int index = 0;
+    while(pace_size > index){
+        auto temp = fele_index+index;
+        if(coloring[temp] < coloring[temp+pace_size] ){
+            return false;
+        }else if(coloring[temp] > coloring[temp+pace_size]) {
+            return true;
+        }
+        index++;
+    }
+    return false;
 }
+
+void swapPartsOfTrees(vector<unsigned>& coloring, unsigned pace_size, int fele_index){
+    int index = 0;
+    while(pace_size > index){
+        auto current_ele_i = fele_index+index;
+        auto temp = coloring[current_ele_i];
+        coloring[current_ele_i] = coloring[current_ele_i+pace_size];
+        coloring[current_ele_i+pace_size] = temp;
+        index++;
+    }
+}
+
+void CanonicalOrdering(vector<unsigned>& coloring){
+    auto cor_size = coloring.size();
+    unsigned adjSize = (cor_size/3) *2;
+    unsigned levels =  log2(adjSize);
+    unsigned pace_size =1;
+    cout << "levels :" <<levels << endl;
+    while (levels > 1){
+        unsigned index = 0;
+        while(index + pace_size < cor_size){
+            if(isLexisGE(coloring,pace_size,index) ){
+                cout<< "swaping with index:" << index << "and ps" << pace_size << endl;
+                swapPartsOfTrees(coloring,pace_size,index);
+            }
+            index+=  2*pace_size;
+        }
+        for(auto c: coloring){
+            cout<< c << " ";
+        }
+        cout<< endl;    
+        levels--;
+        pace_size*=2;
+    }
+    unsigned findex = 0;
+    unsigned sindex = findex+pace_size;
+    cout<< "ps: "<< pace_size << endl;
+    if(isLexisGE(coloring,pace_size, findex)){
+        cout<< "swaping with index:" << findex << "and ps" << pace_size << endl;
+        swapPartsOfTrees(coloring,pace_size,findex);
+    }
+    if(isLexisGE(coloring,pace_size, sindex)){
+        cout<< "swaping with index:" << sindex << "and ps" << pace_size << endl;
+        swapPartsOfTrees(coloring,pace_size,sindex);
+    }
+    if(isLexisGE(coloring,pace_size, findex)){
+        cout<< "swaping with index:" << findex << "and ps" << pace_size << endl;
+        swapPartsOfTrees(coloring,pace_size,findex);
+    }
+    cout<< endl;
+}
+
+
+class TreeColoringNode{
+    public:
+        unsigned color;
+        TreeColoringNode* parent;
+    private:
+        vector<TreeColoringNode*> nextColors;
+
+    //Coloca um método para achar vizinho
+    // Por vetor, outro por ponteiro  
+
+};
+
+
+class FinalColoringNode: TreeColoringNode{
+    public:
+        unsigned worstCost;
+        unsigned betterColoringCost;
+};
+
+class ColoringTree{
+    public: 
+        vector<TreeColoringNode*> nextColors;
+};
+
+
+
+int main(){
+    vector<unsigned> coloring{ 16,12,5,7 ,15,3,1,0, 16,5,7,3};
+    CanonicalOrdering(coloring);
+    // for(auto c: coloring){
+    //     cout<< c << " ";
+    // }
+    cout<< endl;
+
+}
+
+
+// int main()
+// {
+
+//     //////cout << "TEste " << endl;
+//     InitializeMatrix();
+//     //////cout << "TEste 2"<< endl;
+//     TopDownOnTree(2);
+
+//     return 0;
+// }
