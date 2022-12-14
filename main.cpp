@@ -60,6 +60,22 @@ public:
 
 vector<char> adjMatrix[16][16];
 void CanonicalOrdering(vector<char>& coloring);
+vector<char> ColoringValues(map<unsigned, char> colorings);
+
+ostream& operator<<(ostream& os, const vector<char>& vec)
+{
+    for(auto e:vec){
+        os << (int)e << " ,";
+    }
+    return os;
+}
+
+
+// Min TopDownCost e Min BottomUp Cost->Not for now
+// Min TopDownCost <= Min BottomUp Cost -> Ruim 
+// Testar com igualdade 
+map<vector<char>, pair<unsigned,unsigned>> coloringTable;
+
 
 Vertice fromInts(vector<int> vertices, int index)
 {
@@ -76,7 +92,7 @@ Vertice fromInts(vector<int> vertices, int index)
 class ClebschGraph : public Graph
 {
 public:
-    vector<unsigned> badVertices = {0, 1, 2, 5, 7};
+    vector<char> badVertices = {0, 1, 2, 5, 7};
     ClebschGraph()
     {
         adjLis.push_back(fromInts({1, 10, 6, 8, 13}, 0));
@@ -311,18 +327,20 @@ void printTreeColoring(TreeColoring* tc)
 }
 
 //Checar a tabela vs calcular ->>>>>>>>>>>>>>>>>
+//Custo considera folhas 
 unsigned betterColoring(unsigned cost, map<unsigned, char> &leafColors, vector<Node *> &leafs, TreeColoring *tc)
 {
     TreeColoring newTc;
     newTc.leafColors = &leafColors;
     newTc.nextLevel = tc;
+    
     if (leafs.size() == 3)
     {
         auto v = PossibleChoicesCommonNeighbours(leafColors[(*leafs[0]).label], leafColors[(*leafs[1]).label]);
         auto cn = VectorInstersection(v, ClebschGraphObj.adjLis[leafColors[(*leafs[2]).label]].adjs);
         auto levelCost = calculateCost(leafColors);
         auto rootCost = cost-levelCost;
-        unsigned minCost = cost;
+        unsigned minCost = rootCost;
         for (auto p : cn)
         {
             minCost = min(minCost,calculateCost(p));
@@ -334,18 +352,13 @@ unsigned betterColoring(unsigned cost, map<unsigned, char> &leafColors, vector<N
     map<unsigned, vector<char>> possibleColors;
     for (int i = 0; i < leafs.size(); i += 2)
     {
-        //////////cout << "test 1" << endl;
         auto parent = (*(leafs[i])).parent;
         auto v = leafColors[(*(leafs[i])).label];
         auto u = leafColors[(*(leafs[i + 1])).label];
         newLeafs.push_back(parent);
-        //////////cout << "test 2" << endl;
-        // testar se está vazio e retorna
-        //  se um possible colors, retorna direto false
-        //////////cout << "cor v: " << v << "  cor u "<< u << endl;
         auto cn = PossibleChoicesCommonNeighbours(v, u);
         if (cn.size() == 0)
-            return false;
+            return cost;
         possibleColors[parent->label] = cn;
     }
     auto combinationIterator = CombinationIterator(possibleColors);
@@ -355,14 +368,30 @@ unsigned betterColoring(unsigned cost, map<unsigned, char> &leafColors, vector<N
         return cost;
     int index = 0;
     unsigned minCost = nextCost;
+    map<unsigned, char> beestColoring;
     while (!combinationIterator.stop)
     {
         auto pc = combinationIterator.GetNextBottomUp();
-        auto curCost = betterColoring(nextCost, pc, newLeafs, &newTc);
-        minCost = min(minCost,nextCost);
+        //TODO checar a tabela
+        // Coloração canonica
+        auto cv = ColoringValues(pc);
+        CanonicalOrdering(cv);
+        if(coloringTable.find(cv) != coloringTable.end()){
+            //cout<< "Cached    !!!!"<< endl;
+            auto cached = coloringTable[cv];
+            minCost = min(minCost,cached.second);
+        }else{
+            auto curCost = betterColoring(nextCost, pc, newLeafs, &newTc);
+            minCost = min(minCost,curCost);
+        }
+        //cout<< ColoringValues(pc)<< endl;
+        // if(curCost< minCost){
+        //     beestColoring = pc;
+        //     minCost = curCost;
+        // }
+        
     }
-    //cout << "Mincost: "<< minCost << " levelcost" << levelCost << endl;
-    return minCost + nextCost;
+    return minCost + levelCost;
 }
 
 vector<Node *> growTree(vector<Node *> children, unsigned &lastIndex)
@@ -402,8 +431,6 @@ void print_tree(vector<Node *> children, map<unsigned, unsigned> &comb)
     }
 }
 
-// Min TopDownCost e Min BottomUp Cost->Not for now
-map<vector<char>, pair<unsigned,unsigned>> coloringTable;
 
 
 vector<char> ColoringValues(map<unsigned, char> colorings){
@@ -415,13 +442,7 @@ vector<char> ColoringValues(map<unsigned, char> colorings){
 }
 
 
-ostream& operator<<(ostream& os, const vector<char>& vec)
-{
-    for(auto e:vec){
-        os << (int)e << " ,";
-    }
-    return os;
-}
+
 
 
 bool TopDownOnTree(unsigned maxTreeLevel)
@@ -444,38 +465,47 @@ bool TopDownOnTree(unsigned maxTreeLevel)
         children->label = index++;
         children->parent = rtree.root;
     }
-    vector<map<unsigned, char>> badCollorings;
+    vector<vector<char>> badColorings;
 
     for (auto c : ClebschGraphObj.badVertices)
     {
-        map<unsigned, char> initialColoring;
-        initialColoring[rtree.root->label] = c;
-        badCollorings.push_back(initialColoring);
+        vector<char> initialColoring{c};
+        initialColoring = {c};
+        badColorings.push_back(initialColoring);
         auto cost = calculateCost(c);
-        auto cv = ColoringValues(initialColoring);
-        coloringTable[cv] = make_pair(cost,cost);
-        //cout<< "Adding cost: "<< cost<< "  with color" << 
+        coloringTable[initialColoring] = make_pair(cost,cost);
     }
 
     unsigned level = 0;
     bool isFirst = true;
-    while (badCollorings.size() > 0 && level < maxTreeLevel)
+    while (badColorings.size() > 0 && level < maxTreeLevel)
     {
-        vector<map<unsigned,char>> newBadCollorings; 
+        vector<vector<char>> newbadColorings; 
         unsigned colorIndex = 0;
         int testindex = 0;
-        for (auto c : badCollorings)
+        unsigned totalgcCounter = 0;
+        unsigned totalbcCounter = 0;
+        unsigned totalcbcCounter =0;
+        for (auto c : badColorings)
         {
             map<unsigned, vector<char>> possibleColors;
-            auto cv =  ColoringValues(c);
-            cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
-            CanonicalOrdering(cv);
-            cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
-            auto fatherCost = coloringTable[cv].first;
-            for (auto child : children)
-            {
-                auto parentColor = c[child->parent->label];
-                possibleColors[child->label] = ClebschGraphObj.adjLis[parentColor].adjs;
+            //auto cv =  ColoringValues(c);
+            //cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
+            CanonicalOrdering(c);
+            //cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
+            auto fatherCost = coloringTable[c].first;
+            if(children.size() ==3){
+                for(int i =0; i< children.size(); i++){
+                    auto child = children[i];
+                    auto parentColor = c[0];
+                    possibleColors[child->label] = ClebschGraphObj.adjLis[parentColor].adjs;
+                }
+            }else {
+                for(int i =0; i< children.size(); i++){
+                    auto child = children[i];
+                    auto parentColor = c[i/2];
+                    possibleColors[child->label] = ClebschGraphObj.adjLis[parentColor].adjs;
+                }
             }
             auto combinationIterator = CombinationIterator(possibleColors);
             unsigned gcCounter = 0;
@@ -483,50 +513,57 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             unsigned cbcCounter =0;
             while (!combinationIterator.stop)
             {
-                auto comb = combinationIterator.GetNext();
+                auto comb = combinationIterator.GetNextBottomUp();
                 auto combCost = calculateCost(comb);
                 unsigned cost = fatherCost + combCost ;// Prestar atenção no custo
                 //cout<< "Calculating cost, fatherCost:  " << fatherCost << "  combCost  " << combCost << endl; 
                 vector<char> coloringVector;
                 coloringVector = ColoringValues(comb);
                 CanonicalOrdering(coloringVector); 
-                if(coloringTable.count(coloringVector)){
+                if(coloringTable.find(coloringVector) != coloringTable.end()){
                     auto cached = coloringTable[coloringVector];
-                    //cout << "Cached cost:" << cached.first << " Cached best: "<< cached.second << " Current Cost"<< cost<< endl;
-                    bool alreadyBadColoring = cached.first <= cached.second;
-                    // cout << "teste"<< "hahahah"<< endl;
+                    bool alreadyBadColoring = cached.first == cached.second;
+                    //TODO remove debug
+                    if(cached.first < cached.second){
+                        cout<< "PROBLEMA DOIDO _-------------------------"<< endl;
+                    }
                     if(cost < cached.first ){
-                        // cout << "teste"<< "hahahah"<< endl;
                         cached = make_pair(cost, cached.second);
                         coloringTable[coloringVector] = cached;
-                        if(!alreadyBadColoring){
-                            newBadCollorings.push_back(comb);
+                        if(cost == cached.second){
                             cbcCounter++;
+                            newbadColorings.push_back(coloringVector);
                         }
                     }
-                    if( cached.first <= cached.second)    
+                    if( cost == cached.second){
                         bcCounter++;
+                    }    
                     else 
                         gcCounter++;  
                 }else {
                     auto result = betterColoring(cost, comb, children, NULL); 
                     //cout << "cost: " << cost << result 
                     coloringTable[coloringVector] = make_pair(cost, result);
-                    if( cost <= result){
+                    if( cost == result){
                         bcCounter++;
                         cbcCounter++;
-                        newBadCollorings.push_back(comb);
+                        newbadColorings.push_back(coloringVector);
                     }
                     else {
                         gcCounter++;
                     }
                 }
             }
+            cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
             cout <<"Colorações canonicas ruins :" << cbcCounter << " Colorações ruins : "<< bcCounter <<" Colarações boas : "<< gcCounter <<  " total:"<< gcCounter + bcCounter <<endl;
             testindex++;
             colorIndex++;
+            totalgcCounter += gcCounter;
+            totalbcCounter += bcCounter;
+            totalcbcCounter+= cbcCounter;
         }
-        badCollorings = newBadCollorings; // use pointer
+        //cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << " Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
+        badColorings = newbadColorings; // use pointer
         children = growTree(children, index);
         level++;
     }
@@ -648,7 +685,7 @@ int main()
     ////////cout << "TEste " << endl;
     InitializeMatrix();
     ////////cout << "TEste 2"<< endl;
-    TopDownOnTree(2);
+    TopDownOnTree(3);
 
     return 0;
 }

@@ -1,213 +1,142 @@
-cv: 0 , fatherCost 1
-cv: 0 , fatherCost 1
-Colorações canonicas ruins :16 Colorações ruins : 16 Colarações boas : 19 total:35
-cv: 1 , fatherCost 1
-cv: 1 , fatherCost 1
-Colorações canonicas ruins :16 Colorações ruins : 16 Colarações boas : 19 total:35
-cv: 2 , fatherCost 1
-cv: 2 , fatherCost 1
-Colorações canonicas ruins :14 Colorações ruins : 18 Colarações boas : 17 total:35
-cv: 5 , fatherCost 1
-cv: 5 , fatherCost 1
-Colorações canonicas ruins :10 Colorações ruins : 16 Colarações boas : 19 total:35
-cv: 7 , fatherCost 1
-cv: 7 , fatherCost 1
-Colorações canonicas ruins :10 Colorações ruins : 16 Colarações boas : 19 total:35
-cv: 1 ,10 ,13 , fatherCost 2
-cv: 1 ,10 ,13 , fatherCost 2
-Colorações canonicas ruins :1775 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 1 ,6 ,10 , fatherCost 2
-cv: 1 ,6 ,10 , fatherCost 2
-Colorações canonicas ruins :1421 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 1 ,6 ,8 , fatherCost 2
-cv: 1 ,6 ,8 , fatherCost 2
-Colorações canonicas ruins :1516 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 1 ,6 ,13 , fatherCost 2
-cv: 1 ,6 ,13 , fatherCost 2
-Colorações canonicas ruins :1358 Colorações ruins : 2268 Colarações boas : 1107 total:3375
-cv: 1 ,8 ,10 , fatherCost 2
-cv: 1 ,8 ,10 , fatherCost 2
-Colorações canonicas ruins :782 Colorações ruins : 1359 Colarações boas : 2016 total:3375
-cv: 1 ,8 ,13 , fatherCost 2
-cv: 1 ,8 ,13 , fatherCost 2
-Colorações canonicas ruins :752 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 6 ,10 ,10 , fatherCost 1
-cv: 6 ,10 ,10 , fatherCost 1
-Colorações canonicas ruins :598 Colorações ruins : 1062 Colarações boas : 2313 total:3375
-cv: 6 ,10 ,13 , fatherCost 1
-cv: 6 ,10 ,13 , fatherCost 1
-Colorações canonicas ruins :853 Colorações ruins : 1396 Colarações boas : 1979 total:3375
-cv: 6 ,6 ,10 , fatherCost 1
-cv: 6 ,6 ,10 , fatherCost 1
-Colorações canonicas ruins :252 Colorações ruins : 1333 Colarações boas : 2042 total:3375
-cv: 6 ,8 ,10 , fatherCost 1
-cv: 6 ,8 ,10 , fatherCost 1
-Colorações canonicas ruins :608 Colorações ruins : 1123 Colarações boas : 2252 total:3375
-cv: 6 ,8 ,13 , fatherCost 1
-cv: 6 ,8 ,13 , fatherCost 1
-Colorações canonicas ruins :607 Colorações ruins : 1396 Colarações boas : 1979 total:3375
-cv: 8 ,10 ,10 , fatherCost 1
-cv: 8 ,10 ,10 , fatherCost 1
-Colorações canonicas ruins :237 Colorações ruins : 843 Colarações boas : 2532 total:3375
-cv: 8 ,10 ,13 , fatherCost 1
-cv: 8 ,10 ,13 , fatherCost 1
-Colorações canonicas ruins :392 Colorações ruins : 1123 Colarações boas : 2252 total:3375
-cv: 8 ,8 ,10 , fatherCost 1
-cv: 8 ,8 ,10 , fatherCost 1
-Colorações canonicas ruins :144 Colorações ruins : 843 Colarações boas : 2532 total:3375
-cv: 8 ,8 ,13 , fatherCost 1
-cv: 8 ,8 ,13 , fatherCost 1
-Colorações canonicas ruins :154 Colorações ruins : 1062 Colarações boas : 2313 total:3375
-cv: 8 ,13 ,13 , fatherCost 1
-cv: 8 ,13 ,13 , fatherCost 1
-Colorações canonicas ruins :171 Colorações ruins : 1333 Colarações boas : 2042 total:3375
-cv: 0 ,3 ,4 , fatherCost 2
-cv: 0 ,3 ,4 , fatherCost 2
-Colorações canonicas ruins :1804 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 0 ,3 ,9 , fatherCost 2
-cv: 0 ,3 ,9 , fatherCost 2
-Colorações canonicas ruins :1392 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 0 ,3 ,15 , fatherCost 2
-cv: 0 ,3 ,15 , fatherCost 2
-Colorações canonicas ruins :850 Colorações ruins : 1359 Colarações boas : 2016 total:3375
-cv: 0 ,4 ,9 , fatherCost 2
-cv: 0 ,4 ,9 , fatherCost 2
-Colorações canonicas ruins :1585 Colorações ruins : 2268 Colarações boas : 1107 total:3375
-cv: 0 ,4 ,15 , fatherCost 2
-cv: 0 ,4 ,15 , fatherCost 2
-Colorações canonicas ruins :1221 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 0 ,9 ,15 , fatherCost 2
-cv: 0 ,9 ,15 , fatherCost 2
-Colorações canonicas ruins :752 Colorações ruins : 1836 Colarações boas : 1539 total:3375
-cv: 3 ,3 ,4 , fatherCost 1
-cv: 3 ,3 ,4 , fatherCost 1
-Colorações canonicas ruins :588 Colorações ruins : 1062 Colarações boas : 2313 total:3375
-cv: 3 ,3 ,15 , fatherCost 1
-cv: 3 ,3 ,15 , fatherCost 1
-Colorações canonicas ruins :457 Colorações ruins : 843 Colarações boas : 2532 total:3375
-cv: 3 ,4 ,4 , fatherCost 1
-cv: 3 ,4 ,4 , fatherCost 1
-Colorações canonicas ruins :327 Colorações ruins : 1333 Colarações boas : 2042 total:3375
-cv: 3 ,4 ,9 , fatherCost 1
-cv: 3 ,4 ,9 , fatherCost 1
-Colorações canonicas ruins :705 Colorações ruins : 1396 Colarações boas : 1979 total:3375
-cv: 3 ,4 ,15 , fatherCost 1
-cv: 3 ,4 ,15 , fatherCost 1
-Colorações canonicas ruins :418 Colorações ruins : 1123 Colarações boas : 2252 total:3375
-cv: 3 ,9 ,15 , fatherCost 1
-cv: 3 ,9 ,15 , fatherCost 1
-Colorações canonicas ruins :543 Colorações ruins : 1123 Colarações boas : 2252 total:3375
-cv: 3 ,15 ,15 , fatherCost 1
-cv: 3 ,15 ,15 , fatherCost 1
-Colorações canonicas ruins :144 Colorações ruins : 843 Colarações boas : 2532 total:3375
-cv: 4 ,9 ,15 , fatherCost 1
-cv: 4 ,9 ,15 , fatherCost 1
-Colorações canonicas ruins :432 Colorações ruins : 1396 Colarações boas : 1979 total:3375
-cv: 9 ,9 ,15 , fatherCost 1
-cv: 9 ,9 ,15 , fatherCost 1
-Colorações canonicas ruins :225 Colorações ruins : 1333 Colarações boas : 2042 total:3375
-cv: 9 ,15 ,15 , fatherCost 1
-cv: 9 ,15 ,15 , fatherCost 1
-Colorações canonicas ruins :96 Colorações ruins : 1062 Colarações boas : 2313 total:3375
-cv: 3 ,3 ,8 , fatherCost 1
-cv: 3 ,3 ,8 , fatherCost 1
-Colorações canonicas ruins :65 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 3 ,10 ,12 , fatherCost 1
-cv: 3 ,10 ,12 , fatherCost 1
-Colorações canonicas ruins :470 Colorações ruins : 832 Colarações boas : 2543 total:3375
-cv: 3 ,10 ,15 , fatherCost 1
-cv: 3 ,10 ,15 , fatherCost 1
-Colorações canonicas ruins :78 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 3 ,8 ,10 , fatherCost 1
-cv: 3 ,8 ,10 , fatherCost 1
-Colorações canonicas ruins :39 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 3 ,8 ,8 , fatherCost 1
-cv: 3 ,8 ,8 , fatherCost 1
-Colorações canonicas ruins :65 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 3 ,8 ,12 , fatherCost 1
-cv: 3 ,8 ,12 , fatherCost 1
-Colorações canonicas ruins :324 Colorações ruins : 828 Colarações boas : 2547 total:3375
-cv: 3 ,8 ,15 , fatherCost 1
-cv: 3 ,8 ,15 , fatherCost 1
-Colorações canonicas ruins :54 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 3 ,12 ,15 , fatherCost 1
-cv: 3 ,12 ,15 , fatherCost 1
-Colorações canonicas ruins :224 Colorações ruins : 1063 Colarações boas : 2312 total:3375
-cv: 10 ,10 ,15 , fatherCost 1
-cv: 10 ,10 ,15 , fatherCost 1
-Colorações canonicas ruins :40 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 10 ,12 ,15 , fatherCost 1
-cv: 10 ,12 ,15 , fatherCost 1
-Colorações canonicas ruins :283 Colorações ruins : 828 Colarações boas : 2547 total:3375
-cv: 10 ,15 ,15 , fatherCost 1
-cv: 10 ,15 ,15 , fatherCost 1
-Colorações canonicas ruins :30 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 8 ,10 ,12 , fatherCost 1
-cv: 8 ,10 ,12 , fatherCost 1
-Colorações canonicas ruins :190 Colorações ruins : 1063 Colarações boas : 2312 total:3375
-cv: 8 ,10 ,15 , fatherCost 1
-cv: 8 ,10 ,15 , fatherCost 1
-Colorações canonicas ruins :22 Colorações ruins : 409 Colarações boas : 2966 total:3375
-cv: 8 ,12 ,15 , fatherCost 1
-cv: 8 ,12 ,15 , fatherCost 1
-Colorações canonicas ruins :318 Colorações ruins : 832 Colarações boas : 2543 total:3375
-cv: 3 ,4 ,8 , fatherCost 1
-cv: 3 ,4 ,8 , fatherCost 1
-Colorações canonicas ruins :153 Colorações ruins : 577 Colarações boas : 2798 total:3375
-cv: 3 ,4 ,7 , fatherCost 2
-cv: 3 ,4 ,7 , fatherCost 2
-Colorações canonicas ruins :894 Colorações ruins : 1776 Colarações boas : 1599 total:3375
-cv: 3 ,4 ,13 , fatherCost 1
-cv: 3 ,4 ,13 , fatherCost 1
-Colorações canonicas ruins :357 Colorações ruins : 1058 Colarações boas : 2317 total:3375
-cv: 3 ,8 ,13 , fatherCost 1
-cv: 3 ,8 ,13 , fatherCost 1
-Colorações canonicas ruins :99 Colorações ruins : 608 Colarações boas : 2767 total:3375
-cv: 3 ,7 ,8 , fatherCost 2
-cv: 3 ,7 ,8 , fatherCost 2
-Colorações canonicas ruins :407 Colorações ruins : 1119 Colarações boas : 2256 total:3375
-cv: 3 ,7 ,13 , fatherCost 2
-cv: 3 ,7 ,13 , fatherCost 2
-Colorações canonicas ruins :834 Colorações ruins : 1740 Colarações boas : 1635 total:3375
-cv: 4 ,8 ,13 , fatherCost 1
-cv: 4 ,8 ,13 , fatherCost 1
-Colorações canonicas ruins :218 Colorações ruins : 862 Colarações boas : 2513 total:3375
-cv: 4 ,7 ,8 , fatherCost 2
-cv: 4 ,7 ,8 , fatherCost 2
-Colorações canonicas ruins :885 Colorações ruins : 1678 Colarações boas : 1697 total:3375
-cv: 4 ,7 ,13 , fatherCost 2
-cv: 4 ,7 ,13 , fatherCost 2
-Colorações canonicas ruins :892 Colorações ruins : 2088 Colarações boas : 1287 total:3375
-cv: 7 ,8 ,13 , fatherCost 2
-cv: 7 ,8 ,13 , fatherCost 2
-Colorações canonicas ruins :350 Colorações ruins : 1675 Colarações boas : 1700 total:3375
-cv: 5 ,6 ,9 , fatherCost 2
-cv: 5 ,6 ,9 , fatherCost 2
-Colorações canonicas ruins :1609 Colorações ruins : 2223 Colarações boas : 1152 total:3375
-cv: 5 ,6 ,10 , fatherCost 2
-cv: 5 ,6 ,10 , fatherCost 2
-Colorações canonicas ruins :780 Colorações ruins : 1859 Colarações boas : 1516 total:3375
-cv: 5 ,6 ,15 , fatherCost 2
-cv: 5 ,6 ,15 , fatherCost 2
-Colorações canonicas ruins :984 Colorações ruins : 1824 Colarações boas : 1551 total:3375
-cv: 5 ,9 ,10 , fatherCost 2
-cv: 5 ,9 ,10 , fatherCost 2
-Colorações canonicas ruins :948 Colorações ruins : 1824 Colarações boas : 1551 total:3375
-cv: 5 ,9 ,15 , fatherCost 2
-cv: 5 ,9 ,15 , fatherCost 2
-Colorações canonicas ruins :545 Colorações ruins : 1859 Colarações boas : 1516 total:3375
-cv: 5 ,10 ,15 , fatherCost 2
-cv: 5 ,10 ,15 , fatherCost 2
-Colorações canonicas ruins :351 Colorações ruins : 1226 Colarações boas : 2149 total:3375
-cv: 6 ,9 ,10 , fatherCost 1
-cv: 6 ,9 ,10 , fatherCost 1
-Colorações canonicas ruins :506 Colorações ruins : 1297 Colarações boas : 2078 total:3375
-cv: 6 ,9 ,15 , fatherCost 1
-cv: 6 ,9 ,15 , fatherCost 1
-Colorações canonicas ruins :377 Colorações ruins : 1297 Colarações boas : 2078 total:3375
-cv: 6 ,10 ,15 , fatherCost 1
-cv: 6 ,10 ,15 , fatherCost 1
-Colorações canonicas ruins :196 Colorações ruins : 921 Colarações boas : 2454 total:3375
-cv: 9 ,10 ,15 , fatherCost 1
-cv: 9 ,10 ,15 , fatherCost 1
-Colorações canonicas ruins :175 Colorações ruins : 921 Colarações boas : 2454 total:3375
+Custo do pai: 1 Com pais: 0 ,
+Colorações canonicas ruins :16 Colorações ruins : 78 Colarações boas : 47 total:125
+Custo do pai: 1 Com pais: 1 ,
+Colorações canonicas ruins :16 Colorações ruins : 78 Colarações boas : 47 total:125
+Custo do pai: 1 Com pais: 2 ,
+Colorações canonicas ruins :14 Colorações ruins : 84 Colarações boas : 41 total:125
+Custo do pai: 1 Com pais: 5 ,
+Colorações canonicas ruins :10 Colorações ruins : 78 Colarações boas : 47 total:125
+Custo do pai: 1 Com pais: 7 ,
+Colorações canonicas ruins :10 Colorações ruins : 78 Colarações boas : 47 total:125
+Custo do pai: 2 Com pais: 1 ,6 ,10 ,
+Colorações canonicas ruins :485 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 2 Com pais: 1 ,8 ,10 ,
+Colorações canonicas ruins :272 Colorações ruins : 2300 Colarações boas : 13325 total:15625
+Custo do pai: 2 Com pais: 1 ,10 ,13 ,
+Colorações canonicas ruins :238 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 1 ,6 ,8 ,
+Colorações canonicas ruins :242 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 1 ,6 ,13 ,
+Colorações canonicas ruins :293 Colorações ruins : 2940 Colarações boas : 12685 total:15625
+Custo do pai: 2 Com pais: 1 ,8 ,13 ,
+Colorações canonicas ruins :243 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 1 Com pais: 6 ,10 ,10 ,
+Colorações canonicas ruins :699 Colorações ruins : 7328 Colarações boas : 8297 total:15625
+Custo do pai: 1 Com pais: 8 ,10 ,10 ,
+Colorações canonicas ruins :427 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 6 ,6 ,10 ,
+Colorações canonicas ruins :404 Colorações ruins : 5744 Colarações boas : 9881 total:15625
+Custo do pai: 1 Com pais: 6 ,8 ,10 ,
+Colorações canonicas ruins :821 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 1 Com pais: 6 ,10 ,13 ,
+Colorações canonicas ruins :621 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 8 ,8 ,10 ,
+Colorações canonicas ruins :301 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 8 ,10 ,13 ,
+Colorações canonicas ruins :681 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 1 Com pais: 6 ,8 ,13 ,
+Colorações canonicas ruins :567 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 8 ,8 ,13 ,
+Colorações canonicas ruins :301 Colorações ruins : 7328 Colarações boas : 8297 total:15625
+Custo do pai: 1 Com pais: 8 ,13 ,13 ,
+Colorações canonicas ruins :198 Colorações ruins : 5744 Colarações boas : 9881 total:15625
+Custo do pai: 2 Com pais: 0 ,3 ,4 ,
+Colorações canonicas ruins :485 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 2 Com pais: 0 ,3 ,9 ,
+Colorações canonicas ruins :279 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 0 ,3 ,15 ,
+Colorações canonicas ruins :231 Colorações ruins : 2300 Colarações boas : 13325 total:15625
+Custo do pai: 2 Com pais: 0 ,4 ,9 ,
+Colorações canonicas ruins :330 Colorações ruins : 2940 Colarações boas : 12685 total:15625
+Custo do pai: 2 Com pais: 0 ,4 ,15 ,
+Colorações canonicas ruins :205 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 0 ,9 ,15 ,
+Colorações canonicas ruins :243 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 1 Com pais: 3 ,3 ,4 ,
+Colorações canonicas ruins :669 Colorações ruins : 7328 Colarações boas : 8297 total:15625
+Custo do pai: 1 Com pais: 3 ,3 ,15 ,
+Colorações canonicas ruins :402 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 3 ,4 ,4 ,
+Colorações canonicas ruins :392 Colorações ruins : 5744 Colarações boas : 9881 total:15625
+Custo do pai: 1 Com pais: 3 ,4 ,9 ,
+Colorações canonicas ruins :689 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 3 ,4 ,15 ,
+Colorações canonicas ruins :700 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 1 Com pais: 3 ,9 ,15 ,
+Colorações canonicas ruins :741 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 1 Com pais: 3 ,15 ,15 ,
+Colorações canonicas ruins :202 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 4 ,9 ,15 ,
+Colorações canonicas ruins :551 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 9 ,9 ,15 ,
+Colorações canonicas ruins :269 Colorações ruins : 5744 Colarações boas : 9881 total:15625
+Custo do pai: 1 Com pais: 9 ,15 ,15 ,
+Colorações canonicas ruins :215 Colorações ruins : 7328 Colarações boas : 8297 total:15625
+Custo do pai: 1 Com pais: 3 ,3 ,8 ,
+Colorações canonicas ruins :286 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 3 ,8 ,10 ,
+Colorações canonicas ruins :575 Colorações ruins : 6804 Colarações boas : 8821 total:15625
+Custo do pai: 1 Com pais: 3 ,10 ,12 ,
+Colorações canonicas ruins :426 Colorações ruins : 3440 Colarações boas : 12185 total:15625
+Custo do pai: 1 Com pais: 3 ,10 ,15 ,
+Colorações canonicas ruins :467 Colorações ruins : 6804 Colarações boas : 8821 total:15625
+Custo do pai: 1 Com pais: 3 ,8 ,8 ,
+Colorações canonicas ruins :174 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 3 ,8 ,12 ,
+Colorações canonicas ruins :486 Colorações ruins : 6025 Colarações boas : 9600 total:15625
+Custo do pai: 1 Com pais: 3 ,8 ,15 ,
+Colorações canonicas ruins :293 Colorações ruins : 6804 Colarações boas : 8821 total:15625
+Custo do pai: 1 Com pais: 3 ,12 ,15 ,
+Colorações canonicas ruins :322 Colorações ruins : 6025 Colarações boas : 9600 total:15625
+Custo do pai: 1 Com pais: 10 ,10 ,15 ,
+Colorações canonicas ruins :201 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 8 ,10 ,12 ,
+Colorações canonicas ruins :396 Colorações ruins : 6025 Colarações boas : 9600 total:15625
+Custo do pai: 1 Com pais: 8 ,10 ,15 ,
+Colorações canonicas ruins :258 Colorações ruins : 6804 Colarações boas : 8821 total:15625
+Custo do pai: 1 Com pais: 10 ,12 ,15 ,
+Colorações canonicas ruins :300 Colorações ruins : 6025 Colarações boas : 9600 total:15625
+Custo do pai: 1 Com pais: 10 ,15 ,15 ,
+Colorações canonicas ruins :72 Colorações ruins : 6228 Colarações boas : 9397 total:15625
+Custo do pai: 1 Com pais: 8 ,12 ,15 ,
+Colorações canonicas ruins :124 Colorações ruins : 3440 Colarações boas : 12185 total:15625
+Custo do pai: 1 Com pais: 3 ,4 ,8 ,
+Colorações canonicas ruins :496 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 2 Com pais: 3 ,4 ,7 ,
+Colorações canonicas ruins :360 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 1 Com pais: 3 ,4 ,13 ,
+Colorações canonicas ruins :462 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 2 Com pais: 3 ,7 ,8 ,
+Colorações canonicas ruins :247 Colorações ruins : 2300 Colarações boas : 13325 total:15625
+Custo do pai: 1 Com pais: 3 ,8 ,13 ,
+Colorações canonicas ruins :356 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 2 Com pais: 3 ,7 ,13 ,
+Colorações canonicas ruins :214 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 4 ,7 ,8 ,
+Colorações canonicas ruins :218 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 1 Com pais: 4 ,8 ,13 ,
+Colorações canonicas ruins :322 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 2 Com pais: 4 ,7 ,13 ,
+Colorações canonicas ruins :262 Colorações ruins : 2940 Colarações boas : 12685 total:15625
+Custo do pai: 2 Com pais: 7 ,8 ,13 ,
+Colorações canonicas ruins :190 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 2 Com pais: 5 ,6 ,9 ,
+Colorações canonicas ruins :394 Colorações ruins : 2940 Colarações boas : 12685 total:15625
+Custo do pai: 2 Com pais: 5 ,6 ,10 ,
+Colorações canonicas ruins :308 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 2 Com pais: 5 ,6 ,15 ,
+Colorações canonicas ruins :214 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 5 ,9 ,10 ,
+Colorações canonicas ruins :210 Colorações ruins : 2356 Colarações boas : 13269 total:15625
+Custo do pai: 2 Com pais: 5 ,9 ,15 ,
+Colorações canonicas ruins :228 Colorações ruins : 3182 Colarações boas : 12443 total:15625
+Custo do pai: 2 Com pais: 5 ,10 ,15 ,
+Colorações canonicas ruins :137 Colorações ruins : 2300 Colarações boas : 13325 total:15625
+Custo do pai: 1 Com pais: 6 ,9 ,10 ,
+Colorações canonicas ruins :522 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 6 ,9 ,15 ,
+Colorações canonicas ruins :452 Colorações ruins : 5608 Colarações boas : 10017 total:15625
+Custo do pai: 1 Com pais: 6 ,10 ,15 ,
+Colorações canonicas ruins :362 Colorações ruins : 7009 Colarações boas : 8616 total:15625
+Custo do pai: 1 Com pais: 9 ,10 ,15 ,
+Colorações canonicas ruins :292 Colorações ruins : 7009 Colarações boas : 8616 total:15625
