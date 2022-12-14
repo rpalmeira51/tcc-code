@@ -562,7 +562,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             totalbcCounter += bcCounter;
             totalcbcCounter+= cbcCounter;
         }
-        //cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << " Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
+        cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << " Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
         badColorings = newbadColorings; // use pointer
         children = growTree(children, index);
         level++;
