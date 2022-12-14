@@ -554,7 +554,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                     }
                 }
             }
-            cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
+            //cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
             cout <<"Colorações canonicas ruins :" << cbcCounter << " Colorações ruins : "<< bcCounter <<" Colarações boas : "<< gcCounter <<  " total:"<< gcCounter + bcCounter <<endl;
             testindex++;
             colorIndex++;
