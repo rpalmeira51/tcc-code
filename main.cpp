@@ -148,6 +148,8 @@ vector<char> PossibleChoicesCommonNeighbours(unsigned v, unsigned u)
     return adjMatrix[v][u];
 }
 
+
+
 bool GetNextPermutation(vector<char> &vet, vector<char> &nc)
 {
     for (int i = vet.size() - 1; i >= 0; i--)
@@ -376,14 +378,14 @@ unsigned betterColoring(unsigned cost, map<unsigned, char> &leafColors, vector<N
         // Coloração canonica
         auto cv = ColoringValues(pc);
         CanonicalOrdering(cv);
-        if(coloringTable.find(cv) != coloringTable.end()){
-            //cout<< "Cached    !!!!"<< endl;
-            auto cached = coloringTable[cv];
-            minCost = min(minCost,cached.second);
-        }else{
+        // if(coloringTable.find(cv) != coloringTable.end()){
+        //     //cout<< "Cached    !!!!"<< endl;
+        //     auto cached = coloringTable[cv];
+        //     minCost = min(minCost,cached.second);
+        // }else{
             auto curCost = betterColoring(nextCost, pc, newLeafs, &newTc);
             minCost = min(minCost,curCost);
-        }
+        //}
         //cout<< ColoringValues(pc)<< endl;
         // if(curCost< minCost){
         //     beestColoring = pc;
@@ -480,6 +482,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     bool isFirst = true;
     while (badColorings.size() > 0 && level < maxTreeLevel)
     {
+        
         vector<vector<char>> newbadColorings; 
         unsigned colorIndex = 0;
         int testindex = 0;
@@ -566,6 +569,10 @@ bool TopDownOnTree(unsigned maxTreeLevel)
         badColorings = newbadColorings; // use pointer
         children = growTree(children, index);
         level++;
+        cout << level << endl;
+        if(level == 3){
+         return level == maxTreeLevel;
+        }
     }
     return level == maxTreeLevel;
 }
