@@ -148,7 +148,41 @@ vector<char> PossibleChoicesCommonNeighbours(unsigned v, unsigned u)
     return adjMatrix[v][u];
 }
 
+pair<int,int> parentPermutationMatrix[15]; 
 
+void InitializeParentPermutationMatrix(){
+    int index =0;
+    for(int i =0; i< 5 ; i++){
+        for(int j = i; j<5; j++){
+            parentPermutationMatrix[index] = make_pair(i,j);
+            index++;
+        }
+    }
+}
+
+
+// permutationIndentifier -> qual permutação de filhos eu to usando
+// escolha de cores atual dos filhos, uma permutação dos pais( -> incrementa) -> traduz para uma escolha de cores filhos 
+// um conjunto de pais -> as adjacencias 
+bool GetNextPermutationTopDown(vector<char> &vet, vector<char> &permutationIndentifier)
+{
+    for (int i = permutationIndentifier.size() - 1; i >= 0; i--)
+    {
+        if (permutationIndentifier[i] < 14)
+        { 
+            permutationIndentifier[i]++;
+            auto pair = parentPermutationMatrix[permutationIndentifier[i]];
+            vet[i*2] = pair.first;
+            vet[i*2+1] = pair.second;
+            return true;
+        }
+        permutationIndentifier[i] = 0;
+        auto pair = parentPermutationMatrix[permutationIndentifier[i]];
+        vet[i*2] = pair.first;
+        vet[i*2+1] = pair.second;
+    }
+    return false;
+}
 
 bool GetNextPermutation(vector<char> &vet, vector<char> &nc)
 {
@@ -164,14 +198,16 @@ bool GetNextPermutation(vector<char> &vet, vector<char> &nc)
     return false;
 }
 
-void IncrecementNextPermutation(vector<char> &vet, vector<char> &nc)
-{
-}
 
+
+
+// Possível coloração -> baseado em uma mapa de adjacencias 
+// Agnostica de TopDown ou BottomUp -> para lógica principal
 class CombinationIterator
 {
 public:
     vector<char> permutation;
+    vector<char> permutationParents;
     vector<char> numberOfChoices;
     unsigned totalPerm = 0;
     unsigned retPerm = 0;
@@ -180,10 +216,12 @@ public:
     unsigned n;
     map<unsigned, vector<char>> &possibleColorsByVertex;
     bool stop = false;
+    // map<unsigned, vector<char>> -> a cada passo map<unsigned, char>
     CombinationIterator(map<unsigned, vector<char>> &possibleColorsByVertexArg) : possibleColorsByVertex(possibleColorsByVertexArg)
     {
         n = possibleColorsByVertex.size();
         permutation.resize(n);
+        permutationParents.resize(n/2);
         for (auto c : possibleColorsByVertex)
         {
             numberOfChoices.push_back(c.second.size());
@@ -222,32 +260,22 @@ public:
         }
         return true;
     }
-
-    map<unsigned, char> GetNext()
+    // Eu tenho um conjunto de pais e eu quero gerar todas as colorações possíveis das folhas
+    // Cada chamada gera uma nova
+    map<unsigned, char> GetNextTopDown()
     {
+        if(permutation.size() ==3 ) return GetNextBottomUp();
         map<unsigned, char> leafColoring;
-        while (!stop)
+        int i = 0;
+        for (auto ps : possibleColorsByVertex)
         {
-            int i = 0;
-            for (auto ps : possibleColorsByVertex)
-            {
-                leafColoring[ps.first] = ps.second[permutation[i]];
-                // //////////cout << "colorindo :" << ps.first  << " com a cor " << ps.second[permutation[i]]<< " e i: " << i << "e permutation[i]: "<<  (unsigned) permutation[i] << endl;
-                i++;
-            }
-            if (!GetNextPermutation(permutation, numberOfChoices))
-            {
-                stop = true;
-            }
-            if (IsGoodLeafColoring(leafColoring))
-            {
-                goodComb++;
-                break;
-            }
-            else
-            {
-                badComb++;
-            }
+            leafColoring[ps.first] = ps.second[permutation[i]];
+            i++;
+        }
+        // cout<< endl;
+        if (!GetNextPermutationTopDown(permutation, permutationParents))
+        {
+            stop = true;
         }
         return leafColoring;
     }
@@ -482,13 +510,13 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     bool isFirst = true;
     while (badColorings.size() > 0 && level < maxTreeLevel)
     {
-        
         vector<vector<char>> newbadColorings; 
         unsigned colorIndex = 0;
         int testindex = 0;
         unsigned totalgcCounter = 0;
         unsigned totalbcCounter = 0;
         unsigned totalcbcCounter =0;
+        unsigned totalcCCounter =0;
         for (auto c : badColorings)
         {
             map<unsigned, vector<char>> possibleColors;
@@ -514,9 +542,10 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             unsigned gcCounter = 0;
             unsigned bcCounter = 0;
             unsigned cbcCounter =0;
+            unsigned cCCounter = 0;
             while (!combinationIterator.stop)
             {
-                auto comb = combinationIterator.GetNextBottomUp();
+                auto comb = combinationIterator.GetNextTopDown();
                 auto combCost = calculateCost(comb);
                 unsigned cost = fatherCost + combCost ;// Prestar atenção no custo
                 //cout<< "Calculating cost, fatherCost:  " << fatherCost << "  combCost  " << combCost << endl; 
@@ -526,15 +555,11 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                 if(coloringTable.find(coloringVector) != coloringTable.end()){
                     auto cached = coloringTable[coloringVector];
                     bool alreadyBadColoring = cached.first == cached.second;
-                    //TODO remove debug
-                    if(cached.first < cached.second){
-                        cout<< "PROBLEMA DOIDO _-------------------------"<< endl;
-                    }
                     if(cost < cached.first ){
                         cached = make_pair(cost, cached.second);
                         coloringTable[coloringVector] = cached;
                         if(cost == cached.second){
-                            cbcCounter++;
+                            //cbcCounter++;
                             newbadColorings.push_back(coloringVector);
                         }
                     }
@@ -546,6 +571,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                 }else {
                     auto result = betterColoring(cost, comb, children, NULL); 
                     //cout << "cost: " << cost << result 
+                    cCCounter++;
                     coloringTable[coloringVector] = make_pair(cost, result);
                     if( cost == result){
                         bcCounter++;
@@ -558,21 +584,23 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                 }
             }
             //cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
-            cout <<"Colorações canonicas ruins :" << cbcCounter << " Colorações ruins : "<< bcCounter <<" Colarações boas : "<< gcCounter <<  " total:"<< gcCounter + bcCounter <<endl;
+            cout <<"Colorações canonicas ruins :" << cbcCounter << "  colorações canonicas" << cCCounter << endl; //" Colorações ruins : "<< bcCounter <<" Colarações boas : "<< gcCounter <<  " total:"<< gcCounter + bcCounter <<endl;
             testindex++;
             colorIndex++;
             totalgcCounter += gcCounter;
             totalbcCounter += bcCounter;
             totalcbcCounter+= cbcCounter;
+            totalcCCounter += cCCounter;
+            if(level == 2){
+                return level == maxTreeLevel;
+            }
         }
-        cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << " Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
+        cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << "  colorações canonicas totais  "<<totalcCCounter << endl; //" Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
         badColorings = newbadColorings; // use pointer
         children = growTree(children, index);
         level++;
         cout << level << endl;
-        if(level == 3){
-         return level == maxTreeLevel;
-        }
+       
     }
     return level == maxTreeLevel;
 }
@@ -674,25 +702,39 @@ class ColoringTree{
 };
 
 
+void DebugPermutation(){
+    vector<char> permutation(6,0); 
+    vector<char> permutationId(3,0); 
+    unsigned counter =0;
+    do {
+        counter++;
+        cout<< "Permutation : ";
+        for(auto i : permutation){
+            cout << (int) i << " ,";
+        }
+        cout<< "with ---> Permutation identifier : ";
+        for(auto i : permutationId){
+            cout << (int) i << " ,";
+        }
+        cout << endl;
+    }
+    while(GetNextPermutationTopDown(permutation,permutationId));
+    cout << "FinalCounter: " << counter << endl;
+}
 
-// int main(){
-//     vector<unsigned> coloring{ 16,12,5,7 ,15,3,1,0, 16,5,7,3};
-//     CanonicalOrdering(coloring);
-//     // for(auto c: coloring){
-//     //     //cout<< c << " ";
-//     // }
-//     //cout<< endl;
-
-// }
-
-
+// Fazer essa otm 
+// Revisão do código e otimizações gerais 
+// Utilizar o banco de dados -> para guardar
 int main()
 {
 
     ////////cout << "TEste " << endl;
     InitializeMatrix();
-    ////////cout << "TEste 2"<< endl;
+    InitializeParentPermutationMatrix();
+    //DebugPermutation();
+    // for(int i =0; i< 15; i++)
+    //     cout << "(" << parentPermutationMatrix[i].first <<"," << parentPermutationMatrix[i].second <<")" << " ";
+    // cout << endl;
     TopDownOnTree(3);
-
     return 0;
 }
