@@ -126,7 +126,6 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     for (auto c : ClebschGraphObj.badVertices)
     {
         vector<char> initialColoring{c};
-        initialColoring = {c};
         badColorings.push_back(initialColoring);
         auto cost = CalculateCost(c);
         coloringTable[initialColoring] = make_pair(cost,cost);
@@ -146,10 +145,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
         for (auto c : badColorings)
         {
             vector<vector<char>> possibleColors;
-            //auto cv =  coloringValues(c);
-            //cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
             CanonicalOrdering(c);
-            //cout<< "cv: " << cv << " fatherCost " << coloringTable[cv].first<< endl;
             auto fatherCost = coloringTable[c].first;
             if(children.size() ==3){
                 for(int i =0; i< children.size(); i++){
