@@ -148,11 +148,12 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             CanonicalOrdering(c);
             auto fatherCost = coloringTable[c].first;
             if(children.size() ==3){
-                for(int i =0; i< children.size(); i++){
-                    auto child = children[i];
-                    auto parentColor = c[0];
-                    possibleColors.push_back(ClebschGraphObj.adjLis[parentColor].adjs);
-                }
+                // for(int i =0; i< children.size(); i++){
+                //     auto child = children[i];
+                //     auto parentColor = c[0];
+                //     possibleColors.push_back(ClebschGraphObj.adjLis[parentColor].adjs);
+                // }
+                possibleColors = {{1},{6}, {10}};
             }else {
                 for(int i =0; i< children.size(); i++){
                     auto child = children[i];
@@ -194,7 +195,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                         gcCounter++;  
                 }else {
                     auto result = BetterColoring(cost, comb); 
-                    //cout << "cost: " << cost << result 
+                    auto leafsCost = CalculateCost(comb);
                     cCCounter++;
                     coloringTable[comb] = make_pair(cost, result);
                     if( cost == result){
@@ -203,6 +204,10 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                         newbadColorings.push_back(comb);
                     }
                     else {
+                        if(result -leafsCost>0){
+                            cout << "good coloring with free cost >0: InitialCost:" << cost -leafsCost << " bestCost: " << result-leafsCost << endl;
+                            cout << comb << endl;
+                        }
                         gcCounter++;
                     }
                 }
@@ -240,6 +245,6 @@ int main()
     for(int i =0; i< 15; i++)
         cout << "(" << parentPermutationMatrix[i].first <<"," << parentPermutationMatrix[i].second <<")" << " ";
     cout << endl;
-    TopDownOnTree(2);
+    TopDownOnTree(3);
     return 0;
 }
