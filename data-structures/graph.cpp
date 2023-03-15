@@ -33,3 +33,16 @@ ClebschGraph:: ClebschGraph(){
     adjLis.push_back(fromInts({4, 6, 8, 11, 15}, 14));
     adjLis.push_back(fromInts({1, 2, 7, 13, 14}, 15));
 }
+
+
+RootedTree:: RootedTree(int n){
+    unsigned index = 0;
+    root = new Node();
+    root->label = 0;
+    for(int i =0; i< n; i++){
+        auto child = new Node();
+        child->label = index++;
+        child->parent = root;
+        children.push_back(child);
+    }
+}

@@ -49,31 +49,31 @@ bool GetNextPermutation(vector<char> &vet, vector<char> &nc)
 
 
 //Construtores dos iteradores
-CombinationIterator::CombinationIterator(map<unsigned, vector<char>> &possibleColorsByVertexArg) : possibleColorsByVertex(possibleColorsByVertexArg) {
-    n = possibleColorsByVertex.size();
+CombinationIterator::CombinationIterator(vector<vector<char>>& possibleColorsByVertexArg) : possibleColors(possibleColorsByVertexArg) {
+    n = possibleColors.size();
 }
 
-CombinationIteratorBottomUp::CombinationIteratorBottomUp(map<unsigned, vector<char>> &possibleColorsByVertexArg): CombinationIterator(possibleColorsByVertexArg) {
+CombinationIteratorBottomUp::CombinationIteratorBottomUp(vector<vector<char>>& possibleColorsByVertexArg): CombinationIterator(possibleColorsByVertexArg) {
     combinationChoices.resize(n);
-    for (auto c : possibleColorsByVertex)
+    for (auto c : possibleColors)
     {
-        numberOfChoices.push_back(c.second.size());
+        numberOfChoices.push_back(c.size());
     }
 }
 
-CombinationIteratorTopDown::CombinationIteratorTopDown(map<unsigned, vector<char>> &possibleColorsByVertexArg): CombinationIterator(possibleColorsByVertexArg){
-    n = possibleColorsByVertex.size();
+CombinationIteratorTopDown::CombinationIteratorTopDown(vector<vector<char>>& possibleColorsByVertexArg) : CombinationIterator(possibleColorsByVertexArg){
+    n = possibleColors.size();
     combinationChoices.resize(n/2);
 }
 
 //A cada chamada, retorna uma possível coloração possível baseado no possibleColorsByVertex
-map<unsigned, char> CombinationIteratorBottomUp::GetNext()
+vector<char> CombinationIteratorBottomUp::GetNext()
 {
-    map<unsigned, char> leafColoring;
+    vector<char> leafColoring;
     int i = 0;
-    for (auto ps : possibleColorsByVertex)
+    for (auto ps : possibleColors)
     {
-        leafColoring[ps.first] = ps.second[combinationChoices[i]];
+        leafColoring.push_back(ps[combinationChoices[i]]);
         i++;
     }
     if (!GetNextPermutation(combinationChoices, numberOfChoices))
@@ -85,15 +85,14 @@ map<unsigned, char> CombinationIteratorBottomUp::GetNext()
 
 //A cada chamada, retorna uma possível coloração possível baseado no possibleColorsByVertex
 // e na parentPermutationMatrix 
-map<unsigned, char> CombinationIteratorTopDown::GetNext()
+vector<char> CombinationIteratorTopDown::GetNext()
 {
-    map<unsigned, char> leafColoring;
+    vector<char> leafColoring;
     int i = 0;
-    for (auto ps : possibleColorsByVertex)
-    {
+    for(auto ps: possibleColors ){
         auto pair = parentPermutationMatrix[combinationChoices[i/2]];
         int index = i%2==0 ? pair.first : pair.second;
-        leafColoring[ps.first] = ps.second[index];
+        leafColoring.push_back(ps[index]);
         i++;
     }
     if (!GetNextPermutationTopDown(combinationChoices))

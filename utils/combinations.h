@@ -12,11 +12,11 @@ class CombinationIterator
 {
 public:
     unsigned n;
-    map<unsigned, vector<char>> &possibleColorsByVertex;
+    vector<vector<char>> &possibleColors;
     vector<char> combinationChoices;
     bool stop = false;
-    CombinationIterator(map<unsigned, vector<char>> &possibleColorsByVertexArg);
-    virtual map<unsigned, char> GetNext() =0;
+    CombinationIterator(vector<vector<char>>&possibleColorsByVertexArg);
+    virtual vector<char> GetNext() =0;
     // ~CombinationIterator();
 };
 
@@ -26,9 +26,9 @@ public:
 class CombinationIteratorTopDown: public CombinationIterator
 {
 public:
-    CombinationIteratorTopDown(map<unsigned, vector<char>> &possibleColorsByVertexArg);
+    CombinationIteratorTopDown(vector<vector<char>>&possibleColorsByVertexArg);
     void InitializeParentPermutationMatrix();
-    map<unsigned, char> GetNext() override;
+    vector<char> GetNext() override;
 };
 
 
@@ -36,8 +36,8 @@ class CombinationIteratorBottomUp: public CombinationIterator
 {
 public:
     vector<char> numberOfChoices;
-    CombinationIteratorBottomUp(map<unsigned, vector<char>> &possibleColorsByVertexArg);
-    map<unsigned, char> GetNext() override;
+    CombinationIteratorBottomUp(vector<vector<char>> &possibleColorsByVertexArg);
+    vector<char> GetNext() override;
 };
 
 void InitializeParentPermutationMatrix();

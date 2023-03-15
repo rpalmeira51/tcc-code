@@ -24,9 +24,8 @@ class RootedTree
 {
 public:
     Node *root;
-    Node *leftChild;
-    Node *rightChild;
-    Node *middleChild;
+    vector<Node *> children;
+    RootedTree(int n);
 };
 
 class Graph
