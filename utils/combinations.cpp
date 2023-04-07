@@ -88,12 +88,10 @@ vector<char> CombinationIteratorBottomUp::GetNext()
 vector<char> CombinationIteratorTopDown::GetNext()
 {
     vector<char> leafColoring;
-    int i = 0;
-    for(auto ps: possibleColors ){
+    for(int i =0; i < possibleColors.size(); i+=2){
         auto pair = parentPermutationMatrix[combinationChoices[i/2]];
-        int index = i%2==0 ? pair.first : pair.second;
-        leafColoring.push_back(ps[index]);
-        i++;
+        leafColoring.push_back(possibleColors[i][pair.first]);
+        leafColoring.push_back(possibleColors[i+1][pair.second]);
     }
     if (!GetNextPermutationTopDown(combinationChoices))
     {
