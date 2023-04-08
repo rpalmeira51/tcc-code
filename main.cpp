@@ -255,9 +255,9 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             totalbcCounter += bcCounter;
             totalcbcCounter+= cbcCounter;
             totalcCCounter += cCCounter;
-            if(level == 2){
-                return level == maxTreeLevel;
-            }
+            // if(level == 2){
+            //     return level == maxTreeLevel;
+            // }
         }
         cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << "  colorações canonicas totais  "<<totalcCCounter << endl; //" Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
         cout << "Bad colorings " << newbadColorings.size() << "  " << endl;
