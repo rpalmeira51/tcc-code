@@ -1,1 +1,3 @@
 *.o
+temp/*
+calculate_for_level*

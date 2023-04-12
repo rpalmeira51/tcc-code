@@ -10,9 +10,11 @@ extern ClebschGraph ClebschGraphObj;
 
 ostream& operator<<(ostream& os, const vector<char>& vec)
 {
-    for(auto e:vec){
-        os << (int)e << " ,";
+    auto temp = vec.size() -1;
+    for(int i =0; i< temp; i++){
+        os << (int)(vec[i]) << " ,";
     }
+    os<< (int) vec[temp];
     return os;
 }
 

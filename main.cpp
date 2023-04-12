@@ -54,7 +54,12 @@ bool HasPossibleParentColors(vector<char> const &levelColors, vector<vector<char
     return true;
 }
 
-unsigned BetterColoring(unsigned cost, vector<char> const &leafColors, bool useCache =true)
+struct CacheInfo{
+    int CacheHit;
+    int CacheMiss;
+};
+
+unsigned BetterColoring(unsigned cost, vector<char> const &leafColors, CacheInfo& cacheInfo ,bool useCache =true)
 {    
     if (leafColors.size() == 3){
         auto v =PossibleChoicesCommonNeighbours(leafColors[0], leafColors[1]);
@@ -70,27 +75,25 @@ unsigned BetterColoring(unsigned cost, vector<char> const &leafColors, bool useC
     vector<vector<char>> possibleColors;
     if(!HasPossibleParentColors(leafColors, possibleColors)) return cost;
     auto levelCost = CalculateCost(leafColors);
-    auto nextCost = cost - levelCost;
     if (levelCost >= cost) return cost;
+
+    auto nextCost = cost - levelCost;
     unsigned minCost = nextCost;
     unsigned curCost;
     auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-    int iters;
+
     while (!combinationIterator.stop){
         auto pc = combinationIterator.GetNext();
         pair<unsigned, unsigned> costs;
         CanonicalOrdering(pc);
-        
         if(useCache && HasCachedValue(pc,costs)){
             curCost = costs.second;
-            minCost = min(minCost,curCost);
-            if(minCost + levelCost < cost){
-                return minCost + levelCost;
-            }
+            cacheInfo.CacheHit++;
         }else {
-            curCost = BetterColoring(nextCost, pc, useCache);
-            minCost = min(minCost,curCost);
+            curCost = BetterColoring(nextCost, pc, cacheInfo,useCache);
+            cacheInfo.CacheMiss++;
         }
+        minCost = min(minCost,curCost);
     }
     return minCost + levelCost;
 }
@@ -194,12 +197,17 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             }
             unsigned gcCounter = 0;
             unsigned bcCounter = 0;
+            unsigned cgcCounter = 0;
             unsigned cbcCounter =0;
             unsigned cCCounter = 0;
             unsigned cacheHit = 0;
             unsigned cacheMiss = 0;
             unsigned index = 0;
             // cout << "Size: " << possibleColors.size() << " Total possibilities" << pow(5,possibleColors.size())<< endl;
+            vector<vector<char>> badCanonicalColeringsToPrint;
+            vector<vector<char>> goodCanonicalColeringsToPrint;
+            CacheInfo cacheInfo;
+            cacheInfo.CacheHit = cacheInfo.CacheMiss = 0;
             while (!combinationIterator->stop)
             {
                 // cout << "Index : "<< ((index++)*100)/pow(5,possibleColors.size()) << "%" << endl;
@@ -214,41 +222,50 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                         cached = make_pair(cost, cached.second);
                         coloringTable[comb] = cached;
                         if(cost == cached.second && !alreadyBadColoring){
-                            //cbcCounter++;
                             newbadColorings.push_back(comb);
-                        }
+                            cbcCounter++;
+                            gcCounter--;
+                        }    
                     }
                     cacheHit++;
-                    if( cost == cached.second){
+                    if(cost == cached.second)
                         bcCounter++;
-                    }    
                     else 
                         gcCounter++;  
                 }else {
                     cacheMiss++;
-                    auto result = BetterColoring(cost, comb); 
+                    auto result = BetterColoring(cost, comb, cacheInfo); 
                     auto leafsCost = CalculateCost(comb);
                     cCCounter++;
                     coloringTable[comb] = make_pair(cost, result);
                     if( cost == result){
                         bcCounter++;
                         cbcCounter++;
+                        badCanonicalColeringsToPrint.push_back(comb);
                         newbadColorings.push_back(comb);
                     }
                     else {
-                        // if(result -leafsCost>0){
-                        //     cout << "good coloring with free cost >0: InitialCost:" << cost -leafsCost << " bestCost: " << result-leafsCost << endl;
-                        //     cout << comb << endl;
-                        // }
+                        goodCanonicalColeringsToPrint.push_back(comb);
                         gcCounter++;
+                        cgcCounter++;
                     }
                 }
                 // if(index == 10000) break;
             }
-            // delete combinationIterator;
-            cout << "CH: " << cacheHit << " CM:" <<cacheMiss<< endl;
+            delete combinationIterator;
+            cout << "TopDown CH: " << cacheHit << " CM:" <<cacheMiss<< endl;
+            cout << "BetterColoring CH: " << cacheInfo.CacheHit << " CM:" <<cacheInfo.CacheMiss<< endl;
             //cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
-            cout <<"Colorações canonicas ruins :" << cbcCounter << "  colorações canonicas" << cCCounter << endl; //" Colorações ruins : "<< bcCounter <<" Colarações boas : "<< gcCounter <<  " total:"<< gcCounter + bcCounter <<endl;
+            cout <<"Colorações canonicas ruins :" << cbcCounter << " colorações canonicas boas " << cgcCounter << "  colorações canonicas " << cCCounter << endl;
+            cout<<"+++++++++++++++++++++++++++++++++"<<endl;
+            cout << "Bad colorings, total: "<< badCanonicalColeringsToPrint.size() <<endl;
+            for(auto c : badCanonicalColeringsToPrint)
+                cout << "[" << c << "]" << endl;
+            cout << "============================="<< endl;
+            cout<< "Good Colorings, total: " << goodCanonicalColeringsToPrint.size() << endl;
+            for(auto c : goodCanonicalColeringsToPrint)
+                cout << "[" << c << "]" << endl;
+            cout<<"+++++++++++++++++++++++++++++++++"<<endl;
             testindex++;
             colorIndex++;
             totalgcCounter += gcCounter;
@@ -259,8 +276,8 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             //     return level == maxTreeLevel;
             // }
         }
-        cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << "  colorações canonicas totais  "<<totalcCCounter << endl; //" Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
-        cout << "Bad colorings " << newbadColorings.size() << "  " << endl;
+        // cout <<"Colorações totais canonicas ruins :" << totalcbcCounter << "  colorações canonicas totais  "<<totalcCCounter << endl; //" Colorações ruins : "<< totalbcCounter <<" Colarações boas : "<< totalgcCounter <<  " total:"<< totalgcCounter + totalbcCounter <<endl;
+        // cout << "Bad colorings " << newbadColorings.size() << "  " << endl;
         badColorings = newbadColorings; // use pointer
         children = GrowTree(children);
         level++;
@@ -280,7 +297,7 @@ int main()
     for(int i =0; i< 15; i++)
         cout << "(" << parentPermutationMatrix[i].first <<"," << parentPermutationMatrix[i].second <<")" << " ";
     cout << endl;
-    TopDownOnTree(3);
+    TopDownOnTree(2);
     return 0;
 }
 

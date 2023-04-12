@@ -1,1 +1,0 @@
-g++ -Wall -g -c "./data-structures/globals.cpp" -o globals.o -pg 

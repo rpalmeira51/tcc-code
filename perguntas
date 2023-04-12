@@ -1,6 +1,9 @@
 -> Fazer perfilagem do código sem consultar tabela do BetterColoring
+    Nemm completou
 -> Ver quantidade colorações canonicas vs CacheHIT
+    Faz sentido = CacheMiss
 -> Fazer CH e CM para BetterColoring
+    
 -> Analisar chamdas do BetterColoring(número, chamar separado)
 -> Imprimir todas as colorações ruins no nível 2 as 43  -> Análise
     Imprimir as boas 
