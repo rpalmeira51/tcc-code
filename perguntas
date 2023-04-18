@@ -3,7 +3,7 @@
 -> Ver quantidade colorações canonicas vs CacheHIT
     Faz sentido = CacheMiss
 -> Fazer CH e CM para BetterColoring
-    
+
 -> Analisar chamdas do BetterColoring(número, chamar separado)
 -> Imprimir todas as colorações ruins no nível 2 as 43  -> Análise
     Imprimir as boas 
@@ -12,3 +12,6 @@
 -> Fazer parelelo
 
 -> Ideia de otimização(todo vértice ruim tem cores de vizinhos diferentes)
+
+-> Vértice 0 não pode ter dois filhos gemeos 
+-> Vertice 0 não pode ter tres vizinhos diferentes

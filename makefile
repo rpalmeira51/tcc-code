@@ -4,14 +4,14 @@
 # Variables to control Makefile operation
  
 CC = g++
-CFLAGS = -Wall -Ofast
+CFLAGS = -Wall -Ofast -pthread
 PROFILING= #-pg
 
 # ****************************************************
 # Targets needed to bring the executable up to date
  
 all: globals.o graph.o canonical_ordering.o combinations.o utils.o
-	g++ main.cpp -o calculate_for_level_opt globals.o graph.o canonical_ordering.o combinations.o utils.o $(PROFILING)
+	g++ ${CFLAGS} main.cpp -o calculate_for_level_opt globals.o graph.o canonical_ordering.o combinations.o utils.o $(PROFILING)
 	
 # The main.o target can be written more simply
 # main.o: main.cpp graph.o canonical_ordering.o combinations.o utils.o
