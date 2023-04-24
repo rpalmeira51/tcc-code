@@ -1,5 +1,6 @@
 #include <vector>
 #include <bits/stdc++.h>
+#include "../data-structures/matrix.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ void swapPartsOfTrees(vector<char>& coloring, unsigned pace_size, int fele_index
 
 
 // Ordena o vetor na ordem canônica lexigograficam
-void CanonicalOrdering(vector<char>& coloring){
+void LexicographicOrdering(vector<char>& coloring){
     auto cor_size = coloring.size();
     if(cor_size ==1 ) return;
     unsigned adjSize = (cor_size/3) *2;
@@ -65,4 +66,32 @@ void CanonicalOrdering(vector<char>& coloring){
     if(isLexisGE(coloring,pace_size, findex)){
         swapPartsOfTrees(coloring,pace_size,findex);
     }
+}
+
+
+bool isLexisG(vector<char> v1, vector<char> v2) {
+    for(int i=0; i< v1.size(); i++){
+        if(v1[i] > v2[i]) return true;
+        if(v1[i] < v2[i]) return false;
+    }
+    return false;
+}
+
+void CanonicalOrdering(vector<char>& coloring){
+    LexicographicOrdering(coloring);
+    vector<char> tempRepresentative = coloring;
+    vector<char> candidate = coloring;
+    for (int i = 0; i < 119; i++)
+    {
+        auto m_index = (i)*16;
+        for (int j = 0; j < 15; j++)
+        {
+            candidate[j] = autoMorphismMatrix[m_index + coloring[j]];
+        }
+        LexicographicOrdering(candidate);
+        if(isLexisG(candidate, tempRepresentative)){
+            tempRepresentative = candidate;
+        }
+    }
+    coloring = tempRepresentative;
 }

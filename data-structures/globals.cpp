@@ -2,7 +2,7 @@
 #include "graph.h"
 #include <map>
 #include <unordered_map>
-
+#include <atomic>
 
 // Matriz de adjacência que guarda os vizinhos em comuns para cada par de vértices
 vector<char> adjMatrix[16][16];

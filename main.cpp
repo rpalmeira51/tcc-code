@@ -9,17 +9,15 @@
 #include <algorithm>
 #include "./data-structures/graph.h"
 #include "./data-structures/globals.h"
-#include "./data-structures/matrix.h"
 #include "./utils/canonical_ordering.h"
 #include "./utils/combinations.h"
 #include "./utils/utils.h"
 #include <thread>
 using namespace std;
 
-bool HasCachedValue(vector<char> comb, pair<unsigned, unsigned> &costs);
-vector<thread> threadpool;
-const auto processor_count = thread::hardware_concurrency() == 0 ? 8: thread::hardware_concurrency() ;
-// Calcula o custo para uma cor
+// const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
+const auto processor_count = 1;
+//   Calcula o custo para uma cor
 unsigned CalculateCost(unsigned vertex)
 {
     if (std::find(ClebschGraphObj.badVertices.begin(), ClebschGraphObj.badVertices.end(), vertex) != ClebschGraphObj.badVertices.end())
@@ -55,54 +53,62 @@ bool HasPossibleParentColors(vector<char> const &levelColors, vector<vector<char
 
 struct CacheInfo
 {
-    int CacheHit;
-    int CacheMiss;
+    atomic<int> CacheHit;
+    atomic<int> CacheMiss;
 };
 
 struct CounterInfo
 {
-    unsigned gcCounter;
-    unsigned bcCounter;
-    unsigned cgcCounter;
-    unsigned cbcCounter;
-    unsigned cCCounter;
-    unsigned cacheHit;
-    unsigned cacheMiss;
-    unsigned index;
+    atomic<unsigned> gcCounter;
+    atomic<unsigned> bcCounter;
+    atomic<unsigned> cgcCounter;
+    atomic<unsigned> cbcCounter;
+    atomic<unsigned> cCCounter;
+    atomic<unsigned> cacheHit;
+    atomic<unsigned> cacheMiss;
+    atomic<unsigned> index;
 };
 mutex tableLocker;
 
-bool HasCanonicalOrderingOnTable(const vector<char> &comb, pair<unsigned, unsigned> &costs)
+bool UnsafeHasCachedValue(const vector<char> &comb, pair<unsigned, unsigned> &costs)
 {
-    tableLocker.lock();
-    if (coloringTable.find(comb) != coloringTable.end())
+    if (coloringTable.find(comb) != coloringTable.end() && coloringTable[comb].first != -1)
     {
         costs = coloringTable[comb];
-        tableLocker.unlock();
         return true;
     }
-    tableLocker.unlock();
     return false;
 }
 
-bool HasCachedValue(vector<char> comb, pair<unsigned, unsigned> &costs)
+bool UnsafeHasDirtyValue(const vector<char> &comb)
 {
-    if (HasCanonicalOrderingOnTable(comb, costs))
+    if (coloringTable.find(comb) != coloringTable.end() && coloringTable[comb].first == -1)
         return true;
-    for (int i = 0; i < 119; i++)
-    {
-        auto m_index = (i)*16;
-        for (int j = 0; j < 15; j++)
-        {
-            comb[j] = autoMorphismMatrix[m_index + comb[j]];
-        }
-        CanonicalOrdering(comb);
-        if (HasCanonicalOrderingOnTable(comb, costs))
-            return true;
-    }
     return false;
 }
 
+// Checa se tem na tabela uma colocação automorfa
+//  vector<char> UnsafeHasCachedValue(vector<char> comb, pair<unsigned, unsigned> &costs, bool& hasValue)
+//  {
+//      if (UnsafeHasCanonicalOrderingOnTable(comb, costs))
+//          return comb;
+//      for (int i = 0; i < 119; i++)
+//      {
+//          auto m_index = (i)*16;
+//          for (int j = 0; j < 15; j++)
+//          {
+//              comb[j] = autoMorphismMatrix[m_index + comb[j]];
+//          }
+//          CanonicalOrdering(comb);
+//          if(UnsafeHasCanonicalOrderingOnTable(comb, costs)){
+//              hasValue= true;
+//              return comb;
+//          }
+//      }
+//      return comb;
+//  }
+
+// Todo remove useCache
 unsigned BetterColoring(unsigned cost, vector<char> const &leafColors, CacheInfo &cacheInfo, bool useCache = true)
 {
     if (leafColors.size() == 3)
@@ -134,13 +140,16 @@ unsigned BetterColoring(unsigned cost, vector<char> const &leafColors, CacheInfo
         auto pc = combinationIterator.GetNext();
         pair<unsigned, unsigned> costs;
         CanonicalOrdering(pc);
-        if (useCache && HasCachedValue(pc, costs))
+        tableLocker.lock();
+        if (UnsafeHasCachedValue(pc, costs))
         {
+            tableLocker.unlock();
             curCost = costs.second;
             cacheInfo.CacheHit++;
         }
         else
         {
+            tableLocker.unlock();
             curCost = BetterColoring(nextCost, pc, cacheInfo, useCache);
             cacheInfo.CacheMiss++;
         }
@@ -170,71 +179,94 @@ vector<Node *> GrowTree(vector<Node *> children)
 }
 
 mutex badColoringsLocker;
-mutex cacheLocker;
 
-
-void TryImproveBadColoring(vector<char> &comb,
-                           unsigned fatherCost, vector<vector<char>> &newbadColorings, 
-                           CacheInfo &cacheInfo, CounterInfo& ci)
+void UnsafeUpdateTable(vector<char> &comb, unsigned cost, pair<unsigned, unsigned> cached,
+                       vector<vector<char>> &newbadColorings,
+                       CacheInfo &cacheInfo, CounterInfo &ci)
 {
+    if (cost < cached.first)
+    {
+        cached = make_pair(cost, cached.second);
+        coloringTable[comb] = cached;
+        if (cost == cached.second)
+        {
+            badColoringsLocker.lock();
+            newbadColorings.push_back(comb);
+            badColoringsLocker.unlock();
+            ci.cbcCounter++;
+            ci.gcCounter--;
+        }
+    }
+    ci.cacheHit++;
+    if (cost == cached.second)
+        ci.bcCounter++;
+    else
+        ci.gcCounter++;
+}
 
+mutex mtx;
+condition_variable cv;
+
+
+void TryImproveBadColoring(vector<char> comb,
+                           unsigned fatherCost, vector<vector<char>> &newbadColorings,
+                           CacheInfo &cacheInfo, CounterInfo &ci)
+{
     auto combCost = CalculateCost(comb);
     unsigned cost = fatherCost + combCost; // Prestar atenção no custo
     pair<unsigned, unsigned> cached;
     CanonicalOrdering(comb);
-    if (HasCachedValue(comb, cached))
+    tableLocker.lock();
+    if (UnsafeHasCachedValue(comb, cached))
     {
-        bool alreadyBadColoring = cached.first == cached.second;
-        if (cost < cached.first)
-        {
-            cached = make_pair(cost, cached.second);
-            tableLocker.lock();
-            coloringTable[comb] = cached;
-            tableLocker.unlock();
-            cacheLocker.lock();
-            if (cost == cached.second && !alreadyBadColoring)
-            {
-                badColoringsLocker.lock();
-                newbadColorings.push_back(comb);
-                badColoringsLocker.unlock();
-                ci.cbcCounter++;
-                ci.gcCounter--;
-            }
-            cacheLocker.unlock();
-        }
-        cacheLocker.lock();
-        ci.cacheHit++;
-        if (cost == cached.second)
-            ci.bcCounter++;
-        else
-            ci.gcCounter++;
-        cacheLocker.unlock();
+        UnsafeUpdateTable(comb, cost, cached, newbadColorings, cacheInfo, ci);
+        tableLocker.unlock();
     }
     else
     {
-        auto result = BetterColoring(cost, comb, cacheInfo);
+        unsigned result;
+        if(!UnsafeHasDirtyValue(comb)){
+            cached = make_pair(-1, cached.second);
+            coloringTable[comb] = cached;
+            tableLocker.unlock();
+            result = BetterColoring(cost, comb, cacheInfo);
+            unique_lock<mutex> lock(mtx);
+            cv.notify_all();
+            lock.unlock();
+        }else {
+            tableLocker.unlock();
+            unique_lock<mutex> lock(mtx);
+            while(UnsafeHasDirtyValue(comb))
+                cv.wait(lock);
+            lock.unlock();
+        }
         tableLocker.lock();
-        coloringTable[comb] = make_pair(cost, result);
-        tableLocker.unlock();
-        cacheLocker.lock();
-        ci.cacheMiss++;
-        ci.cCCounter++;
-        if (cost == result)
+        if (UnsafeHasCachedValue(comb, cached))
         {
-            ci.bcCounter++;
-            ci.cbcCounter++;
-            // badCanonicalColeringsToPrint.push_back(comb);
-            badColoringsLocker.lock();
-            newbadColorings.push_back(comb);
-            badColoringsLocker.unlock();
+            UnsafeUpdateTable(comb, cost, cached, newbadColorings, cacheInfo, ci);
         }
         else
         {
-            // goodCanonicalColeringsToPrint.push_back(comb);
-            ci.gcCounter++;
-            ci.cgcCounter++;
+            coloringTable[comb] = make_pair(cost, result);
+            ci.cacheMiss++;
+            ci.cCCounter++;
+            if (cost == result)
+            {
+                ci.bcCounter++;
+                ci.cbcCounter++;
+                // badCanonicalColeringsToPrint.push_back(comb);
+                badColoringsLocker.lock();
+                newbadColorings.push_back(comb);
+                badColoringsLocker.unlock();
+            }
+            else
+            {
+                // goodCanonicalColeringsToPrint.push_back(comb);
+                ci.gcCounter++;
+                ci.cgcCounter++;
+            }
         }
-        cacheLocker.unlock();
+        tableLocker.unlock();
     }
 }
 
@@ -248,7 +280,7 @@ bool TopDownOnTree(unsigned maxTreeLevel)
         vector<char> initialColoring{c};
         badColorings.push_back(initialColoring);
         auto cost = CalculateCost(c);
-        //Desnecessário
+        // Desnecessário
         tableLocker.lock();
         coloringTable[initialColoring] = make_pair(cost, cost);
         tableLocker.unlock();
@@ -291,12 +323,6 @@ bool TopDownOnTree(unsigned maxTreeLevel)
                 }
             }
             CombinationIterator *combinationIterator;
-            if (level == 2)
-            {
-                cout << "pc size: " << possibleColors.size() << endl;
-                for (auto v : possibleColors)
-                    cout << v << endl;
-            }
             if (possibleColors.size() == 3)
             {
                 combinationIterator = new CombinationIteratorBottomUp(possibleColors);
@@ -305,43 +331,60 @@ bool TopDownOnTree(unsigned maxTreeLevel)
             {
                 combinationIterator = new CombinationIteratorTopDown(possibleColors);
             }
-            unsigned index = 0;
             // cout << "Size: " << possibleColors.size() << " Total possibilities" << pow(5,possibleColors.size())<< endl;
             vector<vector<char>> badCanonicalColeringsToPrint;
             vector<vector<char>> goodCanonicalColeringsToPrint;
             CacheInfo cacheInfo;
-            CounterInfo counterInfo{0,0,0,0,0,0,0,0};
             cacheInfo.CacheHit = cacheInfo.CacheMiss = 0;
-            int thIndex = 1;
+            CounterInfo counterInfo;
+            counterInfo.gcCounter = 0;
+            counterInfo.bcCounter = 0;
+            counterInfo.cgcCounter = 0;
+            counterInfo.cbcCounter = 0;
+            counterInfo.cCCounter = 0;
+            counterInfo.cacheHit = 0;
+            counterInfo.cacheMiss = 0;
+            int thIndex = 0;
             vector<thread> threads;
-            while (!combinationIterator->stop)
+            unsigned index = 0;
+            while (true)
             {
-                auto comb = combinationIterator->GetNext();
-                cout << "ALOHA" << endl;
-                if(thIndex < processor_count){
-                    threads.push_back(thread(TryImproveBadColoring,ref(comb),fatherCost,ref(newbadColorings),ref(cacheInfo), ref(counterInfo)));
+                // cout<< index++ << endl;
+                if (thIndex < processor_count)
+                {
+                    auto comb = combinationIterator->GetNext();
+                    threads.push_back(thread(TryImproveBadColoring, comb, fatherCost, ref(newbadColorings), ref(cacheInfo), ref(counterInfo)));
                     thIndex++;
-                }else {
-                    for(auto &th: threadpool)
+                }
+                else
+                {
+                    thIndex = 0;
+                    for (auto &th : threads)
                         th.join();
                     threads.clear();
                 }
-                cout << "FLAAAG" << endl;
+                if (combinationIterator->stop)
+                {
+                    for (auto &th : threads)
+                        th.join();
+                    threads.clear();
+                    break;
+                }
             }
             delete combinationIterator;
             cout << "TopDown CH: " << counterInfo.cacheHit << " CM:" << counterInfo.cacheMiss << endl;
             cout << "BetterColoring CH: " << cacheInfo.CacheHit << " CM:" << cacheInfo.CacheMiss << endl;
             // cout<< "Custo do pai: "<< fatherCost <<" Com pais: " << c << endl;
             cout << "Colorações canonicas ruins :" << counterInfo.cbcCounter << " colorações canonicas boas " << counterInfo.cgcCounter << "  colorações canonicas " << counterInfo.cCCounter << endl;
-            cout << "+++++++++++++++++++++++++++++++++" << endl;
-            cout << "Bad colorings, total: " << badCanonicalColeringsToPrint.size() << endl;
-            for (auto c : badCanonicalColeringsToPrint)
-                cout << "[" << c << "]" << endl;
-            cout << "=============================" << endl;
-            cout << "Good Colorings, total: " << goodCanonicalColeringsToPrint.size() << endl;
-            for (auto c : goodCanonicalColeringsToPrint)
-                cout << "[" << c << "]" << endl;
-            cout << "+++++++++++++++++++++++++++++++++" << endl;
+            // cout << "+++++++++++++++++++++++++++++++++" << endl;
+            // cout << "Bad colorings, total: " << badCanonicalColeringsToPrint.size() << endl;
+            // for (auto c : badCanonicalColeringsToPrint)
+            //     cout << "[" << c << "]" << endl;
+            // cout << "=============================" << endl;
+            // cout << "Good Colorings, total: " << goodCanonicalColeringsToPrint.size() << endl;
+            // for (auto c : goodCanonicalColeringsToPrint)
+            //     cout << "[" << c << "]" << endl;
+            // cout << "+++++++++++++++++++++++++++++++++" << endl;
             testindex++;
             colorIndex++;
             totalgcCounter += counterInfo.gcCounter;
@@ -362,8 +405,6 @@ bool TopDownOnTree(unsigned maxTreeLevel)
     return level == maxTreeLevel;
 }
 
-
-
 // Fazer essa otm
 // Revisão do código e otimizações gerais
 // Utilizar o banco de dados -> para guardar
@@ -371,10 +412,10 @@ int main()
 {
     InitializeMatrix();
     InitializeParentPermutationMatrix();
-    for(int i =0; i< 15; i++)
-        cout << "(" << parentPermutationMatrix[i].first <<"," << parentPermutationMatrix[i].second <<")" << " ";
+    for (int i = 0; i < 15; i++)
+        cout << "(" << parentPermutationMatrix[i].first << "," << parentPermutationMatrix[i].second << ")"
+             << " ";
     cout << endl;
     TopDownOnTree(2);
     return 0;
 }
-

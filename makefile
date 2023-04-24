@@ -4,8 +4,8 @@
 # Variables to control Makefile operation
  
 CC = g++
-CFLAGS = -Wall -Ofast -pthread
-PROFILING= #-pg
+CFLAGS = -pthread -g
+PROFILING= -pg
 
 # ****************************************************
 # Targets needed to bring the executable up to date
