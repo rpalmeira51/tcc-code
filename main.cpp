@@ -15,8 +15,9 @@
 #include <thread>
 using namespace std;
 
-// const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
-const auto processor_count = 1;
+//const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
+const auto processor_count = 4;
+
 //   Calcula o custo para uma cor
 unsigned CalculateCost(unsigned vertex)
 {
@@ -225,12 +226,14 @@ void TryImproveBadColoring(vector<char> comb,
     else
     {
         unsigned result;
+        //Condições de corrida
         if(!UnsafeHasDirtyValue(comb)){
             cached = make_pair(-1, cached.second);
             coloringTable[comb] = cached;
             tableLocker.unlock();
             result = BetterColoring(cost, comb, cacheInfo);
             unique_lock<mutex> lock(mtx);
+            tableLocker.lock();
             cv.notify_all();
             lock.unlock();
         }else {
@@ -239,8 +242,8 @@ void TryImproveBadColoring(vector<char> comb,
             while(UnsafeHasDirtyValue(comb))
                 cv.wait(lock);
             lock.unlock();
+            tableLocker.lock();
         }
-        tableLocker.lock();
         if (UnsafeHasCachedValue(comb, cached))
         {
             UnsafeUpdateTable(comb, cost, cached, newbadColorings, cacheInfo, ci);
