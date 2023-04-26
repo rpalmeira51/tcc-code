@@ -84,7 +84,7 @@ void CanonicalOrdering(vector<char>& coloring){
     for (int i = 0; i < 119; i++)
     {
         auto m_index = (i)*16;
-        for (int j = 0; j < 15; j++)
+        for (int j = 0; j < 16; j++)
         {
             candidate[j] = autoMorphismMatrix[m_index + coloring[j]];
         }
