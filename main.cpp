@@ -410,11 +410,11 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             unsigned number_of_combinations = pow(15,c.size());
             while (true)
             {
-                if(level==3 ){
-                    cout << index << endl;
-                }
                 if (thIndex < processor_count)
                 {
+                    if(level==3 ){
+                        cout << index << endl;
+                    }
                     auto comb = combinationIterator->GetNext();
                     threads.push_back(thread(TryImproveBadColoring, comb, ref(c), fatherCost, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf)));
                     thIndex++;
