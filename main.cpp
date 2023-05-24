@@ -410,8 +410,8 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             unsigned number_of_combinations = pow(15,c.size());
             while (true)
             {
-                if(index % 10000 ==0 ){
-                    cout << "\t Parcial colorações canonicas ruins :" << counterInfo.cbcCounter << " colorações canonicas boas " << counterInfo.cgcCounter << "  colorações canonicas " << counterInfo.cCCounter << endl;
+                if(level==3 ){
+                    cout << index << endl;
                 }
                 if (thIndex < processor_count)
                 {
