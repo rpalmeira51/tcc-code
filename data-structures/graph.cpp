@@ -15,6 +15,7 @@ Vertice fromInts(vector<int> vertices, int index)
 }
 
 
+
 ClebschGraph:: ClebschGraph(){
     adjLis.push_back(fromInts({1, 10, 6, 8, 13}, 0));
     adjLis.push_back(fromInts({0, 3, 4, 9, 15}, 1));
@@ -32,6 +33,18 @@ ClebschGraph:: ClebschGraph(){
     adjLis.push_back(fromInts({0, 5, 11, 12, 15}, 13));
     adjLis.push_back(fromInts({4, 6, 8, 11, 15}, 14));
     adjLis.push_back(fromInts({1, 2, 7, 13, 14}, 15));
+}
+
+unsigned ClebschGraph::EdgeCost(unsigned u, unsigned v){
+    if(u == 0 && v==1 || u==1 && v ==0 ) return 1;
+    return 0; 
+}
+
+bool ClebschGraph::AreAdjacent(unsigned u, unsigned v){
+    for(auto vertex: adjLis[u].adjs){
+        if(vertex == v) return true;
+    }
+    return false; 
 }
 
 

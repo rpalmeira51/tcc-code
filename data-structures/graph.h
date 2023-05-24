@@ -38,7 +38,11 @@ class ClebschGraph : public Graph
 {
 public:
     vector<char> badVertices = {0};
+    char badVertice = 0;
+    vector<char> badEdge = {0,1};  
     ClebschGraph();
+    unsigned EdgeCost(unsigned u, unsigned v);
+    bool AreAdjacent(unsigned u, unsigned v);
 };
 
 #endif
