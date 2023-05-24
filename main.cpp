@@ -16,8 +16,8 @@
 
 using namespace std;
 
-// const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
-const auto processor_count = 1;
+const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
+//const auto processor_count = 1;
 
 //   Calcula o custo para uma cor
 unsigned CalculateCostVertex(unsigned vertex)
@@ -187,6 +187,7 @@ unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leaf
         auto pc = combinationIterator.GetNext();
         auto levelCost = CalculateCostEdges(pc, leafColors);
         auto nextCost = cost - levelCost;
+        if(nextCost<=0) continue;
         pair<unsigned, unsigned> costs;
         CanonicalOrdering(pc);
         ////COUT << pc << endl;
