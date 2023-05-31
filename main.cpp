@@ -16,8 +16,8 @@
 
 using namespace std;
 
-const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
-//const auto processor_count = 1;
+// const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
+const auto processor_count = 1;
 
 //   Calcula o custo para uma cor
 unsigned CalculateCostVertex(unsigned vertex)
@@ -185,7 +185,7 @@ unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leaf
     {
         auto pc = combinationIterator.GetNext();
         auto levelCost = CalculateCostEdges(pc, leafColors);
-        auto nextCost = cost - levelCost;
+        int nextCost = cost - levelCost;
         if (nextCost <= 0)
             continue;
         pair<unsigned, unsigned> costs;
@@ -301,7 +301,8 @@ void NewTryImproveBadColoring(vector<char> comb, unsigned cost,
     tableLocker.lock();
     auto cached = coloringTable[comb];
     coloringTable[comb] = make_pair(cost, result);
-    if (result < cost){
+    if (result < cost)
+    {
         ci.cgcCounter++;
     }
     else
@@ -399,10 +400,6 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
         unsigned totalcbcCounter = 0;
         unsigned totalcCCounter = 0;
 #pragma endregion
-        // for (auto c : badColorings)
-        // {
-        //     cout << c << endl;
-        // }
         for (auto c : badColorings)
         {
             vector<vector<char>> possibleColors;
@@ -442,14 +439,17 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
                 auto cost = fatherCost + leafCost;
                 sf.CanonicalOrdering(comb);
                 pair<unsigned, unsigned> cached;
-                if (UnsafeHasCachedValue(comb, cached) && cost < cached.first)
+                if (UnsafeHasCachedValue(comb, cached))
                 {
-                    cached = make_pair(cost, cost);
-                    coloringTable[comb] = cached;
+                    if (cost < cached.first)
+                    {
+                        cached = make_pair(cost, -1);
+                        coloringTable[comb] = cached;
+                    }
                 }
                 else
                 {
-                    cached = make_pair(cost, cost);
+                    cached = make_pair(cost, -1);
                     coloringTable[comb] = cached;
                 }
             }
@@ -458,12 +458,13 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             for (auto pair : coloringTable)
             {
                 auto k = pair.first;
-                if (k.size() != targetSize){
+                auto v = pair.second;
+                if (k.size() != targetSize || v.second != -1)
+                {
                     continue;
                 }
                 counterInfo.cCCounter++;
-                auto v = pair.second;
-                //NewTryImproveBadColoring(k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf));
+                // NewTryImproveBadColoring(k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf));
                 if (thIndex < processor_count)
                 {
                     threads.push_back(thread(NewTryImproveBadColoring, k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf)));
@@ -487,7 +488,8 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             }
             // COUT << endl;
             delete combinationIterator;
-            //cout << "TopDown CH: " << counterInfo.cacheHit << " CM:" << counterInfo.cacheMiss << endl;
+
+            // cout << "TopDown CH: " << counterInfo.cacheHit << " CM:" << counterInfo.cacheMiss << endl;
             cout << "BetterColoring CH: " << cacheInfo.CacheHit << " CM:" << cacheInfo.CacheMiss << endl;
             cout << "Colorações canonicas ruins :" << counterInfo.cbcCounter << " colorações canonicas boas " << counterInfo.cgcCounter << "  colorações canonicas " << counterInfo.cCCounter << endl;
             // for(auto c: newbadColorings){
@@ -536,8 +538,8 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
     {
         auto comb = combinationIterator->GetNext();
         CanonicalOrderingVertices(comb);
-        auto totalCost = CalculateCostVertex(comb)+ cost;
-        cout<< totalCost<< endl;
+        auto totalCost = CalculateCostVertex(comb) + cost;
+        cout << totalCost << endl;
         coloringTable[comb] = make_pair(totalCost, totalCost);
     }
     for (auto pair : coloringTable)
@@ -559,7 +561,7 @@ int main()
 {
     InitializeMatrix();
     InitializeParentPermutationMatrix();
-    //TopDownOnTreeVertex(2);
+    // TopDownOnTreeVertex(2);
     TopDownOnTreeEdge(3);
     return 0;
 }
