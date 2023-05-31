@@ -567,6 +567,6 @@ int main()
     InitializeMatrix();
     InitializeParentPermutationMatrix();
     // TopDownOnTreeVertex(2);
-    TopDownOnTreeEdge(3);
+    TopDownOnTreeEdge(4);
     return 0;
 }
