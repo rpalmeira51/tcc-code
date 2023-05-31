@@ -443,6 +443,11 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
                 {
                     if (cost < cached.first)
                     {
+                        if (cached.second != -1 && cached.first > cached.second)
+                        {
+                            counterInfo.cgcCounter--;
+                            //counterInfo.cbcCounter++;
+                        }
                         cached = make_pair(cost, -1);
                         coloringTable[comb] = cached;
                     }
