@@ -131,6 +131,13 @@ bool isLexisG(vector<char> v1, vector<char> v2)
     return false;
 }
 
+
+//0
+// 1 2
+
+//0 
+// 2 1 
+
 void GenericCanonicalOrdering(vector<char> &coloring, char *matrix, int numberAutomorphisms, SpecifLexicographicOrdering& slo)
 {
     slo.LexicographicOrdering(coloring);
