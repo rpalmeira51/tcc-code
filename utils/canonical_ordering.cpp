@@ -15,15 +15,14 @@ bool isLexisGE(vector<char> &coloring, unsigned pace_size, int fele_index)
     while (pace_size > index)
     {
         auto temp = fele_index + index;
-        if (coloring[temp] < coloring[temp + pace_size])
+        auto fe = coloring[temp];
+        auto se = coloring[temp + pace_size];
+        if (fe == se)
         {
-            return false;
+            index++;
+            continue;
         }
-        else if (coloring[temp] > coloring[temp + pace_size])
-        {
-            return true;
-        }
-        index++;
+        return fe > se;
     }
     return false;
 }
@@ -118,7 +117,6 @@ public:
     }
 };
 
-
 bool isLexisG(vector<char> v1, vector<char> v2)
 {
     for (int i = 0; i < v1.size(); i++)
@@ -131,14 +129,13 @@ bool isLexisG(vector<char> v1, vector<char> v2)
     return false;
 }
 
+// 0
+//  1 2
 
-//0
-// 1 2
+// 0
+//  2 1
 
-//0 
-// 2 1 
-
-void GenericCanonicalOrdering(vector<char> &coloring, char *matrix, int numberAutomorphisms, SpecifLexicographicOrdering& slo)
+void GenericCanonicalOrdering(vector<char> &coloring, char *matrix, int numberAutomorphisms, SpecifLexicographicOrdering &slo)
 {
     slo.LexicographicOrdering(coloring);
     vector<char> tempRepresentative = coloring;
@@ -163,7 +160,8 @@ void GenericCanonicalOrdering(vector<char> &coloring, char *matrix, int numberAu
     coloring = tempRepresentative;
 }
 
-void TestLex(vector<char> &coloring){
+void TestLex(vector<char> &coloring)
+{
     EdgesLexicographicOrdering sf;
     sf.LexicographicOrdering(coloring);
 }

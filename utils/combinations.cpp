@@ -11,6 +11,8 @@ void InitializeParentPermutationMatrix(){
     for(int i =0; i< 5 ; i++){
         for(int j = i; j<5; j++){
             parentPermutationMatrix[index] = make_pair(i,j);
+            cout << "("<< i <<"," <<j << ")"<< endl;
+            cout << index<< endl;
             index++;
         }
     }

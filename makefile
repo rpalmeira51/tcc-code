@@ -5,32 +5,32 @@
  
 CC = g++
 CFLAGS = -pthread -O3
-PROFILING=
+PROFILING= #-pg
 
 # ****************************************************
 # Targets needed to bring the executable up to date
  
 all: globals.o graph.o canonical_ordering.o combinations.o utils.o
-	g++ ${CFLAGS} main.cpp -o calculate_for_level_opt globals.o graph.o canonical_ordering.o combinations.o utils.o $(PROFILING)
+	g++ ${CFLAGS} $(PROFILING) main.cpp -o calculate_for_level_opt globals.o graph.o canonical_ordering.o combinations.o utils.o
 	
 # The main.o target can be written more simply
 # main.o: main.cpp graph.o canonical_ordering.o combinations.o utils.o
 # 	g++ $(CFLAGS) -c main.cpp
  
 globals.o: graph.o
-	g++ $(CFLAGS) -c "./data-structures/globals.cpp" -o globals.o $(PROFILING)
+	g++ $(CFLAGS) $(PROFILING) -c "./data-structures/globals.cpp" -o globals.o
 
 clean: 
 	rm *.o
 
 graph.o: 
-	g++ $(CFLAGS) -c "./data-structures/graph.cpp" -o graph.o $(PROFILING)
+	g++ $(CFLAGS) $(PROFILING) -c "./data-structures/graph.cpp" -o graph.o 
 
 canonical_ordering.o:
-	g++ $(CFLAGS) -c "./utils/canonical_ordering.cpp" -o canonical_ordering.o $(PROFILING)
+	g++ $(CFLAGS) $(PROFILING) -c "./utils/canonical_ordering.cpp" -o canonical_ordering.o 
 
 combinations.o: 
-	g++ $(CFLAGS) -c "./utils/combinations.cpp" -o combinations.o $(PROFILING)
+	g++ $(CFLAGS) $(PROFILING) -c "./utils/combinations.cpp" -o combinations.o 
 
 utils.o: graph.o globals.o
-	g++ $(CFLAGS) -c "./utils/utils.cpp" -o utils.o globals.o $(PROFILING)
+	g++ $(CFLAGS) $(PROFILING) -c "./utils/utils.cpp" -o utils.o globals.o 

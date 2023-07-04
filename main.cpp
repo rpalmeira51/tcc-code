@@ -16,6 +16,14 @@
 
 using namespace std;
 
+// Decições
+// Custo infeliz(na raiz) = 100
+// Custo vértice 0 = 1
+// Custo de outro = 0
+// Trocar custo de unsigned para char /4 a memória utilizada
+
+const char subProblemVertexCost = 100;
+
 // const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
 const auto processor_count = 1;
 
@@ -87,11 +95,12 @@ struct CounterInfo
 };
 mutex tableLocker;
 
-bool UnsafeHasCachedValue(const vector<char> &comb, pair<unsigned, unsigned> &costs)
+bool UnsafeHasCachedValue(const vector<char> &comb, pair<unsigned, unsigned> &costs,
+                          unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> localColoringTable)
 {
-    if (coloringTable.find(comb) != coloringTable.end())
+    if (localColoringTable.find(comb) != localColoringTable.end())
     {
-        costs = coloringTable[comb];
+        costs = localColoringTable[comb];
         return true;
     }
     return false;
@@ -130,7 +139,8 @@ class SpecificFunctions
 public:
     virtual void CanonicalOrdering(vector<char> &coloring) = 0;
     virtual unsigned CalculateCost(vector<char> &parentLevel, vector<char> &level) = 0;
-    virtual unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInf) = 0;
+    virtual unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInf,
+                                    unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable) = 0;
 };
 
 class VerticeSpecificFunctions : public SpecificFunctions
@@ -145,7 +155,8 @@ public:
     {
         return CalculateCostVertex(level);
     }
-    unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo) override;
+    unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                            unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable) override;
 };
 
 class EdgeSpecificFunctions : public SpecificFunctions
@@ -160,10 +171,79 @@ public:
     {
         return CalculateCostEdges(parentLevel, level);
     }
-    unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo) override;
+    unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                            unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable) override;
 };
 
-unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo)
+class SubproblemSpecificFunctions : public VerticeSpecificFunctions
+{
+private:
+    vector<char> _goodVertices;
+
+public:
+    unsigned BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                            unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable) override;
+    SubproblemSpecificFunctions(vector<char> goodVertices) : _goodVertices(goodVertices)
+    {
+    }
+};
+
+unsigned SubproblemSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                                                     unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable)
+{
+    cout << "COSSST test" << cost << endl;
+    if (leafColors.size() == 2)
+    {
+        auto possibles = adjMatrix[leafColors[0]][leafColors[1]];
+        for (auto gc : _goodVertices)
+        {
+            if (find(possibles.begin(), possibles.end(), gc) != possibles.end())
+            {
+                cout << "aaaaaaaaaaaaaa "<< endl;
+                return cost;
+            }
+        }
+        return cost + subProblemVertexCost;
+    }
+    vector<vector<char>> possibleColors;
+    if (!HasPossibleParentColors(leafColors, possibleColors))
+        return cost;
+    auto levelCost = CalculateCostVertex(leafColors);
+    // Subproblema seu Otário
+    //  > ao invés de >= não precisamos de menos vértices 0s
+    if (levelCost > cost)
+        return cost;
+
+    auto nextCost = cost - levelCost;
+    unsigned minCost = nextCost;
+    unsigned curCost;
+    auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+
+    while (!combinationIterator.stop)
+    {
+        auto pc = combinationIterator.GetNext();
+        pair<unsigned, unsigned> costs;
+        CanonicalOrdering(pc);
+        tableLocker.lock();
+        if (UnsafeHasCachedValue(pc, costs, localColoringTable))
+        {
+            tableLocker.unlock();
+            curCost = costs.second;
+            cacheInfo.CacheHit++;
+        }
+        else
+        {
+            tableLocker.unlock();
+            curCost = BetterColoring(nextCost, pc, cacheInfo, localColoringTable);
+            cacheInfo.CacheMiss++;
+        }
+        minCost = min(minCost, curCost);
+    }
+    return minCost + levelCost;
+}
+
+unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                                               unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable)
 {
     if (leafColors.size() == 2)
     {
@@ -192,7 +272,7 @@ unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leaf
         CanonicalOrdering(pc);
         ////COUT << pc << endl;
         tableLocker.lock();
-        auto ret = UnsafeHasCachedValue(pc, costs);
+        auto ret = UnsafeHasCachedValue(pc, costs, localColoringTable);
         tableLocker.unlock();
         if (ret)
         {
@@ -201,10 +281,10 @@ unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leaf
         }
         else
         {
-            curCost = BetterColoring(nextCost, pc, cacheInfo);
+            curCost = BetterColoring(nextCost, pc, cacheInfo, localColoringTable);
             tableLocker.lock();
             auto toCache = make_pair(nextCost, curCost);
-            coloringTable[pc] = toCache;
+            localColoringTable[pc] = toCache;
             tableLocker.unlock();
             cacheInfo.CacheMiss++;
         }
@@ -215,7 +295,8 @@ unsigned EdgeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leaf
     return cost;
 }
 
-unsigned VerticeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo)
+unsigned VerticeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &leafColors, CacheInfo &cacheInfo,
+                                                  unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable)
 {
     if (leafColors.size() == 3)
     {
@@ -233,6 +314,8 @@ unsigned VerticeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &l
     if (!HasPossibleParentColors(leafColors, possibleColors))
         return cost;
     auto levelCost = CalculateCostVertex(leafColors);
+    // Subproblema seu Otário
+    //  > ao invés de >= não precisamos de menos vértices 0s
     if (levelCost >= cost)
         return cost;
 
@@ -247,7 +330,7 @@ unsigned VerticeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &l
         pair<unsigned, unsigned> costs;
         CanonicalOrdering(pc);
         tableLocker.lock();
-        if (UnsafeHasCachedValue(pc, costs))
+        if (UnsafeHasCachedValue(pc, costs, localColoringTable))
         {
             tableLocker.unlock();
             curCost = costs.second;
@@ -256,7 +339,7 @@ unsigned VerticeSpecificFunctions::BetterColoring(unsigned cost, vector<char> &l
         else
         {
             tableLocker.unlock();
-            curCost = BetterColoring(nextCost, pc, cacheInfo);
+            curCost = BetterColoring(nextCost, pc, cacheInfo, localColoringTable);
             cacheInfo.CacheMiss++;
         }
         minCost = min(minCost, curCost);
@@ -268,12 +351,13 @@ mutex badColoringsLocker;
 
 void UnsafeUpdateTable(vector<char> &comb, unsigned cost, pair<unsigned, unsigned> cached,
                        vector<vector<char>> &newbadColorings,
-                       CacheInfo &cacheInfo, CounterInfo &ci)
+                       CacheInfo &cacheInfo, CounterInfo &ci,
+                       unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable)
 {
     if (cost < cached.first)
     {
         cached = make_pair(cost, cached.second);
-        coloringTable[comb] = cached;
+        localColoringTable[comb] = cached;
         if (cost == cached.second)
         {
             badColoringsLocker.lock();
@@ -295,12 +379,13 @@ condition_variable cv;
 
 void NewTryImproveBadColoring(vector<char> comb, unsigned cost,
                               vector<vector<char>> &newbadColorings, CacheInfo &cacheInfo,
-                              CounterInfo &ci, SpecificFunctions &sf)
+                              CounterInfo &ci, SpecificFunctions &sf,
+                              unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable)
 {
-    unsigned result = sf.BetterColoring(cost, comb, cacheInfo);
+    unsigned result = sf.BetterColoring(cost, comb, cacheInfo, localColoringTable);
     tableLocker.lock();
-    auto cached = coloringTable[comb];
-    coloringTable[comb] = make_pair(cost, result);
+    auto cached = localColoringTable[comb];
+    localColoringTable[comb] = make_pair(cost, result);
     if (result < cost)
     {
         ci.cgcCounter++;
@@ -311,6 +396,7 @@ void NewTryImproveBadColoring(vector<char> comb, unsigned cost,
         newbadColorings.push_back(comb);
         badColoringsLocker.unlock();
         ci.cbcCounter++;
+        cout << "[" << comb << "], ";
     }
     tableLocker.unlock();
 }
@@ -388,9 +474,33 @@ void NewTryImproveBadColoring(vector<char> comb, unsigned cost,
 //     }
 // }
 
-bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings, SpecificFunctions &sf)
+vector<char> GetPossibleSiblings(char v)
 {
-    unsigned level = 1;
+    vector<char> ret;
+    for (int i = 0; i < 15; i++)
+    {
+        if (adjMatrix[v][i].size() == 0)
+        {
+            cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
+            continue;
+        }
+        cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
+        ret.push_back(i);
+    }
+    return ret;
+}
+
+
+bool SubProblemTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings, SpecificFunctions &sf,
+                            unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable){
+
+}
+
+
+bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings, SpecificFunctions &sf,
+                        unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable, unsigned levelarg = 1)
+{
+    unsigned level = levelarg;
     while (badColorings.size() > 0 && level < maxTreeLevel)
     {
         vector<vector<char>> newbadColorings;
@@ -404,9 +514,9 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
         {
             vector<vector<char>> possibleColors;
             sf.CanonicalOrdering(c);
-            tableLocker.lock();
-            auto fatherCost = coloringTable[c].first;
-            tableLocker.unlock();
+            // tableLocker.lock();
+            auto fatherCost = localColoringTable[c].first;
+            // tableLocker.unlock();
             for (int i = 0; i < c.size() * 2; i++)
             {
                 auto parentColor = c[i / 2];
@@ -434,33 +544,46 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             unsigned number_of_combinations = pow(15, c.size());
             while (!combinationIterator->stop)
             {
+                // if (level == 3)
+                //     cout << "index: " << index++ << endl;
+                // if(index == 1000000){
+                //     cout << "test index: " << index++ << endl;
+                //     return false;
+                // }
+                index++;
                 auto comb = combinationIterator->GetNext();
+                // if(level ==3) continue;
+
                 auto leafCost = sf.CalculateCost(c, comb);
                 auto cost = fatherCost + leafCost;
                 sf.CanonicalOrdering(comb);
                 pair<unsigned, unsigned> cached;
-                if (UnsafeHasCachedValue(comb, cached))
+                if (UnsafeHasCachedValue(comb, cached, localColoringTable))
                 {
                     if (cost < cached.first)
                     {
                         if (cached.second != -1 && cached.first > cached.second)
                         {
                             counterInfo.cgcCounter--;
-                            //counterInfo.cbcCounter++;
+                            // counterInfo.cbcCounter++;
                         }
                         cached = make_pair(cost, -1);
-                        coloringTable[comb] = cached;
+                        localColoringTable[comb] = cached;
                     }
                 }
                 else
                 {
                     cached = make_pair(cost, -1);
-                    coloringTable[comb] = cached;
+                    localColoringTable[comb] = cached;
                 }
             }
+            // if(level==3){
+            //     cout << "Max index:  " << index << endl;
+            //     return false;
+            // }
             auto targetSize = possibleColors.size();
             int thIndex = 0;
-            for (auto pair : coloringTable)
+            for (auto pair : localColoringTable)
             {
                 auto k = pair.first;
                 auto v = pair.second;
@@ -472,7 +595,8 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
                 // NewTryImproveBadColoring(k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf));
                 if (thIndex < processor_count)
                 {
-                    threads.push_back(thread(NewTryImproveBadColoring, k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf)));
+                    threads.push_back(thread(NewTryImproveBadColoring, k, v.first, ref(newbadColorings), ref(cacheInfo),
+                                             ref(counterInfo), ref(sf), ref(localColoringTable)));
                     thIndex++;
                     continue;
                 }
@@ -483,7 +607,8 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
                         th.join();
                     threads.clear();
                 }
-                threads.push_back(thread(NewTryImproveBadColoring, k, v.first, ref(newbadColorings), ref(cacheInfo), ref(counterInfo), ref(sf)));
+                threads.push_back(thread(NewTryImproveBadColoring, k, v.first, ref(newbadColorings), ref(cacheInfo),
+                                         ref(counterInfo), ref(sf), ref(localColoringTable)));
             }
             if (threads.size() > 0)
             {
@@ -493,10 +618,73 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             }
             // COUT << endl;
             delete combinationIterator;
+            // cout << "====================="<< endl;
+            cout << "level :  " << level << endl;
+            if (level == 1 && levelarg != 0)
+            {
+                for (auto bc : newbadColorings)
+                {
+                    cout << "bad coloring" << endl;
+                    int badChanges = 0;
+                    int goodChanges = 0;
+                    for (int i = 0; i < bc.size(); i++)
+                    {
+                        char temp, c;
+                        if (i % 2 == 0)
+                        {
+                            c = bc[i + 1];
+                        }
+                        else
+                        {
+                            c = bc[i - 1];
+                        }
+                        auto possibleChoices = GetPossibleSiblings(c);
+                        vector<char> goodChoices;
+                        cout << "possibleChoices for c: " << (int)c << endl;
+                        cout << possibleChoices << endl;
+                        temp = bc[i];
+                        for (auto v : possibleChoices)
+                        {
+                            bc[i] = v;
+                            auto comb = bc;
+                            sf.CanonicalOrdering(comb);
+                            auto cached = localColoringTable[comb];
+                            if (cached.first == cached.second)
+                                badChanges++;
+                            else
+                            {
+                                goodChanges++;
+                                goodChoices.push_back(v);
+                            }
+                        }
+                        bc[i] = temp;
+                        if (goodChoices.size() > 1)
+                        {
+                            unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> subProblemColoringTable;
+                            vector<char> subProblemBC = {temp};
+                            subProblemColoringTable[subProblemBC] = make_pair(1, 100);
+                            SubproblemSpecificFunctions ssf(goodChoices);
+                            cout << "goodChoides " << goodChoices << endl;
+                            cout << "test" << endl;
+                            auto ret = GenericTopDownTree(2, {subProblemBC}, ssf, subProblemColoringTable, 0);
+                            cout << "ret ::" << ret << endl;
+                        }
+                        return false;
+                    }
+                    cout << "bc : " << badChanges << " gc: " << goodChanges << endl;
+                }
+            }
 
+            // cout << "====================="<< endl;
             // cout << "TopDown CH: " << counterInfo.cacheHit << " CM:" << counterInfo.cacheMiss << endl;
-            cout << "BetterColoring CH: " << cacheInfo.CacheHit << " CM:" << cacheInfo.CacheMiss << endl;
+            cout << endl;
+            // cout << "BetterColoring CH: " << cacheInfo.CacheHit << " CM:" << cacheInfo.CacheMiss << endl;
             cout << "Colorações canonicas ruins :" << counterInfo.cbcCounter << " colorações canonicas boas " << counterInfo.cgcCounter << "  colorações canonicas " << counterInfo.cCCounter << endl;
+            if (level == 3)
+            {
+                cout << "Stoped for breath  " << index << endl;
+                return false;
+            }
             // for(auto c: newbadColorings){
             //     cout<< c<< endl;
             // }
@@ -523,7 +711,7 @@ bool TopDownOnTreeEdge(unsigned maxTreeLevel)
     CacheInfo cacheInfo;
     CounterInfo counterInfo;
     EdgeSpecificFunctions esf;
-    return GenericTopDownTree(maxTreeLevel, badColorings, esf);
+    return GenericTopDownTree(maxTreeLevel, badColorings, esf, coloringTable);
 }
 
 // AnyBadColoringsOnLevel ?
@@ -554,9 +742,9 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
         if (k.size() != possibleColors.size())
             continue;
         auto v = pair.second;
-        NewTryImproveBadColoring(k, v.first, badColorings, cacheInfo, counterInfo, vsf);
+        NewTryImproveBadColoring(k, v.first, badColorings, cacheInfo, counterInfo, vsf, coloringTable);
     }
-    return GenericTopDownTree(maxTreeLevel, badColorings, vsf);
+    return GenericTopDownTree(maxTreeLevel, badColorings, vsf, coloringTable);
 }
 
 // Fazer essa otm
@@ -566,7 +754,7 @@ int main()
 {
     InitializeMatrix();
     InitializeParentPermutationMatrix();
-    // TopDownOnTreeVertex(2);
-    TopDownOnTreeEdge(4);
+    TopDownOnTreeVertex(2);
+    // TopDownOnTreeEdge(2);
     return 0;
 }

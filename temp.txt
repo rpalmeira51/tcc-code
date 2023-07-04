@@ -1,0 +1,81 @@
+(0,0)
+0
+(0,1)
+1
+(0,2)
+2
+(0,3)
+3
+(0,4)
+4
+(1,1)
+5
+(1,2)
+6
+(1,3)
+7
+(1,4)
+8
+(2,2)
+9
+(2,3)
+10
+(2,4)
+11
+(3,3)
+12
+(3,4)
+13
+(4,4)
+14
+1
+3
+[8, 10, 13], 1
+[5, 14, 7, 12, 9, 15], [7, 12, 9, 14, 11, 11], [7, 12, 9, 9, 11, 11], [7, 11, 9, 14, 11, 12], [7, 12, 9, 9, 11, 12], [7, 12, 9, 15, 11, 12], [7, 14, 9, 15, 11, 11], [7, 14, 9, 15, 11, 12], [0, 15, 2, 14, 7, 7], [0, 15, 2, 14, 7, 12], [0, 15, 5, 9, 7, 14], [0, 15, 2, 14, 7, 14], [5, 12, 7, 11, 9, 15], [7, 11, 9, 15, 12, 14], [0, 15, 5, 9, 7, 7], [7, 12, 9, 15, 11, 11], [5, 15, 7, 12, 9, 14], [7, 14, 9, 15, 11, 15], [0, 15, 7, 11, 9, 14], [7, 14, 9, 9, 11, 12], [7, 14, 9, 14, 11, 12], [0, 14, 0, 15, 4, 11], [0, 15, 5, 9, 7, 12], level :  1
+bad coloring
+bc : 28 gc: 34
+bad coloring
+bc : 22 gc: 40
+bad coloring
+bc : 22 gc: 38
+bad coloring
+bc : 26 gc: 36
+bad coloring
+bc : 24 gc: 36
+bad coloring
+bc : 30 gc: 30
+bad coloring
+bc : 26 gc: 36
+bad coloring
+bc : 30 gc: 32
+bad coloring
+bc : 36 gc: 28
+bad coloring
+bc : 40 gc: 22
+bad coloring
+bc : 36 gc: 26
+bad coloring
+bc : 40 gc: 24
+bad coloring
+bc : 34 gc: 26
+bad coloring
+bc : 24 gc: 38
+bad coloring
+bc : 34 gc: 28
+bad coloring
+bc : 20 gc: 40
+bad coloring
+bc : 22 gc: 40
+bad coloring
+bc : 30 gc: 32
+bad coloring
+bc : 36 gc: 26
+bad coloring
+bc : 26 gc: 36
+bad coloring
+bc : 34 gc: 30
+bad coloring
+bc : 50 gc: 12
+bad coloring
+bc : 36 gc: 24
+
