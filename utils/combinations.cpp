@@ -18,6 +18,7 @@ void InitializeParentPermutationMatrix(){
     }
 }
 
+// BUG :( :( :(
 //Incrementa um vetor de escolha possíveis(14) e retorna se há algum novo incrmento possível
 bool GetNextPermutationTopDown(vector<char> &permutationIndentifier)
 {

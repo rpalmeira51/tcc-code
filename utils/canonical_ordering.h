@@ -8,4 +8,5 @@ void swapPartsOfTrees(vector<char>& coloring, unsigned pace_size, int fele_index
 void CanonicalOrderingVertices(vector<char>& coloring);
 void CanonicalOrderingEdges(vector<char>& coloring);
 void TestLex(vector<char> &coloring);
+void LexicographicOrderingSubProblem(vector<char> &coloring);
 #endif
