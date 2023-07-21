@@ -18,10 +18,11 @@ using namespace std;
 
 
 int main(){
-    size_t index = pow(120,8);
-    size_t total = 0;
-    for(size_t i =0; i< index; i++){
-        total++;
+    size_t index = SIZE_MAX;
+    double test = pow(136,8);
+    cout<< "test:  " << endl;
+    if(test > index){
+        cout<< " bad :("<< endl;
     }
-    cout<< "total calculated : " << total << endl;
+    cout << index << "   " << test << "  " <<index -test << endl;
 }

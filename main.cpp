@@ -483,10 +483,10 @@ vector<char> GetPossibleSiblings(char v)
     {
         if (adjMatrix[v][i].size() == 0)
         {
-            cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
+            // cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
             continue;
         }
-        cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
+        // cout << "v: " << (int)v << " i: " << i << " size: " << adjMatrix[v][i].size() << endl;
         ret.push_back(i);
     }
     return ret;
@@ -873,6 +873,7 @@ pair<char, char> GetColors(uint16_t pair)
     return make_pair(c1, c2);
 }
 
+// index 22 ->  1 , 6
 vector<char> GetColors(uint8_t *pairs, int size)
 {
     vector<char> ret;
@@ -889,15 +890,18 @@ vector<char> GetColors(uint8_t *pairs, int size)
     return ret;
 }
 
+// TODO teste de bijeção
 size_t GetIndex(vector<char> colors)
 {
     int exponent = 0;
     size_t ret = 0;
     for (int i = 0; i < colors.size(); i += 2)
     {
-        char u = colors[i];
-        char v = colors[i + 1];
-        char correspondent_pair = ((16 - (16 - u - 1)) * u) / 2 + (v - u);
+        u_int8_t u = colors[i];
+        u_int8_t v = colors[i + 1];
+        u_int8_t correspondent_pair = ((16 + (16 - u + 1)) * u) / 2 + (v - u);
+        //cout<< "u: " << (int) u <<" v: " << (int )v << endl;
+        //cout << "pair" << (int) correspondent_pair << endl;
         ret += correspondent_pair * (pow(pair_choices, exponent));
         exponent++;
     }
@@ -926,46 +930,134 @@ void SimpleCanonical(vector<char> &colors)
     }
 }
 
+void Test()
+{
+    // size_t pair_choices_exponents[5] = {1, pair_choices, (size_t)pow(pair_choices, 2), (size_t)pow(pair_choices, 3), (size_t)pow(pair_choices, 4)};
+    // size_t i = 5438513;
+    // uint8_t first_index = i % pair_choices;
+    // uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
+    // uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
+    // uint8_t fourth_index = i / pair_choices_exponents[3];
+    // cout << "index : " << i << endl;
+    // cout << "bc index " << (int)first_index << "   " << (int)color_array[first_index] << endl;
+    // cout << "bc index " << (int)second_index << "   " << (int)color_array[second_index] << endl;
+    // cout << "bc index " << (int)third_index << "   " << (int)color_array[third_index] << endl;
+    // cout << "bc index " << (int)fourth_index << "   " << (int)color_array[fourth_index] << endl;
+    // uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
+    // auto translate_colors = GetColors(color_pairs, 4);
+    // cout << translate_colors << endl;
+    // cout << "reverse" << GetIndex(translate_colors) << endl;
+    vector<char> test{13, 13};
+    auto index = GetIndex(test);
+    cout << "Test index: " << index << endl;
+}
+
+void SanityCheckForLevel(int level, uint8_t *value_array)
+{
+    size_t size = (size_t)pow(pair_choices, level);
+    for (size_t i = 0; i < size; i++)
+    {
+        auto ret = value_array[i];
+        switch (ret)
+        {
+        case 0:
+        case good_flag:
+        case reachable_flag:
+        case good_flag | reachable_flag:
+            break;
+        default:
+            cout << "Sanity check failed for index: " << dec << i << " with flag: " << hex << ret << endl;
+        }
+    }
+}
+
+void TestTableIndexing()
+{
+    for (int level = 1; level <= 3; level++)
+    {
+        size_t level_size = (size_t)pow(pair_choices, pow(2,level-1));
+        // uint8_t *level_array = (uint8_t *)malloc(level_size * sizeof(uint8_t));
+        cout<< "testing for level: "<< level<<" with level size: "<< level_size<< endl;
+        for (size_t i = 0; i < level_size; i++)
+        {
+            uint8_t number_of_indexes = pow(2, level - 1);
+            uint8_t *index_array = (uint8_t *)malloc(number_of_indexes * sizeof(uint8_t));
+            for (uint8_t index_position = 1; index_position <= number_of_indexes; index_position++)
+            {
+                u_int8_t index = (i % (size_t)pow(pair_choices, index_position)) / (size_t)pow(pair_choices, index_position - 1);
+                index_array[index_position-1] = color_array[index];
+                //cout << "index: " << (int) index <<" t: " << (int)color_array[index] << endl;
+            }
+            auto translate_colors = GetColors(index_array, number_of_indexes);
+            auto indexOfGenerateColoring = GetIndex(translate_colors);
+            if( i != indexOfGenerateColoring) {
+                cout<< "Wrong Index ambiguity for index: " << dec <<i << " got coloring" << 
+                    translate_colors << " that generate index: " <<indexOfGenerateColoring<<endl;
+                    return;
+            }
+            free(index_array);
+        }
+        vector<char> coloring(pow(2, level));
+        cout << "Testing for coloring of size: " << pow(2, level) << " on level: " << level << endl;
+        for (size_t j = 0; j < level_size; j++){
+            //cout << "Testing for coloring: " << coloring << endl;
+            auto index_from_coloring = GetIndex(coloring);
+            //cout << "Index from coloring: " << index_from_coloring << endl; 
+            if(index_from_coloring < 0 || index_from_coloring > level_size) {
+                cout << "Wrong index: " << index_from_coloring << " for coloring: "<< coloring<<" on level: " << level << " level size: " << level_size<<endl;
+                return;
+            }
+            uint8_t number_of_indexes = pow(2, level - 1);
+            uint8_t *index_array = (uint8_t *)malloc(number_of_indexes * sizeof(uint8_t));
+            for (uint8_t index_position = 1; index_position <= number_of_indexes; index_position++)
+            {
+                u_int8_t index = (index_from_coloring % (size_t)pow(pair_choices, index_position)) / (size_t)pow(pair_choices, index_position - 1);
+                index_array[index_position-1] = color_array[index];
+                //cout << "index from coloring"<< index_from_coloring <<"index: " << (int) index <<" t: " << (int)color_array[index] << endl;
+            }
+            auto translate_colors = GetColors(index_array, number_of_indexes);
+            if(coloring != translate_colors){
+                cout<< "Wrong Color ambiguity for index: " << dec <<index_from_coloring << " got coloring" << 
+                    translate_colors << " from index of coloring: " <<coloring<<endl;
+                return;
+            }
+            free(index_array);
+            for(int ci = coloring.size() -1; ci>= 0; ci--){
+                if(coloring[ci] != 15){
+                    coloring[ci]++;
+                    if(ci%2 == 0 && coloring[ci+1] < coloring[ci] )
+                        coloring[ci+1] = coloring[ci];
+                    break;
+                }
+                coloring[ci] = 0;
+            }
+        } 
+    }
+}
+
 void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
 {
-    cout << "test 0" << endl;
     size_t pair_choices_exponents[5] = {1, pair_choices, (size_t)pow(pair_choices, 2), (size_t)pow(pair_choices, 3), (size_t)pow(pair_choices, 4)};
-    cout << "test 0.1" << endl;
     size_t size_1 = pair_choices;
     uint8_t level_1[pair_choices];
-    cout << "test 0.2" << endl;
     size_t size_2 = pair_choices_exponents[2];
     uint8_t level_2[size_2];
-    cout << "test 0.3" << endl;
     size_t size_3 = pair_choices_exponents[4];
-    cout << "teste size: " << size_3 << endl;
     uint8_t *level_3 = (uint8_t *)malloc(size_3 * sizeof(uint8_t));
-    cout << "test 1" << endl;
+    size_t size_4 = (size_t)pow(pair_choices, 8);
+
     for (size_t i = 0; i < size_1; i++)
     {
         uint8_t ret = 0;
         auto colors = GetColors(color_array[i]);
         char u = colors.first;
         char v = colors.second;
-        bool show = true;
-        if (u == 3 && v == 9)
-            cout << "flag 1" << endl;
-        else if (u == 3 && v == 13)
-            cout << "flag 2" << endl;
-        else if (u == 9 && v == 13)
-            cout << "flag 3" << endl;
-        else if (u == 13 && v == 14)
-            cout << "flag 4" << endl;
-        else
-            show = false;
         // cout << "u: " << (int)u << " v: "<< (int)v<< endl;
         auto possibles = adjMatrix[u][v];
         for (auto possible_parent : possibles)
         {
-            // cout << "pp: possible_parent" << (int)possible_parent << " vertex: " << (int) vertex << endl;
             if (possible_parent == vertex)
             {
-                // cout<< "ALARM "<< endl;
                 ret = ret | reachable_flag;
                 continue;
             }
@@ -974,15 +1066,17 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
                 ret = ret | good_flag;
             }
         }
-        if (show)
-            cout << hex << (int)ret << dec << "u: " << (int)u << " v:" << (int)v << " index" << i << endl;
         level_1[i] = ret;
     }
     unsigned badColorings1 = 0;
     for (size_t i = 0; i < size_1; i++)
     {
         auto ret = level_1[i];
-        // cout<< hex <<(int)ret << endl;
+        if (ret != 0 && ((ret & (reachable_flag | good_flag)) != ret))
+        {
+            cout << "weird ret" << hex << (int)ret << endl;
+            cout << "index" << dec << i << endl;
+        }
         if ((ret & reachable_flag) != ret)
             continue;
         if ((ret & good_flag) != ret)
@@ -990,10 +1084,10 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     }
     cout << badColorings1 << " bad colorings on level 1" << endl;
     cout << "test 2" << endl;
+    SanityCheckForLevel(1, level_1);
     for (size_t i = 0; i < size_2; i++)
     {
         uint8_t ret = 0;
-        // 157
         uint8_t first_index = i % pair_choices;
         uint8_t second_index = i / pair_choices;
         uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
@@ -1004,7 +1098,6 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
             level_2[i] = ret;
             continue;
         }
-        cout << translate_colors << endl;
         int min_number_of_zeros_for_reachable_parent = INT_MAX;
         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
         while (!combinationIterator.stop)
@@ -1013,9 +1106,6 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
             SimpleCanonical(pc);
             auto index = GetIndex(pc);
             auto parent_ret = level_1[index];
-            // cout << dec << pc << endl;
-            // cout << "flag :" << (int)parent_ret << endl;
-            // cout << dec << "index: " << index << endl;
             int number_of_zeros = HasBadVertex(pc);
             if (number_of_zeros)
             {
@@ -1050,18 +1140,19 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         }
         level_2[i] = ret;
     }
+    cout << "============ level 2" << endl;
     unsigned badColorings2 = 0;
     for (size_t i = 0; i < size_2; i++)
     {
         auto ret = level_2[i];
-        cout << hex << (int)ret << endl;
-        if ((ret & reachable_flag) != ret)
+        if ((ret & reachable_flag) != reachable_flag)
             continue;
-        if ((ret & good_flag) != ret)
+        if ((ret & good_flag) != good_flag)
             badColorings2++;
     }
     cout << dec << badColorings2 << " bad colorings on level 2" << endl;
-    cout << dec << (double)badColorings2/(double)size_2 << " bad colorings proprotion on level 2" << endl;
+    cout << dec << (double)badColorings2 / (double)size_2 << " bad colorings proprotion on level 2" << endl;
+    SanityCheckForLevel(2, level_2);
     cout << "test 3" << endl;
     for (size_t i = 0; i < size_3; i++)
     {
@@ -1073,16 +1164,20 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
         uint8_t fourth_index = i / pair_choices_exponents[3];
 
-        uint8_t color_pairs[4] = {first_index, second_index, third_index, fourth_index};
+        uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
         auto translate_colors = GetColors(color_pairs, 4);
         vector<vector<char>> possibleColors;
         if (!HasPossibleParentColors(translate_colors, possibleColors))
+        {
+            level_3[i] = ret;
             continue;
+        }
         int min_number_of_zeros_for_reachable_parent = INT_MAX;
         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
         while (!combinationIterator.stop)
         {
             auto pc = combinationIterator.GetNext();
+            SimpleCanonical(pc);
             auto index = GetIndex(pc);
             auto parent_ret = level_2[index];
             int number_of_zeros = HasBadVertex(pc);
@@ -1091,7 +1186,8 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
                 if ((parent_ret & reachable_flag) == reachable_flag)
                     min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
                 ret = ret | (parent_ret & reachable_flag);
-            }else
+            }
+            else
             {
                 ret = ret | parent_ret;
             }
@@ -1118,18 +1214,142 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         }
         level_3[i] = ret;
     }
+    cout << "FLAAAAG" << endl;
     unsigned badColorings3 = 0;
     for (size_t i = 0; i < size_3; i++)
     {
         auto ret = level_3[i];
-        if ((ret & reachable_flag) != ret)
+        if ((ret & reachable_flag) != reachable_flag)
             continue;
-        if ((ret & good_flag) != ret)
+        if ((ret & good_flag) != good_flag)
             badColorings3++;
     }
-    free(level_3);
     cout << dec << badColorings3 << " bad colorings on level 3" << endl;
-    cout << dec << (double)badColorings3/(double)size_3 << " bad colorings proportion on level 3" << endl;
+    cout << dec << (double)badColorings3 / (double)size_3 << " bad colorings proportion on level 3" << endl;
+    SanityCheckForLevel(3, level_3);
+    for (size_t i = 0; i < size_3; i++)
+    {
+        auto ret = level_3[i];
+        if ((ret & reachable_flag) != reachable_flag)
+            continue;
+        int bad_subs = 0;
+        int good_subs = 0;
+        if ((ret & good_flag) != good_flag)
+        {
+            cout << "FLAAAG" << endl;
+            uint8_t first_index = i % pair_choices;
+            uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
+            uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
+            uint8_t fourth_index = i / pair_choices_exponents[3];
+
+            uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
+            auto translate_colors = GetColors(color_pairs, 4);
+            // cout << "Doing test for coloring: " << translate_colors << "with index: " << i << endl;
+            // cout << hex << "ret:  " << ret << endl;
+            for (int i = 0; i < translate_colors.size(); i++)
+            {
+                auto sibling = i % 2 == 0 ? translate_colors[i + 1] : translate_colors[i - 1];
+                vector<char> good_subs;
+                auto possible_subs = GetPossibleSiblings(sibling);
+                cout << dec << "pss: " << possible_subs << endl;
+                for (auto ps : possible_subs)
+                {
+                    vector<char> temp_colors = translate_colors;
+                    // cout << dec << "before temp_colors: " << temp_colors << endl;
+                    temp_colors[i] = ps;
+                    SimpleCanonical(temp_colors);
+                    // cout << dec << "after temp_colors: " << temp_colors << endl;
+                    auto index = GetIndex(temp_colors);
+                    // cout << "index" << index << endl;
+                    auto cur_ret = level_3[index];
+                    // cout << hex << " flaag" << (int)cur_ret << endl;
+                    if ((cur_ret & good_flag) == good_flag)
+                    {
+                        // cout << "FLAAAG" << endl;
+                        good_subs.push_back(ps);
+                    }
+                }
+                cout << dec << "good subs number: " << good_subs.size() << endl;
+                if (good_subs.size() != 0)
+                    cout << "good subs: " << good_subs << endl;
+            }
+            // cout << "==============================================" << endl;
+        }
+    }
+    // #pragma region level 4
+    // size_t badColorings4 = 0;
+    // for (size_t i = 0; i < size_4; i++)
+    // {
+    //     if (i % (size_4 / 100) == 0)
+    //         cout << "done i: " << i << " iterations, " << i / (size_4 / 100) << "\% completed" << endl;
+    //     uint8_t ret = 0;
+    //     uint8_t first_index = i % pair_choices;
+    //     uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
+    //     uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
+    //     uint8_t fourth_index = (i % pair_choices_exponents[4]) / pair_choices_exponents[3];
+    //     uint8_t fifth_index = (i % pair_choices_exponents[5]) / pair_choices_exponents[4];
+    //     uint8_t sixth_index = (i % pair_choices_exponents[6]) / pair_choices_exponents[5];
+    //     uint8_t seventh_index = (i % pair_choices_exponents[7]) / pair_choices_exponents[6];
+    //     uint8_t eighth_index = i / pair_choices_exponents[7];
+
+    //     uint8_t color_pairs[8] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index],
+    //                             color_array[fifth_index], color_array[sixth_index], color_array[seventh_index], color_array[eighth_index]};
+    //     auto translate_colors = GetColors(color_pairs, 8);
+    //     vector<vector<char>> possibleColors;
+    //     if (!HasPossibleParentColors(translate_colors, possibleColors))
+    //         continue;
+    //     int min_number_of_zeros_for_reachable_parent = INT_MAX;
+    //     auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+    //     while (!combinationIterator.stop)
+    //     {
+    //         auto pc = combinationIterator.GetNext();
+    //         auto index = GetIndex(pc);
+    //         auto parent_ret = level_3[index];
+    //         int number_of_zeros = HasBadVertex(pc);
+    //         if (number_of_zeros)
+    //         {
+    //             if ((parent_ret & reachable_flag) == reachable_flag)
+    //                 min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
+    //             ret = ret | (parent_ret & reachable_flag);
+    //         }
+    //         else
+    //         {
+    //             ret = ret | parent_ret;
+    //         }
+    //     }
+    //     if (ret == reachable_flag)
+    //     {
+    //         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+    //         while (!combinationIterator.stop)
+    //         {
+    //             auto pc = combinationIterator.GetNext();
+    //             SimpleCanonical(pc);
+    //             auto index = GetIndex(pc);
+    //             auto parent_ret = level_3[index];
+    //             int number_of_zeros = HasBadVertex(pc);
+    //             if (number_of_zeros > min_number_of_zeros_for_reachable_parent)
+    //             {
+    //                 ret = ret | (parent_ret & reachable_flag);
+    //             }
+    //             else
+    //             {
+    //                 ret = ret | parent_ret;
+    //             }
+    //         }
+    //     }
+    //     if (ret == reachable_flag)
+    //     {
+    //         cout << translate_colors << endl;
+    //         cout << "bad coloring :(" << endl;
+    //         badColorings4++;
+    //     }
+    // }
+    // cout << dec << badColorings4 << " bad colorings on level 4" << endl;
+    // cout << dec << (double)badColorings4 / (double)size_4 << " bad colorings proportion on level 4" << endl;
+    // cout << "yeeeey" << endl;
+    // #pragma endregion level 4
+    //
+    free(level_3);
 }
 
 // Opt Teste
@@ -1138,9 +1358,14 @@ int main()
     InitializeMatrix();
     InitializeParentPermutationMatrix();
     InitializeColorArray();
-    char vertex = 11;
-    vector<char> goodVertices = {0, 2, 3, 4, 6, 7, 8, 9, 13};
-    HasGoodVertexSubstitution(vertex, goodVertices);
+    // char vertex = 11;
+    // vector<char> goodVertices = {0, 2, 3, 4, 6, 7, 8, 9, 13};
+    // HasGoodVertexSubstitution(vertex, goodVertices);
+    // char vertex = 1;
+    // vector<char> goodVertices = {1, 2, 3, 5, 7, 9, 10, 12, 13, 14};
+    // HasGoodVertexSubstitution(vertex, goodVertices);
+    // Test();
+    TestTableIndexing();
     return 0;
 }
 
