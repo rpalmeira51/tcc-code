@@ -45,4 +45,10 @@ public:
     bool AreAdjacent(unsigned u, unsigned v);
 };
 
+class SuperClebschGraph : public ClebschGraph
+{
+public:
+    SuperClebschGraph();
+};
+
 #endif

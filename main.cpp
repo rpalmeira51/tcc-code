@@ -576,6 +576,11 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
                         unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> &localColoringTable, unsigned levelarg = 1)
 {
     unsigned level = levelarg;
+    cout<< "bad colorings " <<badColorings.size()<< endl;
+    for(auto bc: badColorings){
+        cout << bc<<endl;
+    }
+    cout << "end colorings" << endl;
     while (badColorings.size() > 0 && level < maxTreeLevel)
     {
         vector<vector<char>> newbadColorings;
@@ -717,81 +722,83 @@ bool GenericTopDownTree(unsigned maxTreeLevel, vector<vector<char>> badColorings
             //     return level == maxTreeLevel;
             // }
         }
-        if (level == 1 && levelarg != 0)
-        {
-            for (auto bc : newbadColorings)
-            {
-                cout << "bad coloring" << bc << endl;
-                int badChanges = 0;
-                int goodChanges = 0;
-                for (int i = 0; i < bc.size(); i++)
-                {
-                    char temp, c;
-                    if (i % 2 == 0)
-                    {
-                        c = bc[i + 1];
-                    }
-                    else
-                    {
-                        c = bc[i - 1];
-                    }
-                    auto possibleChoices = GetPossibleSiblings(c);
-                    vector<char> goodChoices;
-                    cout << "possibleChoices for c: " << (int)c << endl;
-                    cout << possibleChoices << endl;
-                    temp = bc[i];
-                    for (auto v : possibleChoices)
-                    {
-                        bc[i] = v;
-                        auto comb = bc;
-                        sf.CanonicalOrdering(comb);
-                        if (localColoringTable.count(comb) == 0)
-                        {
-                            goodChanges++;
-                            goodChoices.push_back(v);
-                        }
-                        else
-                        {
-                            auto cached = localColoringTable[comb];
-                            if (cached.first == cached.second)
-                            {
-                                // cout << "=============" << endl;
-                                // cout << localColoringTable.count(comb) << endl;
-                                // cout << comb << endl;
-                                // cout << "cached data " << cached.first << "  " << cached.second << endl;
-                                badChanges++;
-                            }
-                            else
-                            {
-                                goodChanges++;
-                                goodChoices.push_back(v);
-                            }
-                        }
-                    }
-                    bc[i] = temp;
-                    if (goodChoices.size() > 1)
-                    {
-                        unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> subProblemColoringTable;
-                        vector<char> subProblemBC = {temp};
-                        SubproblemSpecificFunctions ssf(goodChoices);
-                        vector<vector<char>> newBc = {subProblemBC};
-                        subProblemColoringTable[subProblemBC] = make_pair(100, 1);
-                        cout << "temp: " << (int)temp << " test ::" << endl;
-                        cout << "goodChoides " << goodChoices << endl;
-                        cout << "bad colorings" << subProblemBC << endl;
-                        auto ret = SubProblemTopDownTree(2, newBc, ssf, subProblemColoringTable);
-                        cout << "ret ::" << ret << endl;
-                    }
-                    // return false;
-                }
-                cout << "bc : " << badChanges << " gc: " << goodChanges << endl;
-                break;
-            }
-            return false;
-        }
+        // if (level == 1 && levelarg != 0)
+        // {
+        //     for (auto bc : newbadColorings)
+        //     {
+        //         cout << "bad coloring" << bc << endl;
+        //         int badChanges = 0;
+        //         int goodChanges = 0;
+        //         for (int i = 0; i < bc.size(); i++)
+        //         {
+        //             char temp, c;
+        //             if (i % 2 == 0)
+        //             {
+        //                 c = bc[i + 1];
+        //             }
+        //             else
+        //             {
+        //                 c = bc[i - 1];
+        //             }
+        //             auto possibleChoices = GetPossibleSiblings(c);
+        //             vector<char> goodChoices;
+        //             cout << "possibleChoices for c: " << (int)c << endl;
+        //             cout << possibleChoices << endl;
+        //             temp = bc[i];
+        //             for (auto v : possibleChoices)
+        //             {
+        //                 bc[i] = v;
+        //                 auto comb = bc;
+        //                 sf.CanonicalOrdering(comb);
+        //                 if (localColoringTable.count(comb) == 0)
+        //                 {
+        //                     goodChanges++;
+        //                     goodChoices.push_back(v);
+        //                 }
+        //                 else
+        //                 {
+        //                     auto cached = localColoringTable[comb];
+        //                     if (cached.first == cached.second)
+        //                     {
+        //                         // cout << "=============" << endl;
+        //                         // cout << localColoringTable.count(comb) << endl;
+        //                         // cout << comb << endl;
+        //                         // cout << "cached data " << cached.first << "  " << cached.second << endl;
+        //                         badChanges++;
+        //                     }
+        //                     else
+        //                     {
+        //                         goodChanges++;
+        //                         goodChoices.push_back(v);
+        //                     }
+        //                 }
+        //             }
+        //             bc[i] = temp;
+        //             if (goodChoices.size() > 1)
+        //             {
+        //                 unordered_map<vector<char>, pair<unsigned, unsigned>, VectorHasher> subProblemColoringTable;
+        //                 vector<char> subProblemBC = {temp};
+        //                 SubproblemSpecificFunctions ssf(goodChoices);
+        //                 vector<vector<char>> newBc = {subProblemBC};
+        //                 subProblemColoringTable[subProblemBC] = make_pair(100, 1);
+        //                 cout << "temp: " << (int)temp << " test ::" << endl;
+        //                 cout << "goodChoides " << goodChoices << endl;
+        //                 cout << "bad colorings" << subProblemBC << endl;
+        //                 auto ret = SubProblemTopDownTree(2, newBc, ssf, subProblemColoringTable);
+        //                 cout << "ret ::" << ret << endl;
+        //             }
+        //             // return false;
+        //         }
+        //         cout << "bc : " << badChanges << " gc: " << goodChanges << endl;
+        //         break;
+        //     }
+        //     return false;
+        // }
+        
         badColorings = newbadColorings; // use pointer
         level++;
     }
+    cout << "HELLLLO" << endl;
     return level == maxTreeLevel;
 }
 
@@ -1353,30 +1360,30 @@ void HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
 }
 
 // Opt Teste
-int main()
-{
-    InitializeMatrix();
-    InitializeParentPermutationMatrix();
-    InitializeColorArray();
-    // char vertex = 11;
-    // vector<char> goodVertices = {0, 2, 3, 4, 6, 7, 8, 9, 13};
-    // HasGoodVertexSubstitution(vertex, goodVertices);
-    // char vertex = 1;
-    // vector<char> goodVertices = {1, 2, 3, 5, 7, 9, 10, 12, 13, 14};
-    // HasGoodVertexSubstitution(vertex, goodVertices);
-    // Test();
-    TestTableIndexing();
-    return 0;
-}
-
-// Fazer essa otm
-// Revisão do código e otimizações gerais
-// Utilizar o banco de dados -> para guardar
 // int main()
 // {
 //     InitializeMatrix();
 //     InitializeParentPermutationMatrix();
-//     TopDownOnTreeVertex(2);
-//     // TopDownOnTreeEdge(2);
+//     InitializeColorArray();
+//     // char vertex = 11;
+//     // vector<char> goodVertices = {0, 2, 3, 4, 6, 7, 8, 9, 13};
+//     // HasGoodVertexSubstitution(vertex, goodVertices);
+//     // char vertex = 1;
+//     // vector<char> goodVertices = {1, 2, 3, 5, 7, 9, 10, 12, 13, 14};
+//     // HasGoodVertexSubstitution(vertex, goodVertices);
+//     // Test();
+//     TestTableIndexing();
 //     return 0;
 // }
+
+// Fazer essa otm
+// Revisão do código e otimizações gerais
+// Utilizar o banco de dados -> para guardar
+int main()
+{
+    InitializeMatrix();
+    InitializeParentPermutationMatrix();
+    TopDownOnTreeVertex(2);
+    // TopDownOnTreeEdge(2);
+    return 0;
+}
