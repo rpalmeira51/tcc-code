@@ -9,6 +9,7 @@ vector<char> adjMatrix[16][16];
 
 // Objeto global do grafo de Clebsch
 SuperClebschGraph ClebschGraphObj;
+//ClebschGraph ClebschGraphObj;
 
 
 

@@ -75,6 +75,9 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "math.h": "c"
+        "math.h": "c",
+        "span": "cpp",
+        "hash_map": "cpp",
+        "ranges": "cpp"
     }
 }

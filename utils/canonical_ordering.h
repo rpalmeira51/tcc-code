@@ -9,4 +9,5 @@ void CanonicalOrderingVertices(vector<char>& coloring);
 void CanonicalOrderingEdges(vector<char>& coloring);
 void TestLex(vector<char> &coloring);
 void LexicographicOrderingSubProblem(vector<char> &coloring);
+void VertexLexicographicOrdering(vector<char> &coloring);
 #endif

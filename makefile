@@ -5,7 +5,7 @@
  
 CC = g++
 CFLAGS = -pthread -O3
-PROFILING= -pg
+PROFILING= 
 
 # ****************************************************
 # Targets needed to bring the executable up to date

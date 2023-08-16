@@ -178,6 +178,12 @@ void CanonicalOrderingVertices(vector<char> &coloring)
     GenericCanonicalOrdering(coloring, autoMorphismMatrix, 120, sf);
 }
 
+void VertexLexicographicOrdering(vector<char> &coloring)
+{
+    VerticeLexicographicOrdering sf;
+    sf.LexicographicOrdering(coloring);
+}
+
 void LexicographicOrderingSubProblem(vector<char> &coloring){
     EdgesLexicographicOrdering sf;
     sf.LexicographicOrdering(coloring);

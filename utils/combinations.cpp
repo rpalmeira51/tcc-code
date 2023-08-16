@@ -36,6 +36,8 @@ bool GetNextPermutationTopDown(vector<char> &permutationIndentifier)
 
 //Incrementa um vetor de escolha possíveis baseado em outro vetor que guarda o número de possibilidades
 // e retorna se há algum novo incrmento possível
+//Vet -> é o vetor que guarda a última assinatura de uma configuração
+// Nc[i] é o número de escolhas na posição i   
 bool GetNextPermutation(vector<char> &vet, vector<char> &nc)
 {
     for (int i = vet.size() - 1; i >= 0; i--)
@@ -69,7 +71,7 @@ CombinationIteratorTopDown::CombinationIteratorTopDown(vector<vector<char>>& pos
     combinationChoices.resize(n/2);
 }
 
-//A cada chamada, retorna uma possível coloração possível baseado no possibleColorsByVertex
+//A cada chamada, retorna uma coloração possível baseado no possibleColorsByVertex
 vector<char> CombinationIteratorBottomUp::GetNext()
 {
     vector<char> leafColoring;
