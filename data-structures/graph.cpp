@@ -55,7 +55,7 @@ SuperClebschGraph::SuperClebschGraph()
     adjLis.push_back(fromInts({1, 2, 3, 7, 9, 10, 13, 14}, 15));
 }
 
-unsigned ClebschGraph::EdgeCost(unsigned u, unsigned v)
+uint8_t ClebschGraph::EdgeCost(unsigned u, unsigned v)
 {
     if (u == 0 && v == 1 || u == 1 && v == 0)
         return 1;

@@ -10,6 +10,7 @@ extern ClebschGraph ClebschGraphObj;
 
 ostream& operator<<(ostream& os, const vector<char>& vec)
 {
+    if(vec.size() ==0) return os;
     auto temp = vec.size() -1;
     for(int i =0; i< temp; i++){
         os << (int)(vec[i]) << ", ";
@@ -21,6 +22,7 @@ ostream& operator<<(ostream& os, const vector<char>& vec)
 template<typename T>
 ostream& operator<<(ostream& os, const vector<T>& vec)
 {
+    if(vec.size() ==0) return os;
     for(auto e:vec){
         os << e << " ,";
     }

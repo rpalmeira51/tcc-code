@@ -29,7 +29,7 @@ struct VectorHasher
 //Mapa que relaciona uma coloração canonica a um par 
 // em que é o primeiro elemento é o custo da árvore 
 // e o segundo é o melhor custo encontrado pelo BottomUp
-unordered_map<vector<char>, pair<unsigned,unsigned>, VectorHasher> coloringTable;
+unordered_map<vector<char>, pair<char, char>, VectorHasher> coloringTable;
 
 // Array que enumera os pares de combinação(de (0,0) ... (4,4)) de possíveis escolhas de filhos 
 pair<int,int> parentPermutationMatrix[15];

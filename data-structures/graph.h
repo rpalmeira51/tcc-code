@@ -1,6 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <vector>
+#include <cstdint>
 using namespace std;
 
 class Vertice
@@ -42,7 +43,7 @@ public:
     char badVertice = 0;
     vector<char> badEdge = {0,1};  
     ClebschGraph();
-    unsigned EdgeCost(unsigned u, unsigned v);
+    uint8_t EdgeCost(unsigned u, unsigned v);
     bool AreAdjacent(unsigned u, unsigned v);
 };
 

@@ -25,5 +25,5 @@ struct VectorHasher
 // Min TopDownCost e Min BottomUp Cost->Not for now
 // Min TopDownCost <= Min BottomUp Cost -> Ruim 
 // Testar com igualdade 
-extern unordered_map<vector<char>, pair<unsigned,unsigned>,VectorHasher> coloringTable;
+extern unordered_map<vector<char>, pair<char, char>, VectorHasher> coloringTable;
 #endif
