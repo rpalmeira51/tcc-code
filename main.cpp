@@ -497,10 +497,11 @@ void NewTryImproveBadColoringWhThreads(vector<char> comb, uint8_t cost,
 //     }
 // }
 
+//Retorna todos os vértices com vizinhos em comum com v
 vector<char> GetPossibleSiblings(char v)
 {
     vector<char> ret;
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 16; i++)
     {
         if (adjMatrix[v][i].size() == 0)
         {
@@ -954,7 +955,6 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
     {
         cout << bc << " with cost "
              << " first : " << (int)localColoringTable[bc].first << " second: " << (int)localColoringTable[bc].second << endl;
-        bool improved = false;
         auto costOfLocalImprovment = localColoringTable[bc].first;
         for (int i = 0; i < bc.size(); i++)
         {
@@ -993,8 +993,8 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 }
                 else
                 {
-                    auto temp = sf.BetterColoring(costOfLocalImprovment, ts, cacheInfo, localColoringTable);
-                    if (temp >= costOfLocalImprovment)
+                    auto free_cost = sf.BetterColoring(costOfLocalImprovment, ts, cacheInfo, localColoringTable);
+                    if (free_cost >= costOfLocalImprovment)
                     {
                         // cout << "Weird coloring :(" << ts << " temp: " << temp << " costOfLocalImprovment:" << costOfLocalImprovment << endl;
                         bsubs++;
@@ -1050,6 +1050,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 coloringsToImprove = kv.second;
             }
         }
+        //bater que decomposição está funcionando como esperado
         auto subs = vector<char>(k.begin(), k.end() - 1);
         auto root = k[k.size() - 1];
         // cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.second.size() << endl;

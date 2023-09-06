@@ -75,6 +75,8 @@ public:
     }
 };
 
+// Testar todas as possibilidades e verificar corretude
+//Virar lema do tcc
 class VerticeLexicographicOrdering : public SpecifLexicographicOrdering
 {
 public:
