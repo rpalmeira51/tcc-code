@@ -937,40 +937,47 @@ bool GenericTopDownTreeWhThreads(unsigned maxTreeLevel, vector<vector<char>> bad
     return level == maxTreeLevel;
 }
 
+bool cmp(pair<vector<char>, vector<vector<char>>> &a,
+         pair<vector<char>, vector<vector<char>>> &b)
+{
+    return a.second.size() < b.second.size();
+}
+
 void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorings,
                                           unordered_map<vector<char>, pair<char, char>, VectorHasher> &localColoringTable,
                                           SpecificFunctions &sf,
                                           CacheInfo &cacheInfo)
 {
     unsigned remainingBC = badColorings.size();
+    map<vector<char>, vector<vector<char>>> toImproveTable;
     for (auto bc : badColorings)
     {
         cout << bc << " with cost "
-             << " first : " << localColoringTable[bc].first << " second: " << localColoringTable[bc].second << endl;
+             << " first : " << (int)localColoringTable[bc].first << " second: " << (int)localColoringTable[bc].second << endl;
         bool improved = false;
         auto costOfLocalImprovment = localColoringTable[bc].first;
         for (int i = 0; i < bc.size(); i++)
         {
             vector<char> goodsubs;
-            cout << "Trying to change the " << (int)bc[i] << endl;
+            // cout << "Trying to change the " << (int)bc[i] << endl;
             int bsubs = 0;
             int gsubs = 0;
             auto sibling = ((i % 2) == 0) ? bc[i + 1] : bc[i - 1];
             auto ps = GetPossibleSiblings(sibling);
-            cout << "ps" << ps << endl;
+            // cout << "ps" << ps << endl;
             for (auto s : ps)
             {
-                cout << (int)s << endl;
+                // cout << (int)s << endl;
                 if (s == 0)
                 {
                     bsubs++;
                     continue;
                 }
                 vector<char> ts = bc;
-                cout << "bc:  " << bc << endl;
+                // cout << "bc:  " << bc << endl;
                 ts[i] = s;
                 sf.CanonicalOrdering(ts);
-                cout << "ts:  " << ts << endl;
+                // cout << "ts:  " << ts << endl;
                 if (localColoringTable.find(ts) != localColoringTable.end())
                 {
                     auto cached = localColoringTable[ts];
@@ -989,7 +996,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                     auto temp = sf.BetterColoring(costOfLocalImprovment, ts, cacheInfo, localColoringTable);
                     if (temp >= costOfLocalImprovment)
                     {
-                        cout << "Weird coloring :(" << ts << " temp: " << temp << " costOfLocalImprovment:" << costOfLocalImprovment << endl;
+                        // cout << "Weird coloring :(" << ts << " temp: " << temp << " costOfLocalImprovment:" << costOfLocalImprovment << endl;
                         bsubs++;
                     }
                     else
@@ -1000,27 +1007,72 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 }
             }
 
-            // Configuração ruim tentando melhorar 
-            // Melhora dela com a sbustituição pelo better coloring -> 
-            // Todos as filhas possiíveis no subproblema e como melhorar 
-            cout << "good subs size " << goodsubs.size() << endl; 
-            cout << " good subs substitution: " << goodsubs << endl;
-            cout << "bad subs: " << bsubs << "   good subs " << gsubs << endl;
-            if(goodsubs.size() < 7) continue;
-            if (HasGoodVertexSubstitution(bc[i], goodsubs))
+            // Configuração ruim tentando melhorar
+            // Melhora dela com a sbustituição pelo better coloring ->
+            // Todos as filhas possiíveis no subproblema e como melhorar
+            // cout << "good subs size " << goodsubs.size() << endl;
+            // cout << " good subs substitution: " << goodsubs << endl;
+            // cout << "bad subs: " << bsubs << "   good subs " << gsubs << endl;
+            if (goodsubs.size() < 7)
+                continue;
+            // map<char,vector<pair<vector<char>,char>>>
+            auto key = goodsubs;
+            key.push_back(bc[i]);
+            if (toImproveTable.count(key) == 1)
             {
-                improved = true;
-                remainingBC--;
-                break;
+                toImproveTable[key].push_back(bc);
             }
-            if (improved)
+            else
             {
-                cout << "GOOTTTT BETTER" << endl;
+                vector<vector<char>> tempValue = {bc};
+                toImproveTable[key] = tempValue;
             }
-            cout << "=+++++++++++++++=" << endl;
+
+            // cout << (int)bc[i] << " with subs " << goodsubs << endl;
+            // cout << "=+++++++++++++++=" << endl;
         }
-        cout << "Remaining bad colorings: " << remainingBC << endl;
-        cout << "===================" << endl;
+    }
+    // for (auto k : data_print)
+    // {
+    //     for (auto c : k.second)
+    //         cout << (int)k.first << " with subs " << c << " appears: " << (int)counter[k.first][c] << endl;
+    // }
+    cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
+    while (remainingBC > 0)
+    {
+        vector<char> k;
+        vector<vector<char>> coloringsToImprove;
+        for (auto kv : toImproveTable)
+        {
+            if (kv.second.size() > coloringsToImprove.size())
+            {
+                k = kv.first;
+                coloringsToImprove = kv.second;
+            }
+        }
+        auto subs = vector<char>(k.begin(), k.end() - 1);
+        auto root = k[k.size() - 1];
+        // cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.second.size() << endl;
+        if (HasGoodVertexSubstitution(root, subs))
+        {
+            for (auto kv : toImproveTable)
+            {
+                if (kv.first == k)
+                    continue;
+                for (auto bc : coloringsToImprove)
+                {
+                    auto it = std::find(kv.second.begin(), kv.second.end(), bc);
+                    if (it != kv.second.end())
+                        kv.second.erase(it);
+                }
+            }
+            remainingBC -= coloringsToImprove.size();
+            cout << "Resolved" <<(int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+        }else {
+            cout << "Unable to resolve" <<(int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+        }
+        toImproveTable.erase(k);
+        cout << "Remaining BC: " << remainingBC << endl;
     }
 }
 
@@ -1082,11 +1134,12 @@ void ReadAndTryImprove(string filename)
             }
             second_num = stoi(tempNum);
             pair<char, char> cost_pair = make_pair(first_num, second_num);
-            if(first_num == second_num && coloring.size()==6) badColorings.push_back(coloring);
+            if (first_num == second_num && coloring.size() == 6)
+                badColorings.push_back(coloring);
             coloringTable[coloring] = cost_pair;
         }
         file.close();
-        TryImproveBadColoringsWithSubProblem(badColorings,coloringTable,vsf ,cacheInfo );
+        TryImproveBadColoringsWithSubProblem(badColorings, coloringTable, vsf, cacheInfo);
     }
 }
 
@@ -1346,15 +1399,17 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     size_t size_3 = pair_choices_exponents[4];
     uint8_t *level_3 = (uint8_t *)malloc(size_3 * sizeof(uint8_t));
     size_t size_4 = (size_t)pow(pair_choices, 8);
-
+    cout << "Trying substitutions to: " << (int)vertex << endl;
     for (size_t i = 0; i < size_1; i++)
     {
         uint8_t ret = 0;
         auto colors = GetColors(color_array[i]);
         char u = colors.first;
         char v = colors.second;
-        // cout << "u: " << (int)u << " v: "<< (int)v<< endl;
+        cout << "i: " << i << endl;
+        cout << "u: " << (int)u << " v: " << (int)v << endl;
         auto possibles = adjMatrix[u][v];
+        cout << "possibles " << possibles << "||" << endl;
         for (auto possible_parent : possibles)
         {
             if (possible_parent == vertex)
@@ -1371,6 +1426,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         level_1[i] = ret;
     }
     unsigned badColorings1 = 0;
+    cout << "bad iiisss" << endl;
     for (size_t i = 0; i < size_1; i++)
     {
         auto ret = level_1[i];
@@ -1382,8 +1438,12 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         if ((ret & reachable_flag) != ret)
             continue;
         if ((ret & good_flag) != ret)
+        {
+            cout << i << " ";
             badColorings1++;
+        }
     }
+    cout << endl;
     cout << badColorings1 << " bad colorings on level 1" << endl;
     cout << "test 2" << endl;
     if (badColorings1 == 0)
@@ -1684,8 +1744,8 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
 int main()
 {
     InitializeMatrix();
-    //  TODO MAtar
-    //  InitializeParentPermutationMatrix();
+    InitializeColorArray();
+    InitializeParentPermutationMatrix();
     // TopDownOnTreeVertex(2);
     //  TopDownOnTreeEdge(2);
     ReadAndTryImprove("output_table_1692733877");
