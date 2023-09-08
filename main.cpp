@@ -1039,7 +1039,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
     //         cout << (int)k.first << " with subs " << c << " appears: " << (int)counter[k.first][c] << endl;
     // }
     cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-    while (remainingBC > 0)
+    while (true)
     {
         vector<char> k;
         vector<vector<char>> coloringsToImprove;
@@ -1083,6 +1083,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         }
         cout << "size_counter" << size_counter << endl;
         cout << "Remaining BC: " << remainingBC << endl;
+        if(size_counter ==0) break;
     }
 }
 
