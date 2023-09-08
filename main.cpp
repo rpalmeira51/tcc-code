@@ -497,7 +497,7 @@ void NewTryImproveBadColoringWhThreads(vector<char> comb, uint8_t cost,
 //     }
 // }
 
-//Retorna todos os vértices com vizinhos em comum com v
+// Retorna todos os vértices com vizinhos em comum com v
 vector<char> GetPossibleSiblings(char v)
 {
     vector<char> ret;
@@ -1020,7 +1020,8 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
             key.push_back(bc[i]);
             if (toImproveTable.count(key) == 1)
             {
-                toImproveTable[key].push_back(bc);
+                if (find(toImproveTable[key].begin(), toImproveTable[key].end(), bc) == toImproveTable[key].end())
+                    toImproveTable[key].push_back(bc);
             }
             else
             {
@@ -1050,7 +1051,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 coloringsToImprove = kv.second;
             }
         }
-        //bater que decomposição está funcionando como esperado
+        // bater que decomposição está funcionando como esperado
         auto subs = vector<char>(k.begin(), k.end() - 1);
         auto root = k[k.size() - 1];
         // cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.second.size() << endl;
@@ -1068,11 +1069,19 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 }
             }
             remainingBC -= coloringsToImprove.size();
-            cout << "Resolved" <<(int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
-        }else {
-            cout << "Unable to resolve" <<(int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+            cout << "Resolved" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+        }
+        else
+        {
+            cout << "Unable to resolve" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
         }
         toImproveTable.erase(k);
+        int size_counter = 0 ;
+        for (auto kv : toImproveTable)
+        {
+            size_counter += coloringsToImprove.size();
+        }
+        cout << "size_counter" << size_counter << endl;
         cout << "Remaining BC: " << remainingBC << endl;
     }
 }
