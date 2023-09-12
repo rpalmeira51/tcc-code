@@ -1061,13 +1061,13 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
     // return ;
 
     cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-    while (true)
+    while (remainingBC != 0)
     {
-        int size_counter = 0;
-        for (auto kv : toImproveTable)
-        {
-            size_counter += kv.second.size();
-        }
+        // int size_counter = 0;
+        // for (auto kv : toImproveTable)
+        // {
+        //     size_counter += kv.second.size();
+        // }
         vector<char> k;
         vector<vector<char>> coloringsToImprove;
         for (auto kv : toImproveTable)
@@ -1100,7 +1100,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                     if (it != nv.end())
                     {
                         nv.erase(it);
-                        cout << "Removing" << endl;
+                        //cout << "Removing" << endl;
                         removed++;
                     }
                     // cout << "size after" << kv.second.size() << endl;
@@ -1115,6 +1115,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         {
             cout << "Unable to resolve" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
         }
+        toImproveTable.erase(k);
         cout << "Remaining BC: " << remainingBC << endl;
     }
 }
