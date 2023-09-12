@@ -1038,9 +1038,36 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
     //     for (auto c : k.second)
     //         cout << (int)k.first << " with subs " << c << " appears: " << (int)counter[k.first][c] << endl;
     // }
+    // cout << "Sanity Test" << endl;
+    // vector<vector<char>> test;
+    // for (auto kv : toImproveTable)
+    // {
+    //     auto values = kv.second;
+    //     for (auto bc : values)
+    //     {
+    //         auto it = std::find(test.begin(), test.end(), bc);
+    //         if (it == test.end()){
+    //             test.push_back(bc);
+    //         }else{
+    //             cout << "Weird with bc:" << bc << endl;
+    //         }
+    //         if(find(badColorings.begin(), badColorings.end(), bc) == badColorings.end()){
+    //             cout << "Something wrong with bc" << endl;
+    //         }
+    //     }
+    // }
+    // cout << badColorings.size() << endl;
+    // cout << "Test with size: "<< test.size() << endl;
+    // return ;
+
     cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
     while (true)
     {
+        int size_counter = 0;
+        for (auto kv : toImproveTable)
+        {
+            size_counter += kv.second.size();
+        }
         vector<char> k;
         vector<vector<char>> coloringsToImprove;
         for (auto kv : toImproveTable)
@@ -1055,35 +1082,40 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         auto subs = vector<char>(k.begin(), k.end() - 1);
         auto root = k[k.size() - 1];
         // cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.second.size() << endl;
-        if (HasGoodVertexSubstitution(root, subs))
+        int beforeSize = 0;
+        int afterSize = 0;
+        int removed = 0;
+        if (true || HasGoodVertexSubstitution(root, subs))
         {
             for (auto kv : toImproveTable)
             {
                 if (kv.first == k)
                     continue;
+                beforeSize += toImproveTable[kv.first].size();
+                auto nv = kv.second;
                 for (auto bc : coloringsToImprove)
                 {
-                    auto it = std::find(kv.second.begin(), kv.second.end(), bc);
-                    if (it != kv.second.end())
-                        kv.second.erase(it);
+                    auto it = std::find(nv.begin(), nv.end(), bc);
+                    // cout << "size before" << kv.second.size() << endl;
+                    if (it != nv.end())
+                    {
+                        nv.erase(it);
+                        cout << "Removing" << endl;
+                        removed++;
+                    }
+                    // cout << "size after" << kv.second.size() << endl;
                 }
+                toImproveTable[kv.first] = nv;
+                afterSize += toImproveTable[kv.first].size();
             }
             remainingBC -= coloringsToImprove.size();
-            cout << "Resolved" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+            cout << "Resolved " << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
         }
         else
         {
             cout << "Unable to resolve" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
         }
-        toImproveTable.erase(k);
-        int size_counter = 0 ;
-        for (auto kv : toImproveTable)
-        {
-            size_counter += coloringsToImprove.size();
-        }
-        cout << "size_counter" << size_counter << endl;
         cout << "Remaining BC: " << remainingBC << endl;
-        if(size_counter ==0) break;
     }
 }
 
