@@ -1085,7 +1085,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         int beforeSize = 0;
         int afterSize = 0;
         int removed = 0;
-        if (true || HasGoodVertexSubstitution(root, subs))
+        if ( HasGoodVertexSubstitution(root, subs))
         {
             for (auto kv : toImproveTable)
             {
