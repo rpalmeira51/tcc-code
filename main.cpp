@@ -1006,13 +1006,6 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                     }
                 }
             }
-
-            // Configuração ruim tentando melhorar
-            // Melhora dela com a sbustituição pelo better coloring ->
-            // Todos as filhas possiíveis no subproblema e como melhorar
-            // cout << "good subs size " << goodsubs.size() << endl;
-            // cout << " good subs substitution: " << goodsubs << endl;
-            // cout << "bad subs: " << bsubs << "   good subs " << gsubs << endl;
             if (goodsubs.size() < 7)
                 continue;
             // map<char,vector<pair<vector<char>,char>>>
@@ -1028,38 +1021,8 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                 vector<vector<char>> tempValue = {bc};
                 toImproveTable[key] = tempValue;
             }
-
-            // cout << (int)bc[i] << " with subs " << goodsubs << endl;
-            // cout << "=+++++++++++++++=" << endl;
         }
     }
-    // for (auto k : data_print)
-    // {
-    //     for (auto c : k.second)
-    //         cout << (int)k.first << " with subs " << c << " appears: " << (int)counter[k.first][c] << endl;
-    // }
-    // cout << "Sanity Test" << endl;
-    // vector<vector<char>> test;
-    // for (auto kv : toImproveTable)
-    // {
-    //     auto values = kv.second;
-    //     for (auto bc : values)
-    //     {
-    //         auto it = std::find(test.begin(), test.end(), bc);
-    //         if (it == test.end()){
-    //             test.push_back(bc);
-    //         }else{
-    //             cout << "Weird with bc:" << bc << endl;
-    //         }
-    //         if(find(badColorings.begin(), badColorings.end(), bc) == badColorings.end()){
-    //             cout << "Something wrong with bc" << endl;
-    //         }
-    //     }
-    // }
-    // cout << badColorings.size() << endl;
-    // cout << "Test with size: "<< test.size() << endl;
-    // return ;
-
     cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
     while (remainingBC != 0)
     {
@@ -1085,7 +1048,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         int beforeSize = 0;
         int afterSize = 0;
         int removed = 0;
-        if ( HasGoodVertexSubstitution(root, subs))
+        if (HasGoodVertexSubstitution(root, subs))
         {
             for (auto kv : toImproveTable)
             {
@@ -1100,7 +1063,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
                     if (it != nv.end())
                     {
                         nv.erase(it);
-                        //cout << "Removing" << endl;
+                        // cout << "Removing" << endl;
                         removed++;
                     }
                     // cout << "size after" << kv.second.size() << endl;
@@ -1183,8 +1146,9 @@ void ReadAndTryImprove(string filename)
             coloringTable[coloring] = cost_pair;
         }
         file.close();
-        TryImproveBadColoringsWithSubProblem(badColorings, coloringTable, vsf, cacheInfo);
     }
+    TryImproveBadColoringsWithSubProblem(badColorings, coloringTable, vsf, cacheInfo);
+    cout << "CLOSING" << endl;
 }
 
 bool TopDownOnTreeEdge(unsigned maxTreeLevel)
@@ -1470,20 +1434,13 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         level_1[i] = ret;
     }
     unsigned badColorings1 = 0;
-    cout << "bad iiisss" << endl;
     for (size_t i = 0; i < size_1; i++)
     {
         auto ret = level_1[i];
-        if (ret != 0 && ((ret & (reachable_flag | good_flag)) != ret))
-        {
-            cout << "weird ret" << hex << (int)ret << endl;
-            cout << "index" << dec << i << endl;
-        }
         if ((ret & reachable_flag) != ret)
             continue;
         if ((ret & good_flag) != ret)
         {
-            cout << i << " ";
             badColorings1++;
         }
     }
@@ -1529,6 +1486,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         if (ret == reachable_flag)
         {
             auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+            bool hasBad = false;
             while (!combinationIterator.stop)
             {
                 auto pc = combinationIterator.GetNext();
@@ -1542,7 +1500,32 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
                 }
                 else
                 {
+                    if (parent_ret == reachable_flag)
+                    {
+                        if(hasBad == false){
+                            cout << "Improving coloring" << endl;
+                        }
+                        cout << pc << endl;
+                        hasBad = true;
+                    }
                     ret = ret | parent_ret;
+                }
+            }
+            cout << "Improved with" << endl;
+            if (hasBad && ((ret & good_flag) == good_flag))
+            {
+                auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+                while (!combinationIterator.stop)
+                {
+                    auto pc = combinationIterator.GetNext();
+                    SimpleCanonical(pc);
+                    auto index = GetIndex(pc);
+                    auto parent_ret = level_1[index];
+                    int number_of_zeros = HasBadVertex(pc);
+                    if (number_of_zeros <= min_number_of_zeros_for_reachable_parent && (parent_ret & good_flag) == good_flag)
+                    {
+                        cout << pc <<endl;
+                    }
                 }
             }
         }
@@ -1624,7 +1607,6 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         }
         level_3[i] = ret;
     }
-    cout << "FLAAAAG" << endl;
     unsigned badColorings3 = 0;
     for (size_t i = 0; i < size_3; i++)
     {
@@ -1637,59 +1619,11 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     cout << dec << badColorings3 << " bad colorings on level 3" << endl;
     cout << dec << (double)badColorings3 / (double)size_3 << " bad colorings proportion on level 3" << endl;
     // SanityCheckForLevel(3, level_3);
+    free(level_3);
     if (badColorings3 == 0)
         return true;
     return false;
-    for (size_t i = 0; i < size_3; i++)
-    {
-        auto ret = level_3[i];
-        if ((ret & reachable_flag) != reachable_flag)
-            continue;
-        int bad_subs = 0;
-        int good_subs = 0;
-        if ((ret & good_flag) != good_flag)
-        {
-            cout << "FLAAAG" << endl;
-            uint8_t first_index = i % pair_choices;
-            uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
-            uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
-            uint8_t fourth_index = i / pair_choices_exponents[3];
-
-            uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
-            auto translate_colors = GetColors(color_pairs, 4);
-            // cout << "Doing test for coloring: " << translate_colors << "with index: " << i << endl;
-            // cout << hex << "ret:  " << ret << endl;
-            for (int i = 0; i < translate_colors.size(); i++)
-            {
-                auto sibling = i % 2 == 0 ? translate_colors[i + 1] : translate_colors[i - 1];
-                vector<char> good_subs;
-                auto possible_subs = GetPossibleSiblings(sibling);
-                cout << dec << "pss: " << possible_subs << endl;
-                for (auto ps : possible_subs)
-                {
-                    vector<char> temp_colors = translate_colors;
-                    // cout << dec << "before temp_colors: " << temp_colors << endl;
-                    temp_colors[i] = ps;
-                    SimpleCanonical(temp_colors);
-                    // cout << dec << "after temp_colors: " << temp_colors << endl;
-                    auto index = GetIndex(temp_colors);
-                    // cout << "index" << index << endl;
-                    auto cur_ret = level_3[index];
-                    // cout << hex << " flaag" << (int)cur_ret << endl;
-                    if ((cur_ret & good_flag) == good_flag)
-                    {
-                        // cout << "FLAAAG" << endl;
-                        good_subs.push_back(ps);
-                    }
-                }
-                cout << dec << "good subs number: " << good_subs.size() << endl;
-                if (good_subs.size() != 0)
-                    cout << "good subs: " << good_subs << endl;
-            }
-            // cout << "==============================================" << endl;
-        }
-    }
-    // #pragma region level 4
+#pragma region level 4
     // size_t badColorings4 = 0;
     // for (size_t i = 0; i < size_4; i++)
     // {
@@ -1760,9 +1694,8 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     // cout << dec << badColorings4 << " bad colorings on level 4" << endl;
     // cout << dec << (double)badColorings4 / (double)size_4 << " bad colorings proportion on level 4" << endl;
     // cout << "yeeeey" << endl;
-    // #pragma endregion level 4
+#pragma endregion level 4
     //
-    free(level_3);
 }
 
 // Opt Teste
@@ -1790,8 +1723,8 @@ int main()
     InitializeMatrix();
     InitializeColorArray();
     InitializeParentPermutationMatrix();
-    // TopDownOnTreeVertex(2);
+    TopDownOnTreeVertex(2);
     //  TopDownOnTreeEdge(2);
-    ReadAndTryImprove("output_table_1692733877");
+    //ReadAndTryImprove("output_table_1692733877");
     return 0;
 }
