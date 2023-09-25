@@ -39,7 +39,7 @@ class ClebschGraph : public Graph
 {
 public:
     //vector<char> badVertices = {0,1,2,7,12};
-    vector<char> badVertices = {0,1};
+    vector<char> badVertices = {0};
     char badVertice = 0;
     vector<char> badEdge = {0,1};  
     ClebschGraph();
