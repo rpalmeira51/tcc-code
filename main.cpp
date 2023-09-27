@@ -1069,7 +1069,6 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         }
         toImproveTable.erase(k);
         cout << "Remaining BC: " << remainingBC << endl;
-        return;
     }
 }
 
