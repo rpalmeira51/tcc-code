@@ -953,8 +953,8 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
     map<vector<char>, vector<vector<char>>> toImproveTable;
     for (auto bc : badColorings)
     {
-        cout << bc << " with cost "
-             << " first : " << (int)localColoringTable[bc].first << " second: " << (int)localColoringTable[bc].second << endl;
+        // cout << bc << " with cost "
+        //      << " first : " << (int)localColoringTable[bc].first << " second: " << (int)localColoringTable[bc].second << endl;
         auto costOfLocalImprovment = localColoringTable[bc].first;
         for (int i = 0; i < bc.size(); i++)
         {
@@ -1069,6 +1069,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         }
         toImproveTable.erase(k);
         cout << "Remaining BC: " << remainingBC << endl;
+        return;
     }
 }
 
@@ -1415,9 +1416,9 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         char u = colors.first;
         char v = colors.second;
         // cout << "i: " << i << endl;
-        // cout << "u: " << (int)u << " v: " << (int)v << endl;
+        cout << "u: " << (int)u << " v: " << (int)v << endl;
         auto possibles = adjMatrix[u][v];
-        // cout << "possibles " << possibles << "||" << endl;
+        cout << "possibles " << possibles << "||" << endl;
         for (auto possible_parent : possibles)
         {
             if (possible_parent == vertex)
@@ -1446,9 +1447,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     cout << "test 2" << endl;
     if (badColorings1 == 0)
         return true;
-    // else 
-    //     return false;
-    // SanityCheckForLevel(1, level_1);
+    //SanityCheckForLevel(1, level_1);
     for (size_t i = 0; i < size_2; i++)
     {
         uint8_t ret = 0;
@@ -1457,7 +1456,6 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
         auto translate_colors = GetColors(color_pairs, 2);
         vector<vector<char>> possibleColors;
-        cout << translate_colors << endl;
         if (!HasPossibleParentColors(translate_colors, possibleColors))
         {
             level_2[i] = ret;
@@ -1524,7 +1522,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
             }
             int min_number_of_zeros_for_reachable_parent = INT_MAX;
             auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-            cout << translate_colors << endl;
+            //cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
             while (!combinationIterator.stop)
             {
                 auto pc = combinationIterator.GetNext();
@@ -1551,8 +1549,8 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     cout << "test 3" << endl;
     for (size_t i = 0; i < size_3; i++)
     {
-        if (i % (size_3 / 100) == 0)
-            cout << "done i: " << i << " iterations, " << i / (size_3 / 100) << "\% completed" << endl;
+        // if (i % (size_3 / 100) == 0)
+        //     cout << "done i: " << i << " iterations, " << i / (size_3 / 100) << "\% completed" << endl;
         uint8_t ret = 0;
         uint8_t first_index = i % pair_choices;
         uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
@@ -1562,6 +1560,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
         auto translate_colors = GetColors(color_pairs, 4);
         vector<vector<char>> possibleColors;
+        //cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
         if (!HasPossibleParentColors(translate_colors, possibleColors))
         {
             level_3[i] = ret;
@@ -1627,8 +1626,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
 
             int min_number_of_zeros_for_reachable_parent = INT_MAX;
             auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-            cout << "translate colors"<< endl;
-            cout << translate_colors << endl;
+            cout << "Bad Coloring: " << translate_colors << "with index: "<< i << endl;
             while (!combinationIterator.stop)
             {
                 auto pc = combinationIterator.GetNext();
@@ -1761,5 +1759,10 @@ int main()
     // TopDownOnTreeVertex(2);
     //   TopDownOnTreeEdge(2);
     ReadAndTryImprove("output_table_1692733877");
+//     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+//       Trying substitutions to: 9
+//      with goodVertices 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15
+    //vector<char> goodVertex = {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15};
+    //HasGoodVertexSubstitution(9, goodVertex);
     return 0;
 }
