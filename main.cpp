@@ -27,7 +27,7 @@ const char subProblemVertexCost = 100;
 // const auto processor_count = thread::hardware_concurrency() == 0 ? 8 : thread::hardware_concurrency();
 const auto processor_count = 1;
 
-bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices);
+bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool subsubproblem = false);
 
 //   Calcula o custo para uma cor
 uint8_t CalculateCostVertex(unsigned vertex)
@@ -944,6 +944,89 @@ bool cmp(pair<vector<char>, vector<vector<char>>> &a,
     return a.second.size() < b.second.size();
 }
 
+bool TryImproveWithSubProblemFromTable(int remainingBC, map<vector<char>, vector<vector<char>>> &toImproveTable, bool dosubsubproblem)
+{
+    cout << "Trying to solve table with " << remainingBC << " colorings" << endl;
+    cout << "toImproveTable size: " << toImproveTable.size() << endl;
+    // for (auto kv : toImproveTable)
+    // {
+    //     cout << "kv first" << kv.first << endl;
+    //     cout << "kv second:  ";
+    //     for (auto e : kv.second)
+    //         cout << e << ", ";
+    //     cout << endl;
+    // }
+    while (remainingBC != 0 && toImproveTable.size() != 0)
+    {
+        cout << "Trying again" << endl;
+
+        vector<char> k;
+        vector<vector<char>> coloringsToImprove;
+        for (auto kv : toImproveTable)
+        {
+            if (kv.second.size() > coloringsToImprove.size())
+            {
+                k = kv.first;
+                coloringsToImprove = kv.second;
+            }
+        }
+        // // bater que decomposição está funcionando como esperado
+        // cout << "yolo sss" << endl;
+        // cout << "k.size " << k.size() << endl;
+        // if (k.size() == 0)
+        // {
+        //     cout << "toImproveTable size: " << toImproveTable.size() << endl;
+        //     cout << "coloringsToImprove size: " << coloringsToImprove.size() << endl;
+        //     for (auto kv : toImproveTable)
+        //     {
+        //         cout << "kv first" << kv.first << endl;
+        //         cout << "kv second:  ";
+        //         for (auto e : kv.second)
+        //             cout << e << ", ";
+        //         cout << endl;
+        //     }
+        // }
+        if(k.size() == 0) return false;
+        auto subs = vector<char>(k.begin(), k.end() - 1);
+        auto root = k[k.size() - 1];
+        cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.size() << endl;
+        if (HasGoodVertexSubstitution(root, subs, dosubsubproblem))
+        {
+            for (auto kv : toImproveTable)
+            {
+                if (kv.first == k)
+                    continue;
+                auto nv = kv.second;
+                for (auto bc : coloringsToImprove)
+                {
+                    auto it = std::find(nv.begin(), nv.end(), bc);
+                    // cout << "size before" << kv.second.size() << endl;
+                    if (it != nv.end())
+                    {
+                        nv.erase(it);
+                        // cout << "Removing" << endl;
+                    }
+                    // cout << "size after" << kv.second.size() << endl;
+                }
+                toImproveTable[kv.first] = nv;
+            }
+            remainingBC -= coloringsToImprove.size();
+            cout << "Resolved " << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+        }
+        else
+        {
+            cout << "Unable to resolve" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
+        }
+        toImproveTable.erase(k);
+        if (!dosubsubproblem)
+            cout << "Remaining BC: " << remainingBC << endl;
+        else
+            cout << "Real Remaining BC: " << remainingBC << endl;
+        cout << "toImproveTable size: " << toImproveTable.size() << endl;
+    }
+    return remainingBC == 0;
+}
+
 void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorings,
                                           unordered_map<vector<char>, pair<char, char>, VectorHasher> &localColoringTable,
                                           SpecificFunctions &sf,
@@ -1024,52 +1107,7 @@ void TryImproveBadColoringsWithSubProblem(const vector<vector<char>> &badColorin
         }
     }
     cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-    while (remainingBC != 0)
-    {
-        vector<char> k;
-        vector<vector<char>> coloringsToImprove;
-        for (auto kv : toImproveTable)
-        {
-            if (kv.second.size() > coloringsToImprove.size())
-            {
-                k = kv.first;
-                coloringsToImprove = kv.second;
-            }
-        }
-        // bater que decomposição está funcionando como esperado
-        auto subs = vector<char>(k.begin(), k.end() - 1);
-        auto root = k[k.size() - 1];
-        // cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.second.size() << endl;
-        if (HasGoodVertexSubstitution(root, subs))
-        {
-            for (auto kv : toImproveTable)
-            {
-                if (kv.first == k)
-                    continue;
-                auto nv = kv.second;
-                for (auto bc : coloringsToImprove)
-                {
-                    auto it = std::find(nv.begin(), nv.end(), bc);
-                    // cout << "size before" << kv.second.size() << endl;
-                    if (it != nv.end())
-                    {
-                        nv.erase(it);
-                        // cout << "Removing" << endl;
-                    }
-                    // cout << "size after" << kv.second.size() << endl;
-                }
-                toImproveTable[kv.first] = nv;
-            }
-            remainingBC -= coloringsToImprove.size();
-            cout << "Resolved " << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
-        }
-        else
-        {
-            cout << "Unable to resolve" << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << coloringsToImprove.size() << endl;
-        }
-        toImproveTable.erase(k);
-        cout << "Remaining BC: " << remainingBC << endl;
-    }
+    TryImproveWithSubProblemFromTable(remainingBC, toImproveTable, true);
 }
 
 void ReadAndTryImprove(string filename)
@@ -1189,8 +1227,12 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
     return GenericTopDownTreeWhThreads(maxTreeLevel, badColorings, vsf, coloringTable);
 }
 
-char const good_flag = 1 << 0;      // 01
-char const reachable_flag = 1 << 1; // 10
+// custo_r/custo_l/alca_r/alca_l
+
+uint8_t const free_reachable_flag = 1 << 0;       // 01
+uint8_t const restricted_reachable_flag = 1 << 1; // 10
+uint8_t const free_cost_flag = 0x1C;              // 00011100
+uint8_t const restricted_cost_flag = 0xE0;        // 11100000
 
 uint8_t const left_color = 0xF << 4;
 uint8_t const right_color = 0xF << 0;
@@ -1255,6 +1297,11 @@ size_t GetIndex(vector<char> colors)
     return ret;
 }
 
+int HasBadVertex(pair<char, char> colors)
+{
+    return (colors.first == 0) + (colors.second == 0);
+}
+
 int HasBadVertex(vector<char> colors)
 {
     int number_of_zeros = 0;
@@ -1308,9 +1355,9 @@ void SanityCheckForLevel(int level, uint8_t *value_array)
         switch (ret)
         {
         case 0:
-        case good_flag:
-        case reachable_flag:
-        case good_flag | reachable_flag:
+        case free_reachable_flag:
+        case restricted_reachable_flag:
+        case free_reachable_flag | restricted_reachable_flag:
             break;
         default:
             cout << "Sanity check failed for index: " << dec << i << " with flag: " << hex << ret << endl;
@@ -1386,28 +1433,64 @@ void TestTableIndexing()
     }
 }
 
-bool IsReachable(uint8_t flag)
+uint8_t ExtractRestricetedReacheble(uint8_t flag)
 {
-    return (flag & reachable_flag) == reachable_flag;
+    return (flag & restricted_reachable_flag);
+}
+
+uint8_t ExtractFreeReacheble(uint8_t flag)
+{
+    return (flag & free_reachable_flag);
+}
+
+uint8_t ExtractFreeCost(uint8_t flag)
+{
+    return (flag & free_cost_flag) >> 2;
+}
+
+uint8_t ExtractRestricetedCost(uint8_t flag)
+{
+    return (flag & restricted_cost_flag) >> 5;
+}
+
+uint8_t FreeCostToFlag(uint8_t flag)
+{
+    return flag << 2;
+}
+
+uint8_t RestricetedCostToFlag(uint8_t flag)
+{
+    return flag << 5;
+}
+
+bool IsBad(uint8_t flag)
+{
+    return ExtractRestricetedReacheble(flag) && (!ExtractFreeReacheble(flag) || (ExtractFreeCost(flag) > ExtractRestricetedCost(flag)));
 }
 
 bool IsGood(uint8_t flag)
 {
-    return (flag & good_flag) == good_flag;
+    return !IsBad(flag);
 }
 
-bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
+// TODO Remove zeros
+//  bbb/bbb b b
+//  custo_r/custo_l/alca_r/alca_l
+bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosubsubproblem)
 {
+    string file_name = "./results/"
+    for(auto c in goodVertices){
+        file_name.push_back(c);
+    }
+    file_name.push_back(vertex);
     size_t pair_choices_exponents[5] = {1, pair_choices, (size_t)pow(pair_choices, 2), (size_t)pow(pair_choices, 3), (size_t)pow(pair_choices, 4)};
     size_t size_1 = pair_choices;
     uint8_t level_1[pair_choices];
     size_t size_2 = pair_choices_exponents[2];
     uint8_t level_2[size_2];
-    size_t size_3 = pair_choices_exponents[4];
-    uint8_t *level_3 = (uint8_t *)malloc(size_3 * sizeof(uint8_t));
-    size_t size_4 = (size_t)pow(pair_choices, 8);
     cout << "Trying substitutions to: " << (int)vertex << endl;
     cout << "with goodVertices " << goodVertices << endl;
+    uint8_t free_cost, restricted_cost;
     for (size_t i = 0; i < size_1; i++)
     {
         uint8_t ret = 0;
@@ -1418,25 +1501,29 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         cout << "u: " << (int)u << " v: " << (int)v << endl;
         auto possibles = adjMatrix[u][v];
         cout << "possibles " << possibles << "||" << endl;
+        free_cost = restricted_cost = HasBadVertex(colors);
         for (auto possible_parent : possibles)
         {
             if (possible_parent == vertex)
             {
-                ret = ret | reachable_flag;
+                ret = ret | restricted_reachable_flag;
+                if (possible_parent == 0)
+                    restricted_cost++;
             }
             else if (find(goodVertices.begin(), goodVertices.end(), possible_parent) != goodVertices.end())
             {
-                ret = ret | good_flag;
+                ret = ret | free_reachable_flag;
                 // cout << "Good possible_parent" << (int)possible_parent << endl;
             }
         }
+        ret = ret | FreeCostToFlag(free_cost) | RestricetedCostToFlag(restricted_cost);
         level_1[i] = ret;
     }
     unsigned badColorings1 = 0;
     for (size_t i = 0; i < size_1; i++)
     {
         auto ret = level_1[i];
-        if (ret == reachable_flag)
+        if (IsBad(ret))
         {
             badColorings1++;
         }
@@ -1446,10 +1533,10 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     cout << "test 2" << endl;
     if (badColorings1 == 0)
         return true;
-    //SanityCheckForLevel(1, level_1);
+    // SanityCheckForLevel(1, level_1);
     for (size_t i = 0; i < size_2; i++)
     {
-        uint8_t ret = 0;
+        uint8_t ret = 0xfc;
         uint8_t first_index = i % pair_choices;
         uint8_t second_index = i / pair_choices;
         uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
@@ -1460,46 +1547,54 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
             level_2[i] = ret;
             continue;
         }
+        cout << "Checking coloring " << translate_colors << endl;
         int min_number_of_zeros_for_reachable_parent = INT_MAX;
         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+        uint8_t level_cost = HasBadVertex(translate_colors);
         while (!combinationIterator.stop)
         {
             auto pc = combinationIterator.GetNext();
             SimpleCanonical(pc);
             auto index = GetIndex(pc);
             auto parent_ret = level_1[index];
-            int number_of_zeros = HasBadVertex(pc);
-            // cout << "Trying to solve parent" << pc << endl;
-            // cout << "number of zeros" << number_of_zeros << endl;
-            // cout << "With flag reachable: " << (IsReachable(parent_ret) ? "Y" : "N") << "  good: " << (IsGood(parent_ret) ? "Y" : "N") << endl;
-            if ((parent_ret & reachable_flag) == reachable_flag)
-                min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
-            if (number_of_zeros)
+            if (ExtractFreeReacheble(parent_ret) || ExtractRestricetedReacheble(parent_ret))
             {
-                ret = ret | (parent_ret & reachable_flag);
+                cout << "Trying to solve parent  " << pc << endl;
+                cout << "Costs free cost << " << +ExtractFreeCost(parent_ret) << " restricted cost: " << +ExtractRestricetedCost(parent_ret) << endl;
+                cout << "With flag free reachable: " << (ExtractFreeReacheble(parent_ret) ? "Y" : "N") << " restricted reachable: " << (ExtractRestricetedReacheble(parent_ret) ? "Y" : "N") << endl;
             }
             else
             {
-                ret = ret | parent_ret;
+                cout << "Unreachable parent:: " << bitset<8>(parent_ret) << endl;
             }
-        }
-        if ((ret & good_flag) != good_flag)
-        {
-            auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-            bool hasBad = false;
-            while (!combinationIterator.stop)
+            if (ExtractFreeReacheble(parent_ret))
             {
-                auto pc = combinationIterator.GetNext();
-                SimpleCanonical(pc);
-                auto index = GetIndex(pc);
-                auto parent_ret = level_1[index];
-                int number_of_zeros = HasBadVertex(pc);
-                if (number_of_zeros <= min_number_of_zeros_for_reachable_parent)
-                {
-                    ret = ret | parent_ret;
-                }
+                cout << "freeee" << endl;
+                ret |= free_reachable_flag;
+                uint8_t current_best_parent_free_cost = ExtractFreeCost(ret) - level_cost;
+                cout << "ret: " << bitset<8>(ret) << " current_best_parent_free_cost: " << +current_best_parent_free_cost << endl;
+                uint8_t parent_free_cost = ExtractFreeCost(parent_ret);
+                cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_free_cost: " << +parent_free_cost << endl;
+                ret = ((ret & (~free_cost_flag)) | ((current_best_parent_free_cost > parent_free_cost) ? FreeCostToFlag(parent_free_cost + level_cost) : ret));
+                cout << "new ret: " << bitset<8>(ret)<< endl;
             }
+            else if (ExtractRestricetedReacheble(parent_ret))
+            {
+                cout << "restricted" << endl;
+                ret |= restricted_reachable_flag;
+                uint8_t current_best_parent_r_cost = ExtractRestricetedCost(ret) - level_cost;
+                cout << "ret: " << bitset<8>(ret) << " current_best_parent_r_cost: " << +current_best_parent_r_cost << endl;
+                uint8_t parent_r_cost = ExtractRestricetedCost(parent_ret);
+                cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_r_cost: " << +parent_r_cost << endl;
+                ret = ((ret & (~restricted_cost_flag)) | ((current_best_parent_r_cost > parent_r_cost) ? RestricetedCostToFlag(parent_r_cost + level_cost) : ret));
+                cout << "new ret: " << bitset<8>(ret) << endl;
+            }
+            cout << "============" << endl;
         }
+        cout << "Final Result for " << translate_colors << endl;
+        cout << "Costs free cost << " << +ExtractFreeCost(ret) << " restricted cost: " << +ExtractRestricetedCost(ret) << endl;
+        cout << "With flag free reachable: " << (ExtractFreeReacheble(ret) ? "Y" : "N") << " restricted reachable: " << (ExtractRestricetedReacheble(ret) ? "Y" : "N") << endl;
+        cout << "================================================================" << endl;
         level_2[i] = ret;
     }
 
@@ -1507,45 +1602,141 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     unsigned badColorings2 = 0;
     for (size_t i = 0; i < size_2; i++)
     {
-        if (level_2[i] == reachable_flag)
+        auto ret = level_2[i];
+        if (IsBad(ret))
         {
             badColorings2++;
             uint8_t first_index = i % pair_choices;
             uint8_t second_index = i / pair_choices;
             uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
             auto translate_colors = GetColors(color_pairs, 2);
-            vector<vector<char>> possibleColors;
-            if (!HasPossibleParentColors(translate_colors, possibleColors))
-            {
-                continue;
-            }
-            int min_number_of_zeros_for_reachable_parent = INT_MAX;
-            auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-            //cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
-            while (!combinationIterator.stop)
-            {
-                auto pc = combinationIterator.GetNext();
-                SimpleCanonical(pc);
-                auto index = GetIndex(pc);
-                auto parent_ret = level_1[index];
-                int number_of_zeros = HasBadVertex(pc);
-                cout << "===============================" << endl;
-                cout << "Trying to solve parent" << pc << endl;
-                cout << "number of zeros" << number_of_zeros << endl;
-                cout << "possibles: " << adjMatrix[pc[0]][pc[1]] << endl;
-                cout << "With flag reachable: " << (IsReachable(parent_ret) ? "Y" : "N") << "  good: " << (IsGood(parent_ret) ? "Y" : "N") << endl;
-                if ((parent_ret & reachable_flag) == reachable_flag)
-                    min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
-            }
-            cout << "+++++++++++++++++++++++" << endl;
+            cout << "bad coloring on level 2" << translate_colors << endl;
         }
+    }
+    cout << endl;
+    cout << badColorings2 << " bad colorings on level 2 before problem" << endl;
+    if (badColorings2 == 0)
+        return true;
+    cout << "test 2 ==" << endl;
+    // for (size_t i = 0; i < size_2; i++)
+    // {
+    //     if (level_2[i] == reachable_flag)
+    //     {
+    //         badColorings2++;
+    //         uint8_t first_index = i % pair_choices;
+    //         uint8_t second_index = i / pair_choices;
+    //         uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
+    //         auto translate_colors = GetColors(color_pairs, 2);
+    //         vector<vector<char>> possibleColors;
+    //         if (!HasPossibleParentColors(translate_colors, possibleColors))
+    //         {
+    //             continue;
+    //         }
+    //         int min_number_of_zeros_for_reachable_parent = INT_MAX;
+    //         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
+    //         //cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
+    //         while (!combinationIterator.stop)
+    //         {
+    //             auto pc = combinationIterator.GetNext();
+    //             SimpleCanonical(pc);
+    //             auto index = GetIndex(pc);
+    //             auto parent_ret = level_1[index];
+    //             int number_of_zeros = HasBadVertex(pc);
+    //             cout << "===============================" << endl;
+    //             cout << "Trying to solve parent" << pc << endl;
+    //             cout << "number of zeros" << number_of_zeros << endl;
+    //             cout << "possibles: " << adjMatrix[pc[0]][pc[1]] << endl;
+    //             cout << "With flag reachable: " << (IsReachable(parent_ret) ? "Y" : "N") << "  good: " << (IsGood(parent_ret) ? "Y" : "N") << endl;
+    //             if ((parent_ret & reachable_flag) == reachable_flag)
+    //                 min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
+    //         }
+    //         cout << "+++++++++++++++++++++++" << endl;
+    //     }
+    // }
+    if (dosubsubproblem)
+    {
+        cout << "Preparing SubProblem" << endl;
+        map<vector<char>, vector<vector<char>>> toImproveTable;
+        for (size_t i = 0; i < size_2; i++)
+        {
+
+            if (IsBad(level_2[i]))
+            {
+                uint8_t first_index = i % pair_choices;
+                uint8_t second_index = i / pair_choices;
+                uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
+                auto bc = GetColors(color_pairs, 2);
+                for (int i = 0; i < bc.size(); i++)
+                {
+                    vector<char> goodsubs;
+                    int bsubs = 0;
+                    int gsubs = 0;
+                    auto sibling = ((i % 2) == 0) ? bc[i + 1] : bc[i - 1];
+                    auto ps = GetPossibleSiblings(sibling);
+                    for (auto s : ps)
+                    {
+                        if (s == 0)
+                        {
+                            bsubs++;
+                            continue;
+                        }
+                        vector<char> ts = bc;
+                        ts[i] = s;
+                        SimpleCanonical(ts);
+                        // cout << "ts:  " << ts << endl;
+                        auto index = GetIndex(ts);
+                        auto sub_ret = level_2[index];
+
+                        //&&
+                        //&
+                        // 110 & 010 = 010
+                        // 00
+                        // 01 -> good flag
+                        // 10 -> reachable_flag
+                        // 11
+                        if ((sub_ret & free_reachable_flag) == free_reachable_flag)
+                        {
+                            goodsubs.push_back(s);
+                        }
+                    }
+                    if (goodsubs.size() < 7)
+                        continue;
+                    // map<char,vector<pair<vector<char>,char>>>
+                    auto key = goodsubs;
+                    //cout << "pushing to solver root " << (int)bc[i] << "from" << bc << " with subs" << goodsubs << endl;
+                    key.push_back(bc[i]);
+                    if (toImproveTable.count(key) == 1)
+                    {
+                        if (find(toImproveTable[key].begin(), toImproveTable[key].end(), bc) == toImproveTable[key].end())
+                            toImproveTable[key].push_back(bc);
+                    }
+                    else
+                    {
+                        vector<vector<char>> tempValue = {bc};
+                        toImproveTable[key] = tempValue;
+                    }
+                }
+            }
+        }
+        cout << "Starting subsubproblem" << endl;
+        auto ret = TryImproveWithSubProblemFromTable(badColorings2, toImproveTable, false);
+        if (!ret)
+            cout << "Unable SubSubProblem" << endl;
+        else 
+            cout << "Solve SubSubProblem" << endl;
+        return ret;
     }
     cout << dec << badColorings2 << " bad colorings on level 2" << endl;
     cout << dec << (double)badColorings2 / (double)size_2 << " bad colorings proportion on level 2" << endl;
     if (badColorings2 == 0)
         return true;
+    else
+        return false;
     // SanityCheckForLevel(2, level_2);
     cout << "test 3" << endl;
+    size_t size_3 = pair_choices_exponents[4];
+    uint8_t *level_3 = (uint8_t *)malloc(size_3 * sizeof(uint8_t));
+    size_t size_4 = (size_t)pow(pair_choices, 8);
     for (size_t i = 0; i < size_3; i++)
     {
         // if (i % (size_3 / 100) == 0)
@@ -1559,7 +1750,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
         uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
         auto translate_colors = GetColors(color_pairs, 4);
         vector<vector<char>> possibleColors;
-        //cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
+        // cout << "Coloring: " << translate_colors << "with index: "<< i << endl;
         if (!HasPossibleParentColors(translate_colors, possibleColors))
         {
             level_3[i] = ret;
@@ -1574,18 +1765,18 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
             auto index = GetIndex(pc);
             auto parent_ret = level_2[index];
             int number_of_zeros = HasBadVertex(pc);
-            if ((parent_ret & reachable_flag) == reachable_flag)
+            if ((parent_ret & restricted_reachable_flag) == restricted_reachable_flag)
                 min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
             if (number_of_zeros)
             {
-                ret = ret | (parent_ret & reachable_flag);
+                ret = ret | (parent_ret & restricted_reachable_flag);
             }
             else
             {
                 ret = ret | parent_ret;
             }
         }
-        if ((ret & good_flag) != good_flag)
+        if ((ret & free_reachable_flag) != free_reachable_flag)
         {
             auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
             while (!combinationIterator.stop)
@@ -1606,7 +1797,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
     unsigned badColorings3 = 0;
     for (size_t i = 0; i < size_3; i++)
     {
-        if (level_3[i] == reachable_flag)
+        if (level_3[i] == restricted_reachable_flag)
         {
             badColorings3++;
             uint8_t ret = 0;
@@ -1625,7 +1816,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
 
             int min_number_of_zeros_for_reachable_parent = INT_MAX;
             auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-            cout << "Bad Coloring: " << translate_colors << "with index: "<< i << endl;
+            cout << "Bad Coloring: " << translate_colors << "with index: " << i << endl;
             while (!combinationIterator.stop)
             {
                 auto pc = combinationIterator.GetNext();
@@ -1637,12 +1828,13 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices)
                 cout << "Trying to solve parent" << pc << endl;
                 cout << "number of zeros" << number_of_zeros << endl;
                 cout << "possibles: ";
-                for(auto i=0; i< pc.size(); i+=2){
-                     cout << adjMatrix[pc[i]][pc[i+1]] << "--|--";
+                for (auto i = 0; i < pc.size(); i += 2)
+                {
+                    cout << adjMatrix[pc[i]][pc[i + 1]] << "--|--";
                 }
-                cout<< endl;
-                cout << "With flag reachable: " << (IsReachable(parent_ret) ? "Y" : "N") << "  good: " << (IsGood(parent_ret) ? "Y" : "N") << endl;
-                if ((parent_ret & reachable_flag) == reachable_flag)
+                cout << endl;
+                // cout << "With flag reachable: " << (IsReachable(parent_ret) ? "Y" : "N") << "  good: " << (IsGood(parent_ret) ? "Y" : "N") << endl;
+                if ((parent_ret & restricted_reachable_flag) == restricted_reachable_flag)
                     min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
             }
             cout << "+++++++++++++++++++++++" << endl;
@@ -1758,10 +1950,10 @@ int main()
     // TopDownOnTreeVertex(2);
     //   TopDownOnTreeEdge(2);
     ReadAndTryImprove("output_table_1692733877");
-//     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-//       Trying substitutions to: 9
-//      with goodVertices 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15
-    //vector<char> goodVertex = {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15};
-    //HasGoodVertexSubstitution(9, goodVertex);
+    //     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    //       Trying substitutions to: 9
+    //      with goodVertices 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15
+    // vector<char> goodVertex = {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15};
+    // HasGoodVertexSubstitution(9, goodVertex);
     return 0;
 }
