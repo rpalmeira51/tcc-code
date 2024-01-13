@@ -2,8 +2,25 @@
 #include <map>
 #include "combinations.h"
 #include "../data-structures/globals.h"
+#include "../utils/utils.h"
 using namespace std;
 
+
+bool HasPossibleParentColors(vector<char> const &levelColors, vector<vector<char>> &possibleColors)
+{
+    for (int i = 0; i < levelColors.size(); i += 2)
+    {
+        auto v = levelColors[i];
+        auto u = levelColors[i + 1];
+        auto cn = PossibleChoicesCommonNeighbours(v, u);
+        if (cn.size() == 0)
+        {
+            return false;
+        }
+        possibleColors.push_back(cn);
+    }
+    return true;
+}
 
 //Inicializa a matriz de permutação
 void InitializeParentPermutationMatrix(){

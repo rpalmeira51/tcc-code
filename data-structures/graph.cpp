@@ -1,6 +1,9 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>    
 #include "graph.h"
+#include "globals.h"
+
 using namespace std;
 
 // Função auxiliar que cria um vértice com a lista de adjacência preenchida com índices(dos vizinhos) passados no argumento
@@ -84,4 +87,38 @@ RootedTree::RootedTree(int n)
         child->parent = root;
         children.push_back(child);
     }
+}
+
+
+//   Calcula o custo para uma cor
+uint8_t CalculateCostVertex(unsigned vertex)
+{
+    if (find(ClebschGraphObj.badVertices.begin(), ClebschGraphObj.badVertices.end(), vertex) != ClebschGraphObj.badVertices.end())
+        return 1;
+    else
+        return 0;
+}
+
+// 0 ,6
+// 1 ,1 ,0 ,0
+uint8_t CalculateCostEdges(vector<char> const &parentColors, vector<char> const &colors)
+{
+    ////COUT << "parent" << parentColors << endl;
+    ////COUT << "colors" << colors << endl;
+    uint8_t cost = 0;
+    for (int i = 0; i < colors.size(); i++)
+    {
+        cost += ClebschGraphObj.EdgeCost(parentColors[i / 2], colors[i]);
+    }
+    ////COUT << "T cost: " << cost << endl;
+    return cost;
+}
+
+// Calcula o custo para um vetor de cores
+uint8_t CalculateCostVertex(vector<char> const &colors)
+{
+    uint8_t cost = 0;
+    for (auto c : colors)
+        cost += CalculateCostVertex(c);
+    return cost;
 }

@@ -1,0 +1,35 @@
+Trying substitutions to: 12
+with goodVertices 2, 3, 4, 6, 7, 8, 9, 11, 13, 15
+bad color to improve: 2  4  with index 33
+bad color to improve: 4  9  with index 63
+bad color to improve: 4  13  with index 67
+bad color to improve: 6  13  with index 88
+4 bad colorings on level 1
+bad coloring on level 2  |5, 11, 0, 13|
+bad coloring on level 2  |5, 14, 1, 4|
+bad coloring on level 2  |5, 14, 1, 8|
+bad coloring on level 2  |5, 14, 3, 8|
+bad coloring on level 2  |5, 14, 4, 12|
+bad coloring on level 2  |0, 13, 5, 11|
+bad coloring on level 2  |9, 12, 5, 11|
+bad coloring on level 2  |12, 13, 5, 11|
+bad coloring on level 2  |12, 14, 5, 11|
+bad coloring on level 2  |1, 4, 5, 14|
+bad coloring on level 2  |1, 8, 5, 14|
+bad coloring on level 2  |3, 8, 5, 14|
+bad coloring on level 2  |4, 12, 5, 14|
+bad coloring on level 2  |6, 12, 5, 14|
+bad coloring on level 2  |8, 10, 5, 14|
+bad coloring on level 2  |8, 12, 5, 14|
+bad coloring on level 2  |11, 12, 5, 14|
+bad coloring on level 2  |12, 15, 5, 14|
+bad coloring on level 2  |5, 14, 6, 12|
+bad coloring on level 2  |5, 14, 8, 10|
+bad coloring on level 2  |5, 14, 8, 12|
+bad coloring on level 2  |5, 11, 9, 12|
+bad coloring on level 2  |5, 14, 11, 12|
+bad coloring on level 2  |5, 11, 12, 13|
+bad coloring on level 2  |5, 11, 12, 14|
+bad coloring on level 2  |5, 14, 12, 15|
+
+26 bad colorings on level 2

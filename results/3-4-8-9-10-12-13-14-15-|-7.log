@@ -1,0 +1,1055 @@
+Trying substitutions to: 7
+with goodVertices 3, 4, 8, 9, 10, 12, 13, 14, 15
+bad color to improve: 6  10  with index 85
+bad color to improve: 9  10  with index 109
+bad color to improve: 9  15  with index 114
+bad color to improve: 10  15  with index 120
+4 bad colorings on level 1
+bad coloring on level 2  |1, 8, 0, 2|
+bad coloring on level 2  |1, 11, 0, 2|
+bad coloring on level 2  |8, 12, 0, 2|
+bad coloring on level 2  |11, 12, 0, 2|
+bad coloring on level 2  |1, 1, 0, 4|
+bad coloring on level 2  |1, 2, 0, 4|
+bad coloring on level 2  |1, 7, 0, 4|
+bad coloring on level 2  |1, 8, 0, 4|
+bad coloring on level 2  |1, 11, 0, 4|
+bad coloring on level 2  |1, 12, 0, 4|
+bad coloring on level 2  |1, 13, 0, 4|
+bad coloring on level 2  |1, 14, 0, 4|
+bad coloring on level 2  |1, 2, 0, 11|
+bad coloring on level 2  |1, 13, 0, 11|
+bad coloring on level 2  |2, 14, 0, 11|
+bad coloring on level 2  |13, 14, 0, 11|
+bad coloring on level 2  |2, 4, 0, 12|
+bad coloring on level 2  |2, 11, 0, 12|
+bad coloring on level 2  |2, 11, 0, 14|
+bad coloring on level 2  |4, 11, 0, 14|
+bad coloring on level 2  |0, 4, 1, 1|
+bad coloring on level 2  |2, 11, 1, 1|
+bad coloring on level 2  |0, 4, 1, 2|
+bad coloring on level 2  |0, 11, 1, 2|
+bad coloring on level 2  |1, 8, 1, 2|
+bad coloring on level 2  |1, 11, 1, 2|
+bad coloring on level 2  |2, 11, 1, 2|
+bad coloring on level 2  |4, 11, 1, 2|
+bad coloring on level 2  |7, 11, 1, 2|
+bad coloring on level 2  |8, 11, 1, 2|
+bad coloring on level 2  |8, 12, 1, 2|
+bad coloring on level 2  |11, 11, 1, 2|
+bad coloring on level 2  |11, 12, 1, 2|
+bad coloring on level 2  |0, 4, 1, 7|
+bad coloring on level 2  |2, 11, 1, 7|
+bad coloring on level 2  |0, 2, 1, 8|
+bad coloring on level 2  |0, 4, 1, 8|
+bad coloring on level 2  |1, 2, 1, 8|
+bad coloring on level 2  |1, 13, 1, 8|
+bad coloring on level 2  |2, 2, 1, 8|
+bad coloring on level 2  |2, 4, 1, 8|
+bad coloring on level 2  |2, 7, 1, 8|
+bad coloring on level 2  |2, 11, 1, 8|
+bad coloring on level 2  |2, 13, 1, 8|
+bad coloring on level 2  |2, 14, 1, 8|
+bad coloring on level 2  |13, 14, 1, 8|
+bad coloring on level 2  |0, 2, 1, 11|
+bad coloring on level 2  |0, 4, 1, 11|
+bad coloring on level 2  |1, 2, 1, 11|
+bad coloring on level 2  |1, 13, 1, 11|
+bad coloring on level 2  |2, 2, 1, 11|
+bad coloring on level 2  |2, 4, 1, 11|
+bad coloring on level 2  |2, 7, 1, 11|
+bad coloring on level 2  |2, 11, 1, 11|
+bad coloring on level 2  |2, 13, 1, 11|
+bad coloring on level 2  |2, 14, 1, 11|
+bad coloring on level 2  |13, 14, 1, 11|
+bad coloring on level 2  |0, 4, 1, 12|
+bad coloring on level 2  |2, 4, 1, 12|
+bad coloring on level 2  |2, 11, 1, 12|
+bad coloring on level 2  |0, 4, 1, 13|
+bad coloring on level 2  |0, 11, 1, 13|
+bad coloring on level 2  |1, 8, 1, 13|
+bad coloring on level 2  |1, 11, 1, 13|
+bad coloring on level 2  |2, 11, 1, 13|
+bad coloring on level 2  |4, 11, 1, 13|
+bad coloring on level 2  |7, 11, 1, 13|
+bad coloring on level 2  |8, 11, 1, 13|
+bad coloring on level 2  |8, 12, 1, 13|
+bad coloring on level 2  |11, 11, 1, 13|
+bad coloring on level 2  |11, 12, 1, 13|
+bad coloring on level 2  |0, 4, 1, 14|
+bad coloring on level 2  |2, 11, 1, 14|
+bad coloring on level 2  |4, 11, 1, 14|
+bad coloring on level 2  |1, 8, 2, 2|
+bad coloring on level 2  |1, 11, 2, 2|
+bad coloring on level 2  |8, 12, 2, 2|
+bad coloring on level 2  |11, 12, 2, 2|
+bad coloring on level 2  |0, 12, 2, 4|
+bad coloring on level 2  |1, 8, 2, 4|
+bad coloring on level 2  |1, 11, 2, 4|
+bad coloring on level 2  |1, 12, 2, 4|
+bad coloring on level 2  |3, 12, 2, 4|
+bad coloring on level 2  |7, 12, 2, 4|
+bad coloring on level 2  |8, 12, 2, 4|
+bad coloring on level 2  |11, 12, 2, 4|
+bad coloring on level 2  |12, 12, 2, 4|
+bad coloring on level 2  |12, 14, 2, 4|
+bad coloring on level 2  |1, 8, 2, 7|
+bad coloring on level 2  |1, 11, 2, 7|
+bad coloring on level 2  |8, 12, 2, 7|
+bad coloring on level 2  |11, 12, 2, 7|
+bad coloring on level 2  |0, 12, 2, 11|
+bad coloring on level 2  |0, 14, 2, 11|
+bad coloring on level 2  |1, 1, 2, 11|
+bad coloring on level 2  |1, 2, 2, 11|
+bad coloring on level 2  |1, 7, 2, 11|
+bad coloring on level 2  |1, 8, 2, 11|
+bad coloring on level 2  |1, 11, 2, 11|
+bad coloring on level 2  |1, 12, 2, 11|
+bad coloring on level 2  |1, 13, 2, 11|
+bad coloring on level 2  |1, 14, 2, 11|
+bad coloring on level 2  |2, 14, 2, 11|
+bad coloring on level 2  |3, 12, 2, 11|
+bad coloring on level 2  |3, 14, 2, 11|
+bad coloring on level 2  |7, 12, 2, 11|
+bad coloring on level 2  |7, 14, 2, 11|
+bad coloring on level 2  |8, 12, 2, 11|
+bad coloring on level 2  |11, 12, 2, 11|
+bad coloring on level 2  |12, 12, 2, 11|
+bad coloring on level 2  |12, 14, 2, 11|
+bad coloring on level 2  |13, 14, 2, 11|
+bad coloring on level 2  |14, 14, 2, 11|
+bad coloring on level 2  |1, 8, 2, 13|
+bad coloring on level 2  |1, 11, 2, 13|
+bad coloring on level 2  |8, 12, 2, 13|
+bad coloring on level 2  |11, 12, 2, 13|
+bad coloring on level 2  |0, 11, 2, 14|
+bad coloring on level 2  |1, 8, 2, 14|
+bad coloring on level 2  |1, 11, 2, 14|
+bad coloring on level 2  |2, 11, 2, 14|
+bad coloring on level 2  |4, 11, 2, 14|
+bad coloring on level 2  |7, 11, 2, 14|
+bad coloring on level 2  |8, 11, 2, 14|
+bad coloring on level 2  |8, 12, 2, 14|
+bad coloring on level 2  |11, 11, 2, 14|
+bad coloring on level 2  |11, 12, 2, 14|
+bad coloring on level 2  |2, 4, 3, 12|
+bad coloring on level 2  |2, 11, 3, 12|
+bad coloring on level 2  |2, 11, 3, 14|
+bad coloring on level 2  |4, 11, 3, 14|
+bad coloring on level 2  |0, 14, 4, 11|
+bad coloring on level 2  |1, 2, 4, 11|
+bad coloring on level 2  |1, 13, 4, 11|
+bad coloring on level 2  |1, 14, 4, 11|
+bad coloring on level 2  |2, 14, 4, 11|
+bad coloring on level 2  |3, 14, 4, 11|
+bad coloring on level 2  |7, 14, 4, 11|
+bad coloring on level 2  |12, 14, 4, 11|
+bad coloring on level 2  |13, 14, 4, 11|
+bad coloring on level 2  |14, 14, 4, 11|
+bad coloring on level 2  |1, 2, 7, 11|
+bad coloring on level 2  |1, 13, 7, 11|
+bad coloring on level 2  |2, 14, 7, 11|
+bad coloring on level 2  |13, 14, 7, 11|
+bad coloring on level 2  |2, 4, 7, 12|
+bad coloring on level 2  |2, 11, 7, 12|
+bad coloring on level 2  |2, 11, 7, 14|
+bad coloring on level 2  |4, 11, 7, 14|
+bad coloring on level 2  |1, 2, 8, 11|
+bad coloring on level 2  |1, 13, 8, 11|
+bad coloring on level 2  |2, 14, 8, 11|
+bad coloring on level 2  |13, 14, 8, 11|
+bad coloring on level 2  |0, 2, 8, 12|
+bad coloring on level 2  |1, 2, 8, 12|
+bad coloring on level 2  |1, 13, 8, 12|
+bad coloring on level 2  |2, 2, 8, 12|
+bad coloring on level 2  |2, 4, 8, 12|
+bad coloring on level 2  |2, 7, 8, 12|
+bad coloring on level 2  |2, 11, 8, 12|
+bad coloring on level 2  |2, 13, 8, 12|
+bad coloring on level 2  |2, 14, 8, 12|
+bad coloring on level 2  |1, 2, 11, 11|
+bad coloring on level 2  |1, 13, 11, 11|
+bad coloring on level 2  |2, 14, 11, 11|
+bad coloring on level 2  |13, 14, 11, 11|
+bad coloring on level 2  |0, 2, 11, 12|
+bad coloring on level 2  |1, 2, 11, 12|
+bad coloring on level 2  |1, 13, 11, 12|
+bad coloring on level 2  |2, 2, 11, 12|
+bad coloring on level 2  |2, 4, 11, 12|
+bad coloring on level 2  |2, 7, 11, 12|
+bad coloring on level 2  |2, 11, 11, 12|
+bad coloring on level 2  |2, 13, 11, 12|
+bad coloring on level 2  |2, 14, 11, 12|
+bad coloring on level 2  |13, 14, 11, 12|
+bad coloring on level 2  |2, 4, 12, 12|
+bad coloring on level 2  |2, 11, 12, 12|
+bad coloring on level 2  |2, 4, 12, 14|
+bad coloring on level 2  |2, 11, 12, 14|
+bad coloring on level 2  |4, 11, 12, 14|
+bad coloring on level 2  |0, 11, 13, 14|
+bad coloring on level 2  |1, 8, 13, 14|
+bad coloring on level 2  |1, 11, 13, 14|
+bad coloring on level 2  |2, 11, 13, 14|
+bad coloring on level 2  |4, 11, 13, 14|
+bad coloring on level 2  |7, 11, 13, 14|
+bad coloring on level 2  |8, 11, 13, 14|
+bad coloring on level 2  |11, 11, 13, 14|
+bad coloring on level 2  |11, 12, 13, 14|
+bad coloring on level 2  |2, 11, 14, 14|
+bad coloring on level 2  |4, 11, 14, 14|
+
+192 bad colorings on level 2
+Sub sub problem :
+Trying improving 0, 2, 1, 8 with subs:
+Root to change : 2 with colors |3, 5, 7, 11, 12, 14, 15|
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 2, 1, 11 with subs:
+Root to change : 2 with colors |3, 5, 7, 11, 12, 14, 15|
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 2, 8, 12 with subs:
+Root to change : 2 with colors |3, 4, 5, 7, 9, 11, 12, 14, 15|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 0, 2, 11, 12 with subs:
+Root to change : 2 with colors |3, 4, 5, 7, 9, 11, 12, 14, 15|
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 1 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 2 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 12, 14|
+Root to change : 1 with colors |2, 4, 5, 6, 7, 9, 11, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 7 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+Root to change : 1 with colors |2, 3, 4, 7, 8, 11, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 8 with subs:
+Root to change : 0 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |3, 5, 7, 11, 12, 14, 15|
+Root to change : 1 with colors |3, 4, 6, 7, 8, 10, 11, 12, 13, 15|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 11 with subs:
+Root to change : 0 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |3, 5, 7, 11, 12, 14, 15|
+Root to change : 1 with colors |2, 4, 5, 6, 7, 8, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 12 with subs:
+Root to change : 0 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+Root to change : 1 with colors |3, 5, 7, 8, 10, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 13 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 12, 14|
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 10, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 4, 1, 14 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+Root to change : 1 with colors |2, 3, 5, 7, 9, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 11, 1, 2 with subs:
+Root to change : 11 with colors |2, 3, 5, 7, 9, 12, 14|
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 0, 11, 1, 13 with subs:
+Root to change : 11 with colors |2, 3, 5, 7, 9, 12, 14|
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 0, 11, 2, 14 with subs:
+Root to change : 11 with colors |2, 3, 4, 5, 7, 9, 12, 14, 15|
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 0, 11, 13, 14 with subs:
+Root to change : 11 with colors |2, 3, 4, 5, 7, 9, 12, 14, 15|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 0, 12, 2, 4 with subs:
+Root to change : 12 with colors |2, 3, 4, 5, 7, 9, 11, 14, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 12, 2, 11 with subs:
+Root to change : 12 with colors |2, 3, 4, 7, 9, 11, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 14, 2, 11 with subs:
+Root to change : 14 with colors |2, 3, 4, 7, 9, 11, 15|
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 0, 14, 4, 11 with subs:
+Root to change : 14 with colors |2, 3, 4, 5, 7, 9, 11, 12, 15|
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 1, 1, 0, 4 with subs:
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 1, 2, 11 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 0, 4 with subs:
+Root to change : 1 with colors |2, 4, 5, 6, 7, 9, 11, 13, 14|
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 0, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |2, 3, 5, 7, 9, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 1, 8 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 1, 11 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 2, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 4, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 1, 2, 7, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 8, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 8, 12 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 11, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 2, 11, 12 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 7, 0, 4 with subs:
+Root to change : 1 with colors |2, 3, 4, 7, 8, 11, 12, 13, 14|
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 7, 2, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 7, 8, 11, 13|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 0, 2 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |3, 5, 7, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 8, 0, 4 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 10, 11, 12, 13, 15|
+Root to change : 0 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |3, 5, 7, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 8, 1, 2 with subs:
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 1, 13 with subs:
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 2 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 4 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 7 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 11 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 13 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 2, 14 with subs:
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 8, 13, 14 with subs:
+Root to change : 1 with colors |3, 4, 7, 8, 10, 12, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 0, 2 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |3, 5, 7, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 11, 0, 4 with subs:
+Root to change : 1 with colors |2, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 0 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |3, 5, 7, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 11, 1, 2 with subs:
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 1, 13 with subs:
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 2 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 4 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 7 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 13 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 2, 14 with subs:
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 11, 13, 14 with subs:
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 12, 0, 4 with subs:
+Root to change : 1 with colors |3, 5, 7, 8, 10, 11, 12, 14, 15|
+Root to change : 0 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 12, 2, 4 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 12, 2, 11 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 0, 4 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 10, 13, 14|
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 0, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |2, 3, 5, 7, 9, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 1, 8 with subs:
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 1, 11 with subs:
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 2, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 4, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 1, 13, 7, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 8, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 8, 12 with subs:
+Root to change : 1 with colors |3, 4, 7, 8, 9, 10, 13, 14|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 11, 11 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 13, 11, 12 with subs:
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 1, 14, 0, 4 with subs:
+Root to change : 1 with colors |2, 3, 5, 7, 9, 10, 12, 13, 14|
+Root to change : 0 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 4 with colors |2, 3, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 1, 14, 2, 11 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 1, 14, 4, 11 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 2, 2, 1, 8 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 2, 1, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 2, 8, 12 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 2, 11, 12 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 0, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |2, 3, 4, 5, 7, 9, 11, 14, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 1, 8 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 1, 11 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 1, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 4, 3, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |3, 4, 7, 8, 9, 10, 13, 14, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 7, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |1, 2, 3, 4, 7, 8, 11, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 4, 8, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 11, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 4, 12, 12 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 4, 12, 14 with subs:
+Root to change : 2 with colors |3, 4, 7, 8, 9, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |1, 2, 3, 5, 7, 9, 10, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 7, 1, 8 with subs:
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 7, 1, 11 with subs:
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 7, 8, 12 with subs:
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 7, 11, 12 with subs:
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 0, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |2, 3, 4, 7, 9, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 0, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 14 with colors |2, 3, 4, 7, 9, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 1 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 2 with subs:
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 7 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 1 with colors |2, 3, 4, 7, 8, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 8 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 11 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 13 with subs:
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 1, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 11, 2, 14 with subs:
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 3, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |3, 4, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 3, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 14 with colors |3, 4, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 7, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+Root to change : 12 with colors |2, 3, 4, 7, 8, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 7, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 14 with colors |2, 3, 4, 7, 8, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 8, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 11, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 11, 12, 12 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 11, 12, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 11, 13, 14 with subs:
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 2, 11, 14, 14 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 13, 1, 8 with subs:
+Root to change : 1 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 13, 1, 11 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 13, 8, 12 with subs:
+Root to change : 2 with colors |3, 4, 7, 8, 9, 10, 13, 14|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 13, 11, 12 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 2, 14, 0, 11 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |2, 3, 4, 5, 7, 9, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 2, 14, 1, 8 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 14, 1, 11 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 14, 2, 11 with subs:
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 14, 4, 11 with subs:
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 2, 14, 7, 11 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 2, 14, 8, 11 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 14, 8, 12 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 9, 10, 12, 13, 14|
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 2, 14, 11, 11 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 2, 14, 11, 12 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 3, 12, 2, 4 with subs:
+Root to change : 12 with colors |3, 4, 7, 8, 9, 10, 13, 14, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 3, 12, 2, 11 with subs:
+Root to change : 12 with colors |3, 4, 7, 8, 9, 13, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 3, 14, 2, 11 with subs:
+Root to change : 14 with colors |3, 4, 7, 8, 9, 13, 15|
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 3, 14, 4, 11 with subs:
+Root to change : 14 with colors |3, 4, 7, 8, 9, 10, 12, 13, 15|
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 4, 11, 0, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |2, 3, 4, 5, 7, 9, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 4, 11, 1, 2 with subs:
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 1, 13 with subs:
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 1, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 2, 14 with subs:
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 3, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |3, 4, 7, 8, 9, 10, 12, 13, 15|
+++++++++++++++++++++++
+Trying improving 4, 11, 7, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |1, 2, 3, 4, 7, 8, 11, 12, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 12, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |3, 4, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |1, 3, 5, 7, 8, 10, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 4, 11, 13, 14 with subs:
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 4, 11, 14, 14 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 7, 11, 1, 2 with subs:
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 7, 11, 1, 13 with subs:
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 7, 11, 2, 14 with subs:
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 7, 11, 13, 14 with subs:
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 7, 12, 2, 4 with subs:
+Root to change : 12 with colors |1, 2, 3, 4, 7, 8, 11, 13, 14|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 7, 12, 2, 11 with subs:
+Root to change : 12 with colors |2, 3, 4, 7, 8, 11, 13|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 7, 14, 2, 11 with subs:
+Root to change : 14 with colors |2, 3, 4, 7, 8, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 7, 14, 4, 11 with subs:
+Root to change : 14 with colors |1, 2, 3, 4, 7, 8, 11, 12, 13|
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 8, 11, 1, 2 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 8, 11, 1, 13 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 8, 11, 2, 14 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 8, 11, 13, 14 with subs:
+Root to change : 11 with colors |3, 4, 7, 8, 10, 12, 13, 15|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 8, 12, 0, 2 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |3, 4, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 8, 12, 1, 2 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 8, 12, 1, 13 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 1 with colors |3, 4, 7, 8, 9, 10, 13, 14|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 2 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 4 with subs:
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 7 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 11 with subs:
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 13 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |3, 4, 6, 7, 8, 11, 13, 15|
+Root to change : 2 with colors |3, 4, 7, 8, 9, 10, 13, 14|
+++++++++++++++++++++++
+Trying improving 8, 12, 2, 14 with subs:
+Root to change : 8 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 2 with colors |1, 3, 5, 7, 9, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 11, 11, 1, 2 with subs:
+Root to change : 1 with colors |2, 4, 6, 7, 9, 11, 13|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 11, 11, 1, 13 with subs:
+Root to change : 1 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 11, 11, 2, 14 with subs:
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 4, 6, 7, 9, 11, 13|
+++++++++++++++++++++++
+Trying improving 11, 11, 13, 14 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 11, 12, 0, 2 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |3, 4, 5, 7, 9, 11, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 11, 12, 1, 2 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 2 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 11, 12, 1, 13 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 13 with colors |1, 5, 7, 8, 10, 11, 12, 14|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 2 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 4 with subs:
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 7 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |1, 3, 4, 7, 8, 11, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 11 with subs:
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 13 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 12 with colors |2, 4, 6, 7, 8, 11, 15|
+++++++++++++++++++++++
+Trying improving 11, 12, 2, 14 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 2 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 11, 12, 13, 14 with subs:
+Root to change : 11 with colors |1, 3, 5, 7, 8, 10, 12, 14, 15|
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+++++++++++++++++++++++
+Trying improving 12, 12, 2, 4 with subs:
+Root to change : 2 with colors |3, 4, 6, 7, 8, 9, 11, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 12, 12, 2, 11 with subs:
+Root to change : 2 with colors |1, 4, 5, 6, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 12, 14, 2, 4 with subs:
+Root to change : 12 with colors |1, 2, 3, 5, 7, 9, 10, 13, 14|
+Root to change : 2 with colors |3, 4, 7, 8, 9, 13, 15|
+Root to change : 4 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 12, 14, 2, 11 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 5, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 12, 14, 4, 11 with subs:
+Root to change : 14 with colors |1, 3, 5, 7, 8, 10, 11, 12, 15|
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |3, 4, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 13, 14, 0, 11 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |2, 3, 4, 5, 7, 9, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 13, 14, 1, 8 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 1 with colors |3, 4, 7, 8, 10, 12, 13, 15|
+Root to change : 8 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 13, 14, 1, 11 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 11 with colors |1, 2, 5, 7, 10, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 13, 14, 2, 11 with subs:
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 13, 14, 4, 11 with subs:
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Trying improving 13, 14, 7, 11 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |1, 2, 3, 4, 7, 8, 12, 13, 14|
+++++++++++++++++++++++
+Trying improving 13, 14, 8, 11 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+Root to change : 11 with colors |3, 4, 7, 8, 10, 12, 13, 15|
+++++++++++++++++++++++
+Trying improving 13, 14, 11, 11 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 14 with colors |2, 3, 4, 6, 7, 8, 9, 13|
+++++++++++++++++++++++
+Trying improving 13, 14, 11, 12 with subs:
+Root to change : 13 with colors |1, 3, 5, 7, 10, 12, 14|
+Root to change : 11 with colors |1, 3, 5, 7, 8, 10, 12, 14, 15|
+++++++++++++++++++++++
+Trying improving 14, 14, 2, 11 with subs:
+Root to change : 2 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |1, 2, 4, 5, 6, 7, 9, 13, 14|
+++++++++++++++++++++++
+Trying improving 14, 14, 4, 11 with subs:
+Root to change : 4 with colors |1, 5, 7, 8, 11, 12, 15|
+Root to change : 11 with colors |2, 3, 4, 6, 7, 8, 9, 13, 15|
+++++++++++++++++++++++
+Unable to be solved with SubSubProblem

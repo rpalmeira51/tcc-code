@@ -1,0 +1,64 @@
+Trying substitutions to: 10
+with goodVertices 2, 3, 4, 6, 7, 8, 9, 13
+bad color to improve: 0  4  with index 4
+bad color to improve: 0  8  with index 8
+bad color to improve: 2  4  with index 33
+bad color to improve: 2  7  with index 36
+bad color to improve: 2  8  with index 37
+5 bad colorings on level 1
+bad coloring on level 2  |3, 8, 0, 5|
+bad coloring on level 2  |8, 10, 0, 5|
+bad coloring on level 2  |3, 8, 1, 5|
+bad coloring on level 2  |8, 10, 1, 5|
+bad coloring on level 2  |5, 14, 1, 8|
+bad coloring on level 2  |3, 8, 2, 5|
+bad coloring on level 2  |8, 10, 2, 5|
+bad coloring on level 2  |0, 5, 3, 8|
+bad coloring on level 2  |1, 5, 3, 8|
+bad coloring on level 2  |2, 5, 3, 8|
+bad coloring on level 2  |5, 5, 3, 8|
+bad coloring on level 2  |5, 6, 3, 8|
+bad coloring on level 2  |5, 9, 3, 8|
+bad coloring on level 2  |5, 10, 3, 8|
+bad coloring on level 2  |5, 12, 3, 8|
+bad coloring on level 2  |5, 14, 3, 8|
+bad coloring on level 2  |5, 15, 3, 8|
+bad coloring on level 2  |6, 10, 3, 8|
+bad coloring on level 2  |3, 8, 5, 5|
+bad coloring on level 2  |8, 10, 5, 5|
+bad coloring on level 2  |3, 8, 5, 6|
+bad coloring on level 2  |8, 10, 5, 6|
+bad coloring on level 2  |3, 8, 5, 9|
+bad coloring on level 2  |8, 10, 5, 9|
+bad coloring on level 2  |3, 8, 5, 10|
+bad coloring on level 2  |8, 10, 5, 10|
+bad coloring on level 2  |3, 8, 5, 12|
+bad coloring on level 2  |8, 10, 5, 12|
+bad coloring on level 2  |1, 8, 5, 14|
+bad coloring on level 2  |3, 8, 5, 14|
+bad coloring on level 2  |8, 10, 5, 14|
+bad coloring on level 2  |8, 12, 5, 14|
+bad coloring on level 2  |8, 13, 5, 14|
+bad coloring on level 2  |12, 15, 5, 14|
+bad coloring on level 2  |3, 8, 5, 15|
+bad coloring on level 2  |8, 10, 5, 15|
+bad coloring on level 2  |8, 10, 6, 9|
+bad coloring on level 2  |3, 8, 6, 10|
+bad coloring on level 2  |8, 10, 6, 10|
+bad coloring on level 2  |0, 5, 8, 10|
+bad coloring on level 2  |1, 5, 8, 10|
+bad coloring on level 2  |2, 5, 8, 10|
+bad coloring on level 2  |5, 5, 8, 10|
+bad coloring on level 2  |5, 6, 8, 10|
+bad coloring on level 2  |5, 9, 8, 10|
+bad coloring on level 2  |5, 10, 8, 10|
+bad coloring on level 2  |5, 12, 8, 10|
+bad coloring on level 2  |5, 14, 8, 10|
+bad coloring on level 2  |5, 15, 8, 10|
+bad coloring on level 2  |6, 9, 8, 10|
+bad coloring on level 2  |6, 10, 8, 10|
+bad coloring on level 2  |5, 14, 8, 12|
+bad coloring on level 2  |5, 14, 8, 13|
+bad coloring on level 2  |5, 14, 12, 15|
+
+54 bad colorings on level 2

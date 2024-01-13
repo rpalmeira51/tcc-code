@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 using namespace std;
+bool HasPossibleParentColors(vector<char> const &levelColors, vector<vector<char>> &possibleColors);
 bool GetNextPermutationTopDown(vector<char> &permutationIndentifier);
 bool GetNextPermutation(vector<char> &vet, vector<char> &nc);
 

@@ -60,3 +60,17 @@ vector<char> PossibleChoicesCommonNeighbours(unsigned v, unsigned u)
 {
     return adjMatrix[v][u];
 }
+
+
+void SimpleCanonical(vector<char> &colors)
+{
+    for (int i = 0; i < colors.size(); i += 2)
+    {
+        auto u = colors[i];
+        auto v = colors[i + 1];
+        if (u <= v)
+            continue;
+        colors[i] = v;
+        colors[i + 1] = u;
+    }
+}

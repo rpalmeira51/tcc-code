@@ -5,14 +5,17 @@
  
 CC = g++
 CFLAGS = -pthread -O3
-PROFILING=
+PROFILING= #-pg
 
 # ****************************************************
 # Targets needed to bring the executable up to date
  
 all: globals.o graph.o canonical_ordering.o combinations.o utils.o
 	g++ ${CFLAGS} $(PROFILING) main.cpp -o calculate_for_level_opt globals.o graph.o canonical_ordering.o combinations.o utils.o
-	
+
+test: 
+	g++ ${CFLAGS} $(PROFILING) tester.cpp -o tester globals.o graph.o canonical_ordering.o combinations.o utils.o
+
 # The main.o target can be written more simply
 # main.o: main.cpp graph.o canonical_ordering.o combinations.o utils.o
 # 	g++ $(CFLAGS) -c main.cpp

@@ -1,0 +1,12 @@
+Trying substitutions to: 8
+with goodVertices 2, 4, 5, 6, 9, 10, 13, 15
+bad color to improve: 2  5  with index 34
+1 bad colorings on level 1
+bad coloring on level 2  |8, 10, 4, 13|
+bad coloring on level 2  |4, 13, 8, 10|
+bad coloring on level 2  |8, 13, 8, 10|
+bad coloring on level 2  |8, 10, 8, 13|
+bad coloring on level 2  |10, 15, 8, 13|
+bad coloring on level 2  |8, 13, 10, 15|
+
+6 bad colorings on level 2

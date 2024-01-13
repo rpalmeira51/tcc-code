@@ -29,54 +29,6 @@ const auto processor_count = 1;
 
 bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool subsubproblem = false);
 
-//   Calcula o custo para uma cor
-uint8_t CalculateCostVertex(unsigned vertex)
-{
-    if (std::find(ClebschGraphObj.badVertices.begin(), ClebschGraphObj.badVertices.end(), vertex) != ClebschGraphObj.badVertices.end())
-        return 1;
-    else
-        return 0;
-}
-
-// 0 ,6
-// 1 ,1 ,0 ,0
-uint8_t CalculateCostEdges(vector<char> const &parentColors, vector<char> const &colors)
-{
-    ////COUT << "parent" << parentColors << endl;
-    ////COUT << "colors" << colors << endl;
-    uint8_t cost = 0;
-    for (int i = 0; i < colors.size(); i++)
-    {
-        cost += ClebschGraphObj.EdgeCost(parentColors[i / 2], colors[i]);
-    }
-    ////COUT << "T cost: " << cost << endl;
-    return cost;
-}
-
-// Calcula o custo para um vetor de cores
-uint8_t CalculateCostVertex(vector<char> const &colors)
-{
-    uint8_t cost = 0;
-    for (auto c : colors)
-        cost += CalculateCostVertex(c);
-    return cost;
-}
-
-bool HasPossibleParentColors(vector<char> const &levelColors, vector<vector<char>> &possibleColors)
-{
-    for (int i = 0; i < levelColors.size(); i += 2)
-    {
-        auto v = levelColors[i];
-        auto u = levelColors[i + 1];
-        auto cn = PossibleChoicesCommonNeighbours(v, u);
-        if (cn.size() == 0)
-        {
-            return false;
-        }
-        possibleColors.push_back(cn);
-    }
-    return true;
-}
 
 struct CacheInfo
 {
@@ -423,79 +375,6 @@ void NewTryImproveBadColoringWhThreads(vector<char> comb, uint8_t cost,
         ci.cbcCounter++;
     }
 }
-
-// void TryImproveBadColoring(vector<char> comb,
-//                            vector<char> &parentComb,
-//                            unsigned fatherCost, vector<vector<char>> &newbadColorings,
-//                            CacheInfo &cacheInfo, CounterInfo &ci, SpecificFunctions &sf)
-// {
-//     auto combCost = sf.CalculateCost(parentComb, comb);
-//     unsigned cost = fatherCost + combCost; // Prestar atenção no custo
-//     pair<char, char> cached;
-//     sf.CanonicalOrdering(comb);
-//     tableLocker.lock();
-//     if (UnsafeHasCachedValue(comb, cached))
-//     {
-//         UnsafeUpdateTable(comb, cost, cached, newbadColorings, cacheInfo, ci);
-//         tableLocker.unlock();
-//     }
-//     else
-//     {
-//         unsigned result;
-//         // Condições de corrida
-//         if (!UnsafeHasDirtyValue(comb))
-//         {
-//             cached = make_pair(-1, cached.second);
-//             coloringTable[comb] = cached;
-//             tableLocker.unlock();
-//             result = sf.BetterColoring(cost, comb, cacheInfo);
-//             unique_lock<mutex> lock(mtx);
-//             tableLocker.lock();
-//             lock.unlock();
-//             cv.notify_all();
-//         }
-//         else
-//         {
-//             tableLocker.unlock();
-//             unique_lock<mutex> lock(mtx);
-//             while (true)
-//             {
-//                 cv.wait(lock);
-//                 tableLocker.lock();
-//                 auto stop = !UnsafeHasDirtyValue(comb);
-//                 tableLocker.unlock();
-//                 if (stop)
-//                     break;
-//             }
-//             lock.unlock();
-//             tableLocker.lock();
-//         }
-//         if (UnsafeHasCachedValue(comb, cached))
-//         {
-//             UnsafeUpdateTable(comb, cost, cached, newbadColorings, cacheInfo, ci);
-//         }
-//         else
-//         {
-//             coloringTable[comb] = make_pair(cost, result);
-//             ci.cacheMiss++;
-//             ci.cCCounter++;
-//             if (cost == result)
-//             {
-//                 ci.bcCounter++;
-//                 ci.cbcCounter++;
-//                 badColoringsLocker.lock();
-//                 newbadColorings.push_back(comb);
-//                 badColoringsLocker.unlock();
-//             }
-//             else
-//             {
-//                 ci.gcCounter++;
-//                 ci.cgcCounter++;
-//             }
-//         }
-//         tableLocker.unlock();
-//     }
-// }
 
 // Retorna todos os vértices com vizinhos em comum com v
 vector<char> GetPossibleSiblings(char v)
@@ -948,18 +827,8 @@ bool TryImproveWithSubProblemFromTable(int remainingBC, map<vector<char>, vector
 {
     cout << "Trying to solve table with " << remainingBC << " colorings" << endl;
     cout << "toImproveTable size: " << toImproveTable.size() << endl;
-    // for (auto kv : toImproveTable)
-    // {
-    //     cout << "kv first" << kv.first << endl;
-    //     cout << "kv second:  ";
-    //     for (auto e : kv.second)
-    //         cout << e << ", ";
-    //     cout << endl;
-    // }
     while (remainingBC != 0 && toImproveTable.size() != 0)
     {
-        cout << "Trying again" << endl;
-
         vector<char> k;
         vector<vector<char>> coloringsToImprove;
         for (auto kv : toImproveTable)
@@ -970,23 +839,8 @@ bool TryImproveWithSubProblemFromTable(int remainingBC, map<vector<char>, vector
                 coloringsToImprove = kv.second;
             }
         }
-        // // bater que decomposição está funcionando como esperado
-        // cout << "yolo sss" << endl;
-        // cout << "k.size " << k.size() << endl;
-        // if (k.size() == 0)
-        // {
-        //     cout << "toImproveTable size: " << toImproveTable.size() << endl;
-        //     cout << "coloringsToImprove size: " << coloringsToImprove.size() << endl;
-        //     for (auto kv : toImproveTable)
-        //     {
-        //         cout << "kv first" << kv.first << endl;
-        //         cout << "kv second:  ";
-        //         for (auto e : kv.second)
-        //             cout << e << ", ";
-        //         cout << endl;
-        //     }
-        // }
-        if(k.size() == 0) return false;
+        if (k.size() == 0)
+            return false;
         auto subs = vector<char>(k.begin(), k.end() - 1);
         auto root = k[k.size() - 1];
         cout << (int)k[k.size() - 1] << " with subs " << subs << " appears: " << k.size() << endl;
@@ -1202,11 +1056,10 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
         vector<vector<char>> possibleColors = {possibleChildren, possibleChildren, possibleChildren};
         CombinationIterator *combinationIterator;
         combinationIterator = new CombinationIteratorBottomUp(possibleColors);
-        while (!combinationIterator->stop)
+        while (!combinationIterator->stop) 
         {
             auto comb = combinationIterator->GetNext();
             VertexLexicographicOrdering(comb);
-            cout << "comb test 0" << comb << endl;
             auto totalCost = CalculateCostVertex(comb) + cost;
             coloringTable[comb] = make_pair(totalCost, totalCost);
         }
@@ -1218,7 +1071,6 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
     for (auto pair : coloringTable)
     {
         auto k = pair.first;
-        // cout << k.size() << endl;
         if (k.size() != 3)
             continue;
         auto v = pair.second;
@@ -1229,10 +1081,10 @@ bool TopDownOnTreeVertex(unsigned maxTreeLevel)
 
 // custo_r/custo_l/alca_r/alca_l
 
-uint8_t const free_reachable_flag = 1 << 0;       // 01
-uint8_t const restricted_reachable_flag = 1 << 1; // 10
-uint8_t const free_cost_flag = 0x1C;              // 00011100
-uint8_t const restricted_cost_flag = 0xE0;        // 11100000
+uint8_t const free_reachable_flag = 0b00000001;       // 01
+uint8_t const restricted_reachable_flag = 0b00000010; // 10
+uint8_t const free_cost_flag = 0b00011100;             // 00011100
+uint8_t const restricted_cost_flag = 0b11100000;       // 11100000
 
 uint8_t const left_color = 0xF << 4;
 uint8_t const right_color = 0xF << 0;
@@ -1246,13 +1098,10 @@ void InitializeColorArray()
     {
         for (int j = i; j < 16; j++)
         {
-            // cout << "pipi: " <<((i <<4) | j) << endl;
             color_array[color_array_index] = (i << 4) | j;
             color_array_index++;
-            cout << color_array_index << endl;
         }
     }
-    // cout<< "aaaaaaaaaaa aaaaaaaaaa" << endl;
 }
 
 pair<char, char> GetColors(uint16_t pair)
@@ -1269,8 +1118,6 @@ vector<char> GetColors(uint8_t *pairs, int size)
     for (int i = 0; i < size; i++)
     {
         auto pair = pairs[i];
-        // left color 1111 0000
-        //  right color 0000 1111
         char c1 = (pair & left_color) >> 4;
         char c2 = pair & right_color;
         ret.push_back(c1);
@@ -1289,8 +1136,6 @@ size_t GetIndex(vector<char> colors)
         u_int8_t u = colors[i];
         u_int8_t v = colors[i + 1];
         u_int8_t correspondent_pair = ((16 + (16 - u + 1)) * u) / 2 + (v - u);
-        // cout<< "u: " << (int) u <<" v: " << (int )v << endl;
-        // cout << "pair" << (int) correspondent_pair << endl;
         ret += correspondent_pair * (pow(pair_choices, exponent));
         exponent++;
     }
@@ -1311,127 +1156,6 @@ int HasBadVertex(vector<char> colors)
     return number_of_zeros;
 }
 
-void SimpleCanonical(vector<char> &colors)
-{
-    for (int i = 0; i < colors.size(); i += 2)
-    {
-        auto u = colors[i];
-        auto v = colors[i + 1];
-        if (u <= v)
-            continue;
-        colors[i] = v;
-        colors[i + 1] = u;
-    }
-}
-
-void Test()
-{
-    // size_t pair_choices_exponents[5] = {1, pair_choices, (size_t)pow(pair_choices, 2), (size_t)pow(pair_choices, 3), (size_t)pow(pair_choices, 4)};
-    // size_t i = 5438513;
-    // uint8_t first_index = i % pair_choices;
-    // uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
-    // uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
-    // uint8_t fourth_index = i / pair_choices_exponents[3];
-    // cout << "index : " << i << endl;
-    // cout << "bc index " << (int)first_index << "   " << (int)color_array[first_index] << endl;
-    // cout << "bc index " << (int)second_index << "   " << (int)color_array[second_index] << endl;
-    // cout << "bc index " << (int)third_index << "   " << (int)color_array[third_index] << endl;
-    // cout << "bc index " << (int)fourth_index << "   " << (int)color_array[fourth_index] << endl;
-    // uint8_t color_pairs[4] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index]};
-    // auto translate_colors = GetColors(color_pairs, 4);
-    // cout << translate_colors << endl;
-    // cout << "reverse" << GetIndex(translate_colors) << endl;
-    vector<char> test{13, 13};
-    auto index = GetIndex(test);
-    cout << "Test index: " << index << endl;
-}
-
-void SanityCheckForLevel(int level, uint8_t *value_array)
-{
-    size_t size = (size_t)pow(pair_choices, level);
-    for (size_t i = 0; i < size; i++)
-    {
-        auto ret = value_array[i];
-        switch (ret)
-        {
-        case 0:
-        case free_reachable_flag:
-        case restricted_reachable_flag:
-        case free_reachable_flag | restricted_reachable_flag:
-            break;
-        default:
-            cout << "Sanity check failed for index: " << dec << i << " with flag: " << hex << ret << endl;
-        }
-    }
-}
-
-void TestTableIndexing()
-{
-    for (int level = 1; level <= 3; level++)
-    {
-        size_t level_size = (size_t)pow(pair_choices, pow(2, level - 1));
-        // uint8_t *level_array = (uint8_t *)malloc(level_size * sizeof(uint8_t));
-        cout << "testing for level: " << level << " with level size: " << level_size << endl;
-        for (size_t i = 0; i < level_size; i++)
-        {
-            uint8_t number_of_indexes = pow(2, level - 1);
-            uint8_t *index_array = (uint8_t *)malloc(number_of_indexes * sizeof(uint8_t));
-            for (uint8_t index_position = 1; index_position <= number_of_indexes; index_position++)
-            {
-                u_int8_t index = (i % (size_t)pow(pair_choices, index_position)) / (size_t)pow(pair_choices, index_position - 1);
-                index_array[index_position - 1] = color_array[index];
-                // cout << "index: " << (int) index <<" t: " << (int)color_array[index] << endl;
-            }
-            auto translate_colors = GetColors(index_array, number_of_indexes);
-            auto indexOfGenerateColoring = GetIndex(translate_colors);
-            if (i != indexOfGenerateColoring)
-            {
-                cout << "Wrong Index ambiguity for index: " << dec << i << " got coloring" << translate_colors << " that generate index: " << indexOfGenerateColoring << endl;
-                return;
-            }
-            free(index_array);
-        }
-        vector<char> coloring(pow(2, level));
-        cout << "Testing for coloring of size: " << pow(2, level) << " on level: " << level << endl;
-        for (size_t j = 0; j < level_size; j++)
-        {
-            // cout << "Testing for coloring: " << coloring << endl;
-            auto index_from_coloring = GetIndex(coloring);
-            // cout << "Index from coloring: " << index_from_coloring << endl;
-            if (index_from_coloring < 0 || index_from_coloring > level_size)
-            {
-                cout << "Wrong index: " << index_from_coloring << " for coloring: " << coloring << " on level: " << level << " level size: " << level_size << endl;
-                return;
-            }
-            uint8_t number_of_indexes = pow(2, level - 1);
-            uint8_t *index_array = (uint8_t *)malloc(number_of_indexes * sizeof(uint8_t));
-            for (uint8_t index_position = 1; index_position <= number_of_indexes; index_position++)
-            {
-                u_int8_t index = (index_from_coloring % (size_t)pow(pair_choices, index_position)) / (size_t)pow(pair_choices, index_position - 1);
-                index_array[index_position - 1] = color_array[index];
-                // cout << "index from coloring"<< index_from_coloring <<"index: " << (int) index <<" t: " << (int)color_array[index] << endl;
-            }
-            auto translate_colors = GetColors(index_array, number_of_indexes);
-            if (coloring != translate_colors)
-            {
-                cout << "Wrong Color ambiguity for index: " << dec << index_from_coloring << " got coloring" << translate_colors << " from index of coloring: " << coloring << endl;
-                return;
-            }
-            free(index_array);
-            for (int ci = coloring.size() - 1; ci >= 0; ci--)
-            {
-                if (coloring[ci] != 15)
-                {
-                    coloring[ci]++;
-                    if (ci % 2 == 0 && coloring[ci + 1] < coloring[ci])
-                        coloring[ci + 1] = coloring[ci];
-                    break;
-                }
-                coloring[ci] = 0;
-            }
-        }
-    }
-}
 
 uint8_t ExtractRestricetedReacheble(uint8_t flag)
 {
@@ -1470,26 +1194,38 @@ bool IsBad(uint8_t flag)
 
 bool IsGood(uint8_t flag)
 {
-    return !IsBad(flag);
+    return ExtractFreeReacheble(flag) && ((ExtractFreeCost(flag) <= ExtractRestricetedCost(flag)));
 }
 
 // TODO Remove zeros
 //  bbb/bbb b b
 //  custo_r/custo_l/alca_r/alca_l
-bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosubsubproblem)
+bool HasGoodVertexSubstitution(char undesirable, vector<char> goodVertices, bool dosubsubproblem)
 {
-    string file_name = "./results/"
-    for(auto c in goodVertices){
-        file_name.push_back(c);
+    string file_name = "";
+    if(dosubsubproblem)
+        file_name = "./results/";
+    else
+        file_name = "./results/subsub/";
+    for (auto c : goodVertices)
+    {
+        file_name += to_string((int)c);
+        file_name += "-";
     }
-    file_name.push_back(vertex);
+    file_name += "|-";
+    file_name += to_string((int)undesirable);
+    file_name += ".log";
+    cout << "FILE NAME" << file_name << endl;
+    ofstream myfile;
+    myfile.open(file_name, ios::out | ios::app);
+    ofstream ofile(file_name);
     size_t pair_choices_exponents[5] = {1, pair_choices, (size_t)pow(pair_choices, 2), (size_t)pow(pair_choices, 3), (size_t)pow(pair_choices, 4)};
     size_t size_1 = pair_choices;
     uint8_t level_1[pair_choices];
     size_t size_2 = pair_choices_exponents[2];
     uint8_t level_2[size_2];
-    cout << "Trying substitutions to: " << (int)vertex << endl;
-    cout << "with goodVertices " << goodVertices << endl;
+    myfile << "Trying substitutions to: " << (int)undesirable << endl;
+    myfile << "with goodVertices " << goodVertices << endl;
     uint8_t free_cost, restricted_cost;
     for (size_t i = 0; i < size_1; i++)
     {
@@ -1498,13 +1234,11 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
         char u = colors.first;
         char v = colors.second;
         // cout << "i: " << i << endl;
-        cout << "u: " << (int)u << " v: " << (int)v << endl;
         auto possibles = adjMatrix[u][v];
-        cout << "possibles " << possibles << "||" << endl;
         free_cost = restricted_cost = HasBadVertex(colors);
         for (auto possible_parent : possibles)
         {
-            if (possible_parent == vertex)
+            if (possible_parent == undesirable)
             {
                 ret = ret | restricted_reachable_flag;
                 if (possible_parent == 0)
@@ -1520,23 +1254,29 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
         level_1[i] = ret;
     }
     unsigned badColorings1 = 0;
+    map<size_t, vector<pair<size_t,size_t>>> bad_configs_map;
     for (size_t i = 0; i < size_1; i++)
     {
         auto ret = level_1[i];
+        auto colors = GetColors(color_array[i]);
         if (IsBad(ret))
         {
+            myfile << "bad color to improve: " << +colors.first << "  " << +colors.second << "  with index " << i << endl;
+            bad_configs_map[i]= {};
             badColorings1++;
         }
     }
-    cout << endl;
-    cout << badColorings1 << " bad colorings on level 1" << endl;
-    cout << "test 2" << endl;
+    myfile << badColorings1 << " bad colorings on level 1" << endl;
     if (badColorings1 == 0)
+    {
+        myfile.close();
         return true;
+    }
     // SanityCheckForLevel(1, level_1);
+    //Chegamos até aqui 
     for (size_t i = 0; i < size_2; i++)
     {
-        uint8_t ret = 0xfc;
+        uint8_t ret = 0b11111100;
         uint8_t first_index = i % pair_choices;
         uint8_t second_index = i / pair_choices;
         uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
@@ -1547,17 +1287,19 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
             level_2[i] = ret;
             continue;
         }
-        cout << "Checking coloring " << translate_colors << endl;
+        // cout << "Checking coloring " << translate_colors << endl;
         int min_number_of_zeros_for_reachable_parent = INT_MAX;
         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
         uint8_t level_cost = HasBadVertex(translate_colors);
+        vector<size_t> parent_bad_colorings;
+        size_t best_free_parent_i = SIZE_MAX;
         while (!combinationIterator.stop)
         {
             auto pc = combinationIterator.GetNext();
             SimpleCanonical(pc);
             auto index = GetIndex(pc);
             auto parent_ret = level_1[index];
-            if (ExtractFreeReacheble(parent_ret) || ExtractRestricetedReacheble(parent_ret))
+            /*if (ExtractFreeReacheble(parent_ret) || ExtractRestricetedReacheble(parent_ret))
             {
                 cout << "Trying to solve parent  " << pc << endl;
                 cout << "Costs free cost << " << +ExtractFreeCost(parent_ret) << " restricted cost: " << +ExtractRestricetedCost(parent_ret) << endl;
@@ -1566,39 +1308,101 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
             else
             {
                 cout << "Unreachable parent:: " << bitset<8>(parent_ret) << endl;
-            }
+            }*/
+            if (IsBad(parent_ret))
+                parent_bad_colorings.push_back(index);
             if (ExtractFreeReacheble(parent_ret))
             {
-                cout << "freeee" << endl;
+                // cout << "freeee" << endl;
                 ret |= free_reachable_flag;
                 uint8_t current_best_parent_free_cost = ExtractFreeCost(ret) - level_cost;
-                cout << "ret: " << bitset<8>(ret) << " current_best_parent_free_cost: " << +current_best_parent_free_cost << endl;
+                // cout << "ret: " << bitset<8>(ret) << " current_best_parent_free_cost: " << +current_best_parent_free_cost << endl;
                 uint8_t parent_free_cost = ExtractFreeCost(parent_ret);
-                cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_free_cost: " << +parent_free_cost << endl;
-                ret = ((ret & (~free_cost_flag)) | ((current_best_parent_free_cost > parent_free_cost) ? FreeCostToFlag(parent_free_cost + level_cost) : ret));
-                cout << "new ret: " << bitset<8>(ret)<< endl;
+                // cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_free_cost: " << +parent_free_cost << endl;
+                if (current_best_parent_free_cost > parent_free_cost)
+                {
+                    ret = ((ret & (~free_cost_flag)) | FreeCostToFlag(parent_free_cost + level_cost));
+                    best_free_parent_i = index;
+                }
+                // cout << "new ret: " << bitset<8>(ret)<< endl;
             }
             else if (ExtractRestricetedReacheble(parent_ret))
             {
-                cout << "restricted" << endl;
+                // cout << "restricted" << endl;
                 ret |= restricted_reachable_flag;
                 uint8_t current_best_parent_r_cost = ExtractRestricetedCost(ret) - level_cost;
-                cout << "ret: " << bitset<8>(ret) << " current_best_parent_r_cost: " << +current_best_parent_r_cost << endl;
+                // cout << "ret: " << bitset<8>(ret) << " current_best_parent_r_cost: " << +current_best_parent_r_cost << endl;
                 uint8_t parent_r_cost = ExtractRestricetedCost(parent_ret);
-                cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_r_cost: " << +parent_r_cost << endl;
+                // cout << "parent_ret: " << bitset<8>(parent_ret) << " parent_r_cost: " << +parent_r_cost << endl;
                 ret = ((ret & (~restricted_cost_flag)) | ((current_best_parent_r_cost > parent_r_cost) ? RestricetedCostToFlag(parent_r_cost + level_cost) : ret));
-                cout << "new ret: " << bitset<8>(ret) << endl;
+                // cout << "new ret: " << bitset<8>(ret) << endl;
             }
-            cout << "============" << endl;
+            // cout << "============" << endl;
         }
-        cout << "Final Result for " << translate_colors << endl;
-        cout << "Costs free cost << " << +ExtractFreeCost(ret) << " restricted cost: " << +ExtractRestricetedCost(ret) << endl;
-        cout << "With flag free reachable: " << (ExtractFreeReacheble(ret) ? "Y" : "N") << " restricted reachable: " << (ExtractRestricetedReacheble(ret) ? "Y" : "N") << endl;
-        cout << "================================================================" << endl;
+        // cout << "Final Result for " << translate_colors << endl;
+        // cout << "Costs free cost << " << +ExtractFreeCost(ret) << " restricted cost: " << +ExtractRestricetedCost(ret) << endl;
+        // cout << "With flag free reachable: " << (ExtractFreeReacheble(ret) ? "Y" : "N") << " restricted reachable: " << (ExtractRestricetedReacheble(ret) ? "Y" : "N") << endl;
+        // cout << "================================================================" << endl;
+
+        // if(parent_bad_colorings.size() > 0 && !IsBad(ret)){
+        //     myfile<< "Solved this bad configurations:"<< endl;
+        //     for(auto pi: parent_bad_colorings){
+        //         auto colors = GetColors(color_array[pi]);
+        //         auto possibles = adjMatrix[colors.first][colors.second];
+        //         myfile<< "index: "<< +colors.first << "," << +colors.second<< "  possibles: " << possibles << endl;
+        //     }
+        //     auto colors = GetColors(color_array[best_free_parent_i]);
+        //     auto possibles = adjMatrix[colors.first][colors.second];
+        //     myfile <<"With this configuration " << +colors.first << "," << +colors.second << "  possibles: " << possibles << endl;
+        //     myfile << "============"<< endl;
+        // }
+        if (parent_bad_colorings.size() > 0)
+        {
+            if (IsBad(ret))
+            {
+                for (auto pi : parent_bad_colorings)
+                {
+                    bad_configs_map.erase(pi);
+                }
+            }
+            else
+            {
+                for (auto pi : parent_bad_colorings)
+                {
+                    if (bad_configs_map.count(pi) == 1)
+                    {
+                        auto p = make_pair(i, best_free_parent_i);
+                        bad_configs_map[pi].push_back(p);
+                    }
+                }
+            }
+        }
         level_2[i] = ret;
     }
-
-    cout << "============ level 2" << endl;
+    for (auto bc : bad_configs_map)
+    {
+        auto config = GetColors(color_array[bc.first]);
+        myfile << "Solved config"
+               << "  |" << +config.first << ", " << +config.second << "|"
+               << " descendents: " << endl;
+        myfile << "|" << ClebschGraphObj.adjLis[config.first].adjs << " |---| " << ClebschGraphObj.adjLis[config.second].adjs << "|" << endl;
+        ;
+        auto indexes = bc.second;
+        sort(indexes.begin(), indexes.end(), [](const pair<size_t, size_t> &a, const pair<size_t, size_t> &b)
+             { return a.first < b.first; });
+        for (auto dc_p : indexes)
+        {
+            uint8_t first_index = dc_p.first % pair_choices;
+            uint8_t second_index = dc_p.first / pair_choices;
+            uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
+            auto d_config = GetColors(color_pairs, 2);
+            auto parent_config = GetColors(color_array[dc_p.second]);
+            auto possibles = adjMatrix[parent_config.first][parent_config.second];
+            myfile << "|" << d_config << "|"
+                   << "---> |" << +parent_config.first << ", " << +parent_config.second << "| possibles  |" << possibles << "|" << endl;
+        }
+        myfile << "+++++++++++++++++++++++++++++++++++++++" << endl;
+    }
     unsigned badColorings2 = 0;
     for (size_t i = 0; i < size_2; i++)
     {
@@ -1610,14 +1414,16 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
             uint8_t second_index = i / pair_choices;
             uint8_t color_pairs[2] = {color_array[first_index], color_array[second_index]};
             auto translate_colors = GetColors(color_pairs, 2);
-            cout << "bad coloring on level 2" << translate_colors << endl;
+            myfile << "bad coloring on level 2  |" << translate_colors << "|" << endl;
         }
     }
-    cout << endl;
-    cout << badColorings2 << " bad colorings on level 2 before problem" << endl;
+    myfile << endl;
+    myfile << badColorings2 << " bad colorings on level 2" << endl;
     if (badColorings2 == 0)
+    {
+        myfile.close();
         return true;
-    cout << "test 2 ==" << endl;
+    }
     // for (size_t i = 0; i < size_2; i++)
     // {
     //     if (level_2[i] == reachable_flag)
@@ -1657,10 +1463,11 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
     {
         cout << "Preparing SubProblem" << endl;
         map<vector<char>, vector<vector<char>>> toImproveTable;
+        map<vector<char>, vector<vector<char>>> to_print_table;
         for (size_t i = 0; i < size_2; i++)
         {
-
-            if (IsBad(level_2[i]))
+            auto ret = level_2[i]; 
+            if (IsBad(ret))
             {
                 uint8_t first_index = i % pair_choices;
                 uint8_t second_index = i / pair_choices;
@@ -1694,7 +1501,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
                         // 01 -> good flag
                         // 10 -> reachable_flag
                         // 11
-                        if ((sub_ret & free_reachable_flag) == free_reachable_flag)
+                        if (IsGood(sub_ret) && ( ExtractFreeCost(sub_ret) <= ExtractRestricetedCost(ret)))
                         {
                             goodsubs.push_back(s);
                         }
@@ -1703,7 +1510,7 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
                         continue;
                     // map<char,vector<pair<vector<char>,char>>>
                     auto key = goodsubs;
-                    //cout << "pushing to solver root " << (int)bc[i] << "from" << bc << " with subs" << goodsubs << endl;
+                    // cout << "pushing to solver root " << (int)bc[i] << "from" << bc << " with subs" << goodsubs << endl;
                     key.push_back(bc[i]);
                     if (toImproveTable.count(key) == 1)
                     {
@@ -1715,19 +1522,43 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
                         vector<vector<char>> tempValue = {bc};
                         toImproveTable[key] = tempValue;
                     }
+                    if (to_print_table.count(bc) == 1)
+                    {
+                        to_print_table[bc].push_back(key);
+                    }
+                    else
+                    {
+                        vector<vector<char>> tempValue = {key};
+                        to_print_table[bc] = tempValue;
+                    }
                 }
             }
         }
+        myfile << "Sub sub problem :" << endl;
+        for (auto te : to_print_table)
+        {
+            myfile << "Trying improving " << te.first << " with subs:" << endl;
+            for (auto k : te.second)
+            {
+                auto subs = vector<char>(k.begin(), k.end() - 1);
+                auto root = k[k.size() - 1];
+                myfile << "Root to change : " << +root << " with colors |" << subs << "|" << endl;
+            }
+            myfile << "++++++++++++++++++++++" << endl;
+        }
+
         cout << "Starting subsubproblem" << endl;
         auto ret = TryImproveWithSubProblemFromTable(badColorings2, toImproveTable, false);
         if (!ret)
-            cout << "Unable SubSubProblem" << endl;
-        else 
-            cout << "Solve SubSubProblem" << endl;
+            myfile << "Unable to be solved with SubSubProblem" << endl;
+        else
+            myfile << "Solved with SubSubProblem" << endl;
+        myfile.close();
         return ret;
     }
     cout << dec << badColorings2 << " bad colorings on level 2" << endl;
     cout << dec << (double)badColorings2 / (double)size_2 << " bad colorings proportion on level 2" << endl;
+    myfile.close();
     if (badColorings2 == 0)
         return true;
     else
@@ -1847,113 +1678,42 @@ bool HasGoodVertexSubstitution(char vertex, vector<char> goodVertices, bool dosu
     if (badColorings3 == 0)
         return true;
     return false;
-#pragma region level 4
-    // size_t badColorings4 = 0;
-    // for (size_t i = 0; i < size_4; i++)
-    // {
-    //     if (i % (size_4 / 100) == 0)
-    //         cout << "done i: " << i << " iterations, " << i / (size_4 / 100) << "\% completed" << endl;
-    //     uint8_t ret = 0;
-    //     uint8_t first_index = i % pair_choices;
-    //     uint8_t second_index = (i % pair_choices_exponents[2]) / pair_choices;
-    //     uint8_t third_index = (i % pair_choices_exponents[3]) / pair_choices_exponents[2];
-    //     uint8_t fourth_index = (i % pair_choices_exponents[4]) / pair_choices_exponents[3];
-    //     uint8_t fifth_index = (i % pair_choices_exponents[5]) / pair_choices_exponents[4];
-    //     uint8_t sixth_index = (i % pair_choices_exponents[6]) / pair_choices_exponents[5];
-    //     uint8_t seventh_index = (i % pair_choices_exponents[7]) / pair_choices_exponents[6];
-    //     uint8_t eighth_index = i / pair_choices_exponents[7];
-
-    //     uint8_t color_pairs[8] = {color_array[first_index], color_array[second_index], color_array[third_index], color_array[fourth_index],
-    //                             color_array[fifth_index], color_array[sixth_index], color_array[seventh_index], color_array[eighth_index]};
-    //     auto translate_colors = GetColors(color_pairs, 8);
-    //     vector<vector<char>> possibleColors;
-    //     if (!HasPossibleParentColors(translate_colors, possibleColors))
-    //         continue;
-    //     int min_number_of_zeros_for_reachable_parent = INT_MAX;
-    //     auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-    //     while (!combinationIterator.stop)
-    //     {
-    //         auto pc = combinationIterator.GetNext();
-    //         auto index = GetIndex(pc);
-    //         auto parent_ret = level_3[index];
-    //         int number_of_zeros = HasBadVertex(pc);
-    //         if (number_of_zeros)
-    //         {
-    //             if ((parent_ret & reachable_flag) == reachable_flag)
-    //                 min_number_of_zeros_for_reachable_parent = min(min_number_of_zeros_for_reachable_parent, number_of_zeros);
-    //             ret = ret | (parent_ret & reachable_flag);
-    //         }
-    //         else
-    //         {
-    //             ret = ret | parent_ret;
-    //         }
-    //     }
-    //     if (ret == reachable_flag)
-    //     {
-    //         auto combinationIterator = CombinationIteratorBottomUp(possibleColors);
-    //         while (!combinationIterator.stop)
-    //         {
-    //             auto pc = combinationIterator.GetNext();
-    //             SimpleCanonical(pc);
-    //             auto index = GetIndex(pc);
-    //             auto parent_ret = level_3[index];
-    //             int number_of_zeros = HasBadVertex(pc);
-    //             if (number_of_zeros > min_number_of_zeros_for_reachable_parent)
-    //             {
-    //                 ret = ret | (parent_ret & reachable_flag);
-    //             }
-    //             else
-    //             {
-    //                 ret = ret | parent_ret;
-    //             }
-    //         }
-    //     }
-    //     if (ret == reachable_flag)
-    //     {
-    //         cout << translate_colors << endl;
-    //         cout << "bad coloring :(" << endl;
-    //         badColorings4++;
-    //     }
-    // }
-    // cout << dec << badColorings4 << " bad colorings on level 4" << endl;
-    // cout << dec << (double)badColorings4 / (double)size_4 << " bad colorings proportion on level 4" << endl;
-    // cout << "yeeeey" << endl;
-#pragma endregion level 4
-    //
 }
 
-// Opt Teste
-// int main()
-// {
-//     InitializeMatrix();
-//     InitializeParentPermutationMatrix();
-//     InitializeColorArray();
-//     char vertex = 8;
-//     vector<char> goodVertices = {2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14};
-//     HasGoodVertexSubstitution(vertex, goodVertices);
-//     // char vertex = 1;
-//     // vector<char> goodVertices = {1, 2, 3, 5, 7, 9, 10, 12, 13, 14};
-//     // HasGoodVertexSubstitution(vertex, goodVertices);
-//     // Test();
-//     TestTableIndexing();
-//     return 0;
-// }
+void Initialize(){
+    InitializeMatrix();
+    InitializeColorArray();
+    InitializeParentPermutationMatrix();
+} 
+
+
+void ProduceSubProblemTable(){
+    //for(int i =0; i< 16; i++){
+        auto max = pow(2,16);
+        for(unsigned i=0 ; i< max ; i++ ){
+            cout << "i: "<< i << endl;
+            vector<char> permutation;
+            for(int j =0; j< 16; j++){
+                //cout <<"j: " << j << " (i >> j) " << (i >> j) << endl; 
+                if(((i >> j) &1) == 1){
+                    permutation.push_back(j);
+                }
+            }
+            cout << permutation<<endl;
+        }
+    //}
+}
+
 
 // Fazer essa otm
 // Revisão do código e otimizações gerais
 // Utilizar o banco de dados -> para guardar
 int main()
-{
-    InitializeMatrix();
-    InitializeColorArray();
-    InitializeParentPermutationMatrix();
-    // TopDownOnTreeVertex(2);
-    //   TopDownOnTreeEdge(2);
-    ReadAndTryImprove("output_table_1692733877");
-    //     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //       Trying substitutions to: 9
-    //      with goodVertices 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15
-    // vector<char> goodVertex = {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15};
-    // HasGoodVertexSubstitution(9, goodVertex);
+{    
+    Initialize();
+    TopDownOnTreeVertex(3);
+    ProduceSubProblemTable();
+    cout << "end"<< endl;
+    //ReadAndTryImprove("output_table_1692733877");
     return 0;
 }

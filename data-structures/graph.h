@@ -3,6 +3,9 @@
 #include <vector>
 #include <cstdint>
 using namespace std;
+uint8_t CalculateCostVertex(unsigned vertex);
+uint8_t CalculateCostEdges(vector<char> const &parentColors, vector<char> const &colors);
+uint8_t CalculateCostVertex(vector<char> const &colors);
 
 class Vertice
 {

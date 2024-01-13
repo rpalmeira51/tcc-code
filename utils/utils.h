@@ -18,4 +18,5 @@ void InitializeMatrix();
 
 // calcular só uma vez
 vector<char> PossibleChoicesCommonNeighbours(unsigned v, unsigned u);
+void SimpleCanonical(vector<char> &colors);
 #endif

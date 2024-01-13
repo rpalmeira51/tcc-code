@@ -1,0 +1,48 @@
+Problem: 0, 13, 10, 13
+
+Trying substitutions to: 9
+with goodVertices 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15
+
+++++++++++++++++++++++
+Trying improving 0, 13, 6, 13 with subs:
+Root to change : 13 with colors |2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15| -> Solves
+++++++++++++++++++++++
+Trying improving 3-4-5-14 with subs:
+Root to change : 14 with colors |1-2-5-6-9-10-11-12-15| -> Solves 
+++++++++++++++++++++++
+Trying improving 3-12-6-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 5-14-3-4 with subs:
+Root to change : 14 with colors |1-2-5-6-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-0-13 with subs:
+Root to change : 13 with colors |2-3-4-5-6-7-8-9-10-11-12-14-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-3-12 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-9-12 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-10-12 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-12-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 6-13-12-14 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 9-12-6-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 10-12-6-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 12-13-6-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++
+Trying improving 12-14-6-13 with subs:
+Root to change : 13 with colors |1-2-4-5-6-7-8-9-10-11-12-15| -> Solves
+++++++++++++++++++++++

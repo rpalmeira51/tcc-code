@@ -78,6 +78,8 @@
         "math.h": "c",
         "span": "cpp",
         "hash_map": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "concepts": "cpp",
+        "syncstream": "cpp"
     }
 }

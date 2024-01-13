@@ -1,0 +1,30 @@
+Trying substitutions to: 7
+with goodVertices 1, 2, 3, 4, 5, 6, 9, 10, 12, 13, 14, 15
+bad color to improve: 6  10  with index 85
+1 bad colorings on level 1
+bad coloring on level 2  |0, 13, 0, 8|
+bad coloring on level 2  |9, 12, 0, 8|
+bad coloring on level 2  |12, 13, 0, 8|
+bad coloring on level 2  |12, 14, 0, 8|
+bad coloring on level 2  |0, 8, 0, 13|
+bad coloring on level 2  |2, 8, 0, 13|
+bad coloring on level 2  |2, 11, 0, 13|
+bad coloring on level 2  |2, 15, 0, 13|
+bad coloring on level 2  |0, 13, 2, 8|
+bad coloring on level 2  |9, 12, 2, 8|
+bad coloring on level 2  |12, 13, 2, 8|
+bad coloring on level 2  |12, 14, 2, 8|
+bad coloring on level 2  |0, 13, 2, 11|
+bad coloring on level 2  |12, 13, 2, 11|
+bad coloring on level 2  |0, 13, 2, 15|
+bad coloring on level 2  |12, 13, 2, 15|
+bad coloring on level 2  |0, 8, 9, 12|
+bad coloring on level 2  |2, 8, 9, 12|
+bad coloring on level 2  |0, 8, 12, 13|
+bad coloring on level 2  |2, 8, 12, 13|
+bad coloring on level 2  |2, 11, 12, 13|
+bad coloring on level 2  |2, 15, 12, 13|
+bad coloring on level 2  |0, 8, 12, 14|
+bad coloring on level 2  |2, 8, 12, 14|
+
+24 bad colorings on level 2
