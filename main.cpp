@@ -1687,23 +1687,54 @@ void Initialize(){
 } 
 
 
-void ProduceSubProblemTable(){
-    //for(int i =0; i< 16; i++){
-        auto max = pow(2,16);
-        for(unsigned i=0 ; i< max ; i++ ){
-            cout << "i: "<< i << endl;
-            vector<char> permutation;
-            for(int j =0; j< 16; j++){
-                //cout <<"j: " << j << " (i >> j) " << (i >> j) << endl; 
-                if(((i >> j) &1) == 1){
-                    permutation.push_back(j);
-                }
-            }
-            cout << permutation<<endl;
+set<vector<char>> perm_table;
+
+bool helper(vector<char> permutation, int index, unsigned vertex, ofstream& stream){
+    if(permutation.size() >5 ){
+        perm_table.insert(permutation);
+        if(HasGoodVertexSubstitution(vertex, permutation, false)) {
+            stream << "good replacement for vertex: " << vertex <<  " <-> perm: " << permutation << endl;
+            return true;
         }
-    //}
+        //return false;
+    }
+    if(index == 16) return false;
+    if(helper(permutation, index+1, vertex, stream)) return true;
+    cout << permutation << endl;
+    if(index == vertex)
+        return false;
+    permutation.push_back(index);
+    cout << permutation << endl;
+    return helper(permutation, index+1, vertex, stream); 
 }
 
+void ProduceSubProblemTable(){
+    vector<char> permutation_helper;
+    ofstream myfile;
+    myfile.open("sub_problem_table", ios::out | ios::trunc);
+    for(int i =0; i< 16; i++){
+        helper(permutation_helper,1,i, myfile);    
+    }
+    auto max = pow(2,16);
+    cout << "====================" << endl;
+    cout << "Test" << endl;
+    for(unsigned i=0 ; i< max ; i++ ){
+        //cout << hex <<"i: "<< i << endl;
+        vector<char> permutation;
+        for(int j =0; j< 16; j++){
+            //cout <<"j: " << j << " (i >> j) " << (i >> j) << endl; 
+            if(((i >> j) &1) == 1){
+                permutation.push_back(j);
+            }
+        } 
+        if(permutation.size() > 5){
+            //cout << "Testing perm  " << permutation << endl;
+            if( permutation[0] !=0  && perm_table.find(permutation) == perm_table.end()){
+                cout << "missing perm  " << permutation << endl;
+            }
+        }
+    }
+}
 
 // Fazer essa otm
 // Revisão do código e otimizações gerais
@@ -1711,9 +1742,9 @@ void ProduceSubProblemTable(){
 int main()
 {    
     Initialize();
-    TopDownOnTreeVertex(3);
+    //TopDownOnTreeVertex(3);
     ProduceSubProblemTable();
     cout << "end"<< endl;
     //ReadAndTryImprove("output_table_1692733877");
-    return 0;
+     return 0;
 }

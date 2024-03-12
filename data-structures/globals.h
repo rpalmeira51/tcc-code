@@ -7,7 +7,8 @@
 using namespace std;
 
 extern vector<char> adjMatrix[16][16];
-extern ClebschGraph ClebschGraphObj;
+//extern ClebschGraph ClebschGraphObj;
+extern SuperClebschGraph ClebschGraphObj;
 extern pair<int,int> parentPermutationMatrix[15];
 struct VectorHasher
 {

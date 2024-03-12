@@ -6,7 +6,6 @@
 
 using namespace std;
 extern vector<char> adjMatrix[16][16];
-extern ClebschGraph ClebschGraphObj;
 
 ostream& operator<<(ostream& os, const vector<char>& vec)
 {
